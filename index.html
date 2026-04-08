@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interactive Grammar Book</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 :root {
   --primary: #2563eb;
@@ -1060,6 +1061,16 @@ main {
 <div id="toast"></div>
 
 <script>
+// ============================================================
+// SUPABASE CONFIG
+// ============================================================
+const SUPABASE_URL = 'https://bemkdfkayiyxbeeqximt.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlbWtkZmtheWl5eGJlZXF4aW10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMDc5MTQsImV4cCI6MjA4MDc4MzkxNH0.DJhIL7p0R-vxOwIGD6VEIQQO5Lkj4fJnCAt5SyVYvbg';
+const SYNC_USER_ID = 'mychelle';
+const _supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let syncTimer = null;
+let lastSyncAt = null;
+
 // ============================================================
 // DATA
 // ============================================================
@@ -2509,6 +2520,12 @@ let skillResults = {};
 function saveState() {
   const data = { exerciseResults, firstAttemptResults, flashcards, version: 2 };
   try { localStorage.setItem('grammar-book', JSON.stringify(data)); } catch(e) {}
+  debouncedCloudPush();
+}
+
+function saveStateLocal() {
+  const data = { exerciseResults, firstAttemptResults, flashcards, version: 2 };
+  try { localStorage.setItem('grammar-book', JSON.stringify(data)); } catch(e) {}
 }
 
 function loadState() {
@@ -2521,6 +2538,84 @@ function loadState() {
       flashcards = data.flashcards || [];
     }
   } catch(e) {}
+}
+
+// ============================================================
+// SUPABASE SYNC
+// ============================================================
+function debouncedCloudPush() {
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(pushToSupabase, 2000);
+}
+
+function updateSyncIndicator(status) {
+  let dot = document.getElementById('sync-dot');
+  if (!dot) {
+    dot = document.createElement('span');
+    dot.id = 'sync-dot';
+    dot.style.cssText = 'width:8px;height:8px;border-radius:50%;display:inline-block;margin-left:8px;vertical-align:middle;transition:background 0.3s;cursor:help';
+    const h = document.querySelector('header h1');
+    if (h) h.appendChild(dot);
+  }
+  const colors = { synced: '#059669', syncing: '#d97706', offline: '#dc2626' };
+  dot.style.background = colors[status] || colors.offline;
+  dot.title = status === 'synced' ? 'Synced to cloud' : status === 'syncing' ? 'Syncing...' : 'Offline — data saved locally';
+}
+
+async function pushToSupabase() {
+  try {
+    updateSyncIndicator('syncing');
+    const grammarBook = { exerciseResults, firstAttemptResults, flashcards, version: 2 };
+    const grammarPlan = getPlanState();
+    const now = new Date().toISOString();
+    const { error } = await _supa
+      .from('grammar_progress')
+      .update({ grammar_book: grammarBook, grammar_plan: grammarPlan, synced_at: now })
+      .eq('id', SYNC_USER_ID);
+    if (error) throw error;
+    lastSyncAt = now;
+    try { localStorage.setItem('grammar-sync-ts', String(Date.now())); } catch(e) {}
+    updateSyncIndicator('synced');
+  } catch (e) {
+    console.warn('Supabase push failed:', e.message);
+    updateSyncIndicator('offline');
+  }
+}
+
+async function pullFromSupabase() {
+  try {
+    const { data, error } = await _supa
+      .from('grammar_progress')
+      .select('grammar_book, grammar_plan, synced_at')
+      .eq('id', SYNC_USER_ID)
+      .single();
+    if (error) throw error;
+    if (!data || !data.grammar_book || Object.keys(data.grammar_book).length === 0) {
+      await pushToSupabase();
+      return false;
+    }
+    const cloudTime = new Date(data.synced_at).getTime();
+    const localTime = parseInt(localStorage.getItem('grammar-sync-ts') || '0');
+    if (cloudTime > localTime) {
+      if (data.grammar_book.exerciseResults) exerciseResults = data.grammar_book.exerciseResults;
+      if (data.grammar_book.firstAttemptResults) firstAttemptResults = data.grammar_book.firstAttemptResults;
+      if (data.grammar_book.flashcards) flashcards = data.grammar_book.flashcards;
+      saveStateLocal();
+      if (data.grammar_plan && Object.keys(data.grammar_plan).length > 0) {
+        try { localStorage.setItem('grammar-plan', JSON.stringify(data.grammar_plan)); } catch(e) {}
+      }
+      lastSyncAt = data.synced_at;
+      try { localStorage.setItem('grammar-sync-ts', String(cloudTime)); } catch(e) {}
+      return true;
+    } else {
+      await pushToSupabase();
+      return false;
+    }
+  } catch (e) {
+    console.warn('Supabase pull failed, using localStorage:', e.message);
+    updateSyncIndicator('offline');
+    return false;
+  }
 }
 
 function exportData() {
@@ -3902,6 +3997,7 @@ function getPlanState() {
 
 function savePlanState(state) {
   try { localStorage.setItem('grammar-plan', JSON.stringify(state)); } catch(e) {}
+  debouncedCloudPush();
 }
 
 function getStreak(state) {
@@ -4382,11 +4478,8 @@ function checkPractice(exId) {
 }
 
 // ============================================================
-// SYNC — GitHub Gist (read) + Export/Import (write)
+// SYNC — Supabase Cloud + Export/Import
 // ============================================================
-const GIST_URL = 'https://gist.githubusercontent.com/mychellechristy/2a6db13fca5e1c86f14a394fe8f1ac32/raw/progress.json';
-let syncBusy = false;
-
 function getAllSaveData() {
   return { exerciseResults, firstAttemptResults, flashcards, plan: getPlanState(), syncedAt: new Date().toISOString() };
 }
@@ -4398,23 +4491,6 @@ function applySaveData(data) {
   if (data.plan) savePlanState(data.plan);
   saveState();
   updateFcBadge();
-}
-
-async function cloudPull() {
-  if (syncBusy) return;
-  syncBusy = true;
-  renderSyncView();
-  try {
-    const res = await fetch(GIST_URL + '?t=' + Date.now());
-    if (!res.ok) throw new Error('Could not fetch');
-    const text = await res.text();
-    if (!text || text === '{}' || text.length < 10) { showToast('No cloud data yet. Push from Mac first.'); syncBusy = false; renderSyncView(); return; }
-    const data = JSON.parse(text);
-    applySaveData(data);
-    showToast('Progress loaded from cloud!');
-  } catch(e) { showToast('Sync failed: ' + e.message); }
-  syncBusy = false;
-  renderSyncView();
 }
 
 function downloadProgress() {
@@ -4439,27 +4515,39 @@ function uploadProgress(event) {
   event.target.value = '';
 }
 
+async function manualSync() {
+  updateSyncIndicator('syncing');
+  showToast('Syncing...');
+  try {
+    await pushToSupabase();
+    showToast('Synced successfully!');
+  } catch(e) {
+    showToast('Sync failed: ' + e.message);
+  }
+  renderSyncView();
+}
+
 function renderSyncView() {
   const container = document.getElementById('sync-content');
   if (!container) return;
+  const statusText = lastSyncAt
+    ? 'Last synced: ' + new Date(lastSyncAt).toLocaleString()
+    : 'Not yet synced this session';
   container.innerHTML = `<div class="sync-panel">
-    <h3>&#128260; Sync Between Devices</h3>
-    <p>Keep your progress in sync between Mac and phone.</p>
-    <button class="btn btn-primary" onclick="cloudPull()" style="width:100%;margin-bottom:0.3rem">
-      ${syncBusy ? '&#9889; Loading...' : '&#9660; Load from Cloud'}
-    </button>
-    <div style="font-size:0.75rem;color:var(--text-light);margin-bottom:1.2rem">
-      Pulls the latest progress saved from your Mac.
+    <h3>&#9729; Cloud Sync</h3>
+    <p>Your progress syncs automatically to the cloud.</p>
+    <div style="padding:1rem;background:var(--primary-light);border-radius:var(--radius);margin:1rem 0">
+      <div style="font-size:0.9rem;color:var(--text)">${statusText}</div>
     </div>
-    <div style="border-top:1px solid var(--border);padding-top:1rem;margin-bottom:0.8rem">
-      <h4 style="font-size:0.9rem;margin-bottom:0.5rem">Manual Sync</h4>
+    <button class="btn btn-primary" onclick="manualSync()" style="width:100%;margin-bottom:0.5rem">
+      &#8635; Sync Now
+    </button>
+    <div style="border-top:1px solid var(--border);padding-top:1rem;margin-top:1rem">
+      <h4 style="font-size:0.9rem;margin-bottom:0.5rem">Manual Backup</h4>
       <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
         <button class="btn btn-secondary" onclick="downloadProgress()" style="flex:1">&#11015; Export</button>
         <button class="btn btn-secondary" onclick="document.getElementById('upload-sync').click()" style="flex:1">&#11014; Import</button>
         <input type="file" id="upload-sync" accept=".json" style="display:none" onchange="uploadProgress(event)">
-      </div>
-      <div style="font-size:0.75rem;color:var(--text-light);margin-top:0.3rem">
-        Export on one device, send via WhatsApp/email, import on the other.
       </div>
     </div>
   </div>`;
@@ -4471,6 +4559,29 @@ function renderSyncView() {
 loadState();
 updateFcBadge();
 showUnit(1);
+
+// Background cloud sync on page load
+(async () => {
+  updateSyncIndicator('syncing');
+  try {
+    const refreshed = await pullFromSupabase();
+    if (refreshed) {
+      renderCurrentView();
+      updateFcBadge();
+    }
+    updateSyncIndicator(lastSyncAt ? 'synced' : 'offline');
+  } catch(e) {
+    updateSyncIndicator('offline');
+  }
+})();
+
+// Push pending data when tab is hidden/closed
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    clearTimeout(syncTimer);
+    pushToSupabase();
+  }
+});
 </script>
 </body>
 </html>

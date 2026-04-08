@@ -4382,20 +4382,13 @@ function checkPractice(exId) {
 }
 
 // ============================================================
-// CLOUD SYNC (jsonblob.com — free, no signup)
+// SYNC — GitHub Gist (read) + Export/Import (write)
 // ============================================================
-const SYNC_API = 'https://jsonblob.com/api/jsonBlob';
-let syncId = localStorage.getItem('grammar-sync-id') || '';
+const GIST_URL = 'https://gist.githubusercontent.com/mychellechristy/2a6db13fca5e1c86f14a394fe8f1ac32/raw/progress.json';
 let syncBusy = false;
 
 function getAllSaveData() {
-  return {
-    exerciseResults,
-    firstAttemptResults,
-    flashcards,
-    plan: getPlanState(),
-    syncedAt: new Date().toISOString()
-  };
+  return { exerciseResults, firstAttemptResults, flashcards, plan: getPlanState(), syncedAt: new Date().toISOString() };
 }
 
 function applySaveData(data) {
@@ -4407,127 +4400,69 @@ function applySaveData(data) {
   updateFcBadge();
 }
 
-async function cloudCreate() {
-  syncBusy = true;
-  renderSyncView();
-  try {
-    const res = await fetch(SYNC_API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(getAllSaveData())
-    });
-    if (!res.ok) throw new Error('Server returned ' + res.status);
-    // Try multiple ways to get the blob ID
-    const blobId = res.headers.get('x-jsonblob-id')
-      || (res.headers.get('Location') || '').split('/').pop()
-      || '';
-    if (!blobId) throw new Error('Could not get sync ID from response');
-    syncId = blobId;
-    localStorage.setItem('grammar-sync-id', syncId);
-    showToast('Cloud sync created!');
-  } catch(e) { showToast('Sync error: ' + e.message); }
-  syncBusy = false;
-  renderSyncView();
-}
-
-async function cloudPush() {
-  if (!syncId || syncBusy) return;
-  syncBusy = true;
-  try {
-    await fetch(`${SYNC_API}/${syncId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(getAllSaveData())
-    });
-    showToast('Progress saved to cloud!');
-  } catch(e) { showToast('Sync push failed'); }
-  syncBusy = false;
-}
-
 async function cloudPull() {
-  if (!syncId || syncBusy) return;
+  if (syncBusy) return;
   syncBusy = true;
   renderSyncView();
   try {
-    const res = await fetch(`${SYNC_API}/${syncId}`, {
-      headers: { 'Accept': 'application/json' }
-    });
-    if (!res.ok) throw new Error('Not found');
-    const data = await res.json();
+    const res = await fetch(GIST_URL + '?t=' + Date.now());
+    if (!res.ok) throw new Error('Could not fetch');
+    const text = await res.text();
+    if (!text || text === '{}' || text.length < 10) { showToast('No cloud data yet. Push from Mac first.'); syncBusy = false; renderSyncView(); return; }
+    const data = JSON.parse(text);
     applySaveData(data);
     showToast('Progress loaded from cloud!');
-  } catch(e) { showToast('Sync pull failed: ' + e.message); }
+  } catch(e) { showToast('Sync failed: ' + e.message); }
   syncBusy = false;
   renderSyncView();
 }
 
-function connectSync(id) {
-  syncId = id.trim();
-  localStorage.setItem('grammar-sync-id', syncId);
-  cloudPull();
+function downloadProgress() {
+  const blob = new Blob([JSON.stringify(getAllSaveData(), null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `grammar-progress-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('Progress exported!');
 }
 
-function disconnectSync() {
-  syncId = '';
-  localStorage.removeItem('grammar-sync-id');
-  renderSyncView();
-  showToast('Sync disconnected');
+function uploadProgress(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try { applySaveData(JSON.parse(ev.target.result)); showToast('Progress imported!'); renderSyncView(); }
+    catch(e) { showToast('Invalid file'); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
 }
-
-// Auto-push after any save (debounced)
-let _syncDebounce;
-const _origSave = saveState;
-saveState = function() {
-  _origSave();
-  if (syncId) {
-    clearTimeout(_syncDebounce);
-    _syncDebounce = setTimeout(cloudPush, 5000); // push 5s after last change
-  }
-};
 
 function renderSyncView() {
   const container = document.getElementById('sync-content');
   if (!container) return;
-
-  if (syncBusy) {
-    container.innerHTML = `<div class="sync-panel">
-      <h3>&#9889; Syncing...</h3>
-      <p>Please wait.</p>
-      <span class="sync-status syncing">Syncing</span>
-    </div>`;
-    return;
-  }
-
-  if (syncId) {
-    container.innerHTML = `<div class="sync-panel">
-      <h3>&#9989; Cloud Sync Active</h3>
-      <p>Your progress syncs automatically between devices.</p>
-      <div style="margin-bottom:0.8rem">
-        <div style="font-size:0.8rem;color:var(--text-light)">Your sync code:</div>
-        <div class="sync-code" onclick="navigator.clipboard.writeText('${syncId}');showToast('Code copied!')">${syncId}</div>
-        <div style="font-size:0.75rem;color:var(--text-light)">Click to copy</div>
+  container.innerHTML = `<div class="sync-panel">
+    <h3>&#128260; Sync Between Devices</h3>
+    <p>Keep your progress in sync between Mac and phone.</p>
+    <button class="btn btn-primary" onclick="cloudPull()" style="width:100%;margin-bottom:0.3rem">
+      ${syncBusy ? '&#9889; Loading...' : '&#9660; Load from Cloud'}
+    </button>
+    <div style="font-size:0.75rem;color:var(--text-light);margin-bottom:1.2rem">
+      Pulls the latest progress saved from your Mac.
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:1rem;margin-bottom:0.8rem">
+      <h4 style="font-size:0.9rem;margin-bottom:0.5rem">Manual Sync</h4>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <button class="btn btn-secondary" onclick="downloadProgress()" style="flex:1">&#11015; Export</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('upload-sync').click()" style="flex:1">&#11014; Import</button>
+        <input type="file" id="upload-sync" accept=".json" style="display:none" onchange="uploadProgress(event)">
       </div>
-      <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap">
-        <button class="btn btn-primary" onclick="cloudPush()">&#9650; Push (save to cloud)</button>
-        <button class="btn btn-primary" onclick="cloudPull()">&#9660; Pull (load from cloud)</button>
+      <div style="font-size:0.75rem;color:var(--text-light);margin-top:0.3rem">
+        Export on one device, send via WhatsApp/email, import on the other.
       </div>
-      <div style="margin-top:1rem">
-        <button class="btn btn-secondary btn-sm" onclick="disconnectSync()">Disconnect</button>
-      </div>
-      <span class="sync-status ok">Auto-sync ON</span>
-    </div>`;
-  } else {
-    container.innerHTML = `<div class="sync-panel">
-      <h3>&#9729; Cloud Sync</h3>
-      <p>Sync your progress between Mac and phone.<br>No account needed.</p>
-      <button class="btn btn-primary" onclick="cloudCreate()" style="margin-bottom:1.5rem;width:100%">Create New Sync</button>
-      <div style="border-top:1px solid var(--border);padding-top:1rem">
-        <p style="font-size:0.85rem;margin-bottom:0.5rem"><strong>Already syncing on another device?</strong></p>
-        <input type="text" class="sync-input" id="sync-code-input" placeholder="Paste sync code here">
-        <button class="btn btn-secondary" onclick="connectSync(document.getElementById('sync-code-input').value)" style="width:100%">Connect</button>
-      </div>
-    </div>`;
-  }
+    </div>
+  </div>`;
 }
 
 // ============================================================
@@ -4536,9 +4471,6 @@ function renderSyncView() {
 loadState();
 updateFcBadge();
 showUnit(1);
-
-// Auto-pull on page load if sync is active
-if (syncId) { setTimeout(cloudPull, 1000); }
 </script>
 </body>
 </html>

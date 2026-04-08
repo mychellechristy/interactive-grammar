@@ -1003,6 +1003,10 @@ main {
       <option value="12">Unit 12: For and Since</option>
       <option value="13">Unit 13: Present Perfect and Past 1</option>
       <option value="14">Unit 14: Present Perfect and Past 2</option>
+      <option value="15">Unit 15: Past Perfect (I had done)</option>
+      <option value="16">Unit 16: Past Perfect Continuous (I had been doing)</option>
+      <option value="17">Unit 17: have and have got</option>
+      <option value="18">Unit 18: used to (do)</option>
     </select>
     <button onclick="showFlashcards()" id="nav-fc">Flashcards <span class="badge" id="fc-badge" style="display:none">0</span></button>
     <button onclick="showProgress()" id="nav-progress">Progress</button>
@@ -2194,6 +2198,309 @@ Who <strong>invented</strong> the telephone? (<em>not</em> has invented)</p>`
         ]
       }
     ]
+  },
+  15: {
+    number: 15,
+    title: "Past perfect (I had done)",
+    grammar: [
+      {
+        id: 'A', title: 'Past perfect: had + past participle',
+        html: `<p class="grammar-note">The <strong>past perfect</strong> is <strong>had</strong> + past participle (<strong>gone / seen / finished</strong> etc.).</p>
+<p>Sometimes we talk about the past, and then we want to talk about something that happened <em>before</em> that time:</p>
+<div class="example-box">"When Sarah arrived at the party, Paul <strong>had already gone</strong> home."</div>
+<div class="example-box">"When we got home, somebody <strong>had broken</strong> into the flat and <strong>had stolen</strong> the computer."</div>
+<div class="example-box">"Karen didn't want to go to the cinema with us because she<strong>'d already seen</strong> the film."</div>
+<p class="grammar-note">Had done (past perfect) is the past of have done (present perfect):</p>
+<ul>
+<li>Who <strong>is</strong> that woman? I<strong>'ve seen</strong> her before, but I can't remember where.</li>
+<li>I wasn't sure who she was. I<strong>'d seen</strong> her before, but I couldn't remember where.</li>
+</ul>`
+      },
+      {
+        id: 'B', title: 'Compare present perfect and past perfect',
+        html: `<table class="grammar-table">
+<tr><th>Present perfect (have seen)</th><th>Past perfect (had seen)</th></tr>
+<tr><td>I <strong>have seen</strong> the film. (past &rarr; now)</td><td>I <strong>had seen</strong> the film. (earlier past &rarr; later past)</td></tr>
+<tr><td>She <strong>isn't</strong> hungry. She<strong>'s just had</strong> lunch.</td><td>She <strong>wasn't</strong> hungry. She<strong>'d just had</strong> lunch.</td></tr>
+<tr><td>The house is dirty. They <strong>haven't cleaned</strong> it for weeks.</td><td>The house was dirty. They <strong>hadn't cleaned</strong> it for weeks.</td></tr>
+</table>
+<p class="grammar-note">Present perfect = past &rarr; present. Past perfect = earlier past &rarr; later past.</p>`
+      },
+      {
+        id: 'C', title: 'Compare past simple and past perfect',
+        html: `<p class="grammar-note">Compare <strong>past simple</strong> (left, was) and <strong>past perfect</strong> (had left, had been):</p>
+<div class="example-box">"Was Tom there when you arrived?" "Yes, but he <strong>left</strong> soon afterwards." (= he left after I arrived)</div>
+<div class="example-box">"Was Tom there when you arrived?" "No, he<strong>'d already left</strong>." (= he left <em>before</em> I arrived)</div>
+<p>More examples:</p>
+<ul>
+<li>Kate wasn't at home when I phoned. She <strong>was</strong> at her mother's house. (she was there at the time)</li>
+<li>Kate <strong>had just got</strong> home when I phoned. She <strong>had been</strong> at her mother's house. (she had already returned)</li>
+</ul>`
+      }
+    ],
+    exercises: [
+      {
+        id: '15.1',
+        title: 'Exercise 15.1',
+        type: 'write',
+        instructions: "Read the situations and write sentences from the words in brackets.",
+        items: [
+          { isExample: true, num: 1, context: "There was a picture lying on the floor.", display: "<strong>It had fallen off the wall.</strong> (it / fall / off the wall)" },
+          { num: 2, context: "Some passengers on the plane were very nervous. It was their first flight.", answers: ["They hadn't flown before.", "They had never flown before."], explanation: "hadn't flown / had never flown (experience before that time)" },
+          { num: 3, context: "I went back to my home town after many years. It was very different.", answers: ["It had changed a lot."], explanation: "had changed (before the time I went back)" },
+          { num: 4, context: "Somebody sang a song. I didn't know it.", answers: ["I hadn't heard it before.", "I had never heard it before."], explanation: "hadn't heard it before (first time)" },
+          { num: 5, context: "I invited Rachel to the party, but she couldn't come.", answers: ["She'd arranged to do something else.", "She had arranged to do something else."], explanation: "She'd arranged (earlier plan before the invitation)" },
+          { num: 6, context: "I went to the cinema, but we arrived late.", answers: ["The film had already started."], explanation: "had already started (before we arrived)" },
+          { num: 7, context: "I went to Mexico last year. It was my first time there.", answers: ["We hadn't been there before.", "I hadn't been there before.", "We had never been there before.", "I had never been there before."], explanation: "hadn't been there before (first visit)" },
+          { num: 8, context: "I met Daniel a few weeks ago. I hadn't seen him recently.", answers: ["I hadn't seen him for five years.", "I had not seen him for five years."], explanation: "hadn't seen him for five years (long gap before meeting)" },
+          { num: 9, context: "I offered my friends something to eat, but they weren't hungry.", answers: ["They'd just had lunch.", "They had just had lunch."], explanation: "They'd just had lunch (recently before the offer)" },
+          { num: 10, context: "He played tennis yesterday. He wasn't very good at it.", answers: ["He'd never played before.", "He had never played before."], explanation: "He'd never played before (first time)" }
+        ]
+      },
+      {
+        id: '15.3',
+        title: 'Exercise 15.3',
+        type: 'fill',
+        instructions: "Put the verb into the correct form, past perfect (I had done) or past simple (I did).",
+        items: [
+          { isExample: true, num: 1, display: "Paul wasn't at the party when I arrived. He <strong>had gone</strong> (go) home." },
+          { num: 2, before: "I felt tired when I got home, so", after: "straight to bed.", hints: ["(I / go)"], answers: [["I went"]], explanation: "went (what happened next, past simple)" },
+          { num: 3, before: "The house was very quiet when I got home. Everybody", after: "to bed.", hints: ["(go)"], answers: [["had gone"]], explanation: "had gone (before I got home)" },
+          { num: 4, before: "Mark travels a lot. When I first met him, he", after: "round the world.", hints: ["(already / travel)"], answers: [["had already travelled", "'d already travelled"]], explanation: "had already travelled (before I met him)" },
+          { num: 5, before: "Sorry I'm late. The car", after: "down on my way here.", hints: ["(break)"], answers: [["broke"]], explanation: "broke (a single past event)" },
+          { num: 6, before: "We were driving along the road when", after: "a car which", hints: ["(we / see)"], answers: [["we saw"]], explanation: "we saw (what happened at that moment)" },
+          { num: 7, before: "The car had", after: "down, so", hints: ["(break)"], answers: [["broken"]], explanation: "had broken (it broke before we saw it)" },
+          { num: 8, before: "We stopped", after: "to help.", hints: [""], answers: [["stopped"]], explanation: "stopped (what we did next)" }
+        ]
+      }
+    ]
+  },
+  16: {
+    number: 16,
+    title: "Past perfect continuous (I had been doing)",
+    grammar: [
+      {
+        id: 'A', title: 'Formation and use of past perfect continuous',
+        html: `<p class="grammar-note"><strong>had been + -ing</strong> = past perfect continuous.</p>
+<p>Study this example:</p>
+<div class="example-box">Yesterday morning I looked out of the window. The ground was wet. <strong>It had been raining.</strong></div>
+<p>It was <em>not</em> raining when I looked out. But it <strong>had been raining</strong> before.</p>
+<div class="example-box">"When the boys came in, their clothes were dirty. <strong>They'd been playing</strong> football."</div>
+<div class="example-box">"I'd <strong>been waiting</strong> for half an hour before the bus finally came."</div>`
+      },
+      {
+        id: 'B', title: 'Compare present perfect continuous and past perfect continuous',
+        html: `<table class="grammar-table">
+<tr><th>Present perfect continuous (have been -ing)</th><th>Past perfect continuous (had been -ing)</th></tr>
+<tr><td>I <strong>hope</strong> the bus comes soon. I<strong>'ve been waiting</strong> for 20 minutes. (before <em>now</em>)</td><td>At last the bus came. I<strong>'d been waiting</strong> for 20 minutes. (before the bus <em>came</em>)</td></tr>
+<tr><td>He's out of breath. He <strong>has been running</strong>.</td><td>He was out of breath. He <strong>had been running</strong>.</td></tr>
+</table>`
+      },
+      {
+        id: 'C', title: 'Compare was -ing (past continuous) and had been -ing',
+        html: `<p class="grammar-note">Compare <strong>was doing</strong> (= in the middle of an action) and <strong>had been doing</strong> (= the action was ongoing before and had continued up to that point):</p>
+<div class="example-box">It wasn't raining when we went out. The sun <strong>was shining</strong>. But it <strong>had been raining</strong>, so the ground was wet.</div>
+<div class="example-box">Katherine <strong>was lying</strong> on the sofa. She was tired because she <strong>had been working</strong> hard.</div>`
+      },
+      {
+        id: 'D', title: 'State verbs: had known, had had etc.',
+        html: `<p class="grammar-note">Some verbs (for example, <strong>know</strong> and <strong>like</strong>) are not normally used in the continuous:</p>
+<div class="example-box">"We were good friends. We <strong>had known</strong> each other for years." (<em>not</em> had been knowing)</div>
+<p>Similarly: <strong>had wanted, had had, had believed, had understood</strong> etc.</p>`
+      }
+    ],
+    exercises: [
+      {
+        id: '16.1',
+        title: 'Exercise 16.1',
+        type: 'write',
+        instructions: "Read the situations and make sentences from the words in brackets.",
+        items: [
+          { isExample: true, num: 1, context: "I was very tired when I arrived home.", display: "<strong>I'd been working hard all day.</strong> (I / work / hard all day)" },
+          { num: 2, context: "The two boys came into the house. They had a football and they were both very tired.", answers: ["They'd been playing football.", "They had been playing football."], explanation: "They'd been playing football (activity before coming in)" },
+          { num: 3, context: "I was disappointed when I had to cancel my holiday.", answers: ["I'd been looking forward to it.", "I had been looking forward to it."], explanation: "I'd been looking forward to it (ongoing feeling before cancellation)" },
+          { num: 4, context: "Anna woke up in the middle of the night. She was frightened and didn't know where she was.", answers: ["She'd been having a bad dream.", "She had been having a bad dream."], explanation: "She'd been having a bad dream (activity during sleep before waking)" },
+          { num: 5, context: "When I got home, Mark was sitting in front of the TV. He had just turned it off.", answers: ["He'd been watching a film.", "He had been watching a film.", "He'd been watching TV.", "He had been watching TV."], explanation: "He'd been watching a film (activity before turning off)" },
+          { num: 6, context: "I noticed that some people were waiting at the bus stop. The bus was very late.", answers: ["They'd been waiting a long time.", "They had been waiting a long time.", "They'd been waiting for a long time.", "They had been waiting for a long time."], explanation: "They'd been waiting a long time (ongoing before I noticed)" }
+        ]
+      },
+      {
+        id: '16.3',
+        title: 'Exercise 16.3',
+        type: 'fill',
+        instructions: "Which is right? Choose the correct answer.",
+        items: [
+          { isExample: true, num: 1, display: "The neighbours <strong>were having</strong> a party and the noise was terrible. (were having / had been having)" },
+          { num: 2, before: "By the end of the journey,", after: "for about 24 hours.", hints: ["(we were travelling / we'd been travelling)"], answers: [["we'd been travelling", "we had been travelling"]], explanation: "had been travelling (ongoing activity up to the end)" },
+          { num: 3, before: "James was on his hands and knees on the floor.", after: "for his contact lens.", hints: ["(He was looking / He'd been looking)"], answers: [["He was looking"]], explanation: "was looking (in the middle of the action when seen)" },
+          { num: 4, before: "Sue was sitting on the ground, out of breath.", after: ".", hints: ["(She was running / She'd been running)"], answers: [["She'd been running", "She had been running"]], explanation: "had been running (the activity caused her being out of breath)" },
+          { num: 5, before: "John and I went for a walk.", after: "very fast and I couldn't keep up with him.", hints: ["(He was walking / He'd been walking)"], answers: [["He was walking"]], explanation: "was walking (describing what was happening during the walk)" },
+          { num: 6, before: "I was sad when I sold my car.", after: "for a very long time.", hints: ["(I've had it / I'd had it)"], answers: [["I'd had it", "I had had it"]], explanation: "I'd had it (state verb, before the time of selling)" },
+          { num: 7, before: "I was sad when the local cafe closed.", after: "there for years.", hints: ["(I was going / I'd been going)"], answers: [["I'd been going", "I had been going"]], explanation: "I'd been going (repeated action over a period before closing)" },
+          { num: 8, before: "I'm running a marathon next month.", after: "every day.", hints: ["(I've been training / I'd been training)"], answers: [["I've been training", "I have been training"]], explanation: "I've been training (present perfect continuous: up to now)" },
+          { num: 9, before: "I had arranged to meet Kate. I was a bit late.", after: "for a long time.", hints: ["(she was waiting / she'd been waiting)"], answers: [["she'd been waiting", "she had been waiting"]], explanation: "she'd been waiting (ongoing before I arrived)" }
+        ]
+      }
+    ]
+  },
+  17: {
+    number: 17,
+    title: "have and have got",
+    grammar: [
+      {
+        id: 'A', title: 'have = have got for possession',
+        html: `<p class="grammar-note"><strong>have</strong> and <strong>have got</strong> can both be used for possession, relationships, illnesses etc.:</p>
+<div class="example-box">"I <strong>have</strong> a new car." = "I<strong>'ve got</strong> a new car."</div>
+<div class="example-box">"Lisa <strong>has</strong> a headache." = "Lisa<strong>'s got</strong> a headache."</div>
+<p class="grammar-note">We do <em>not</em> use the continuous (<em>not</em> I'm having / I'm having got) for possession.</p>
+<p class="grammar-note">For the <strong>past</strong>, use <strong>had</strong> (<em>not</em> had got):</p>
+<div class="example-box">"Lisa <strong>had</strong> long hair when she was a child." (<em>not</em> Lisa had got)</div>`
+      },
+      {
+        id: 'B', title: 'Questions and negatives with have',
+        html: `<p class="grammar-note">Three possible forms in questions and negatives:</p>
+<table class="grammar-table">
+<tr><th>Form</th><th>Question</th><th>Negative</th></tr>
+<tr><td>do/does (most common)</td><td><strong>Do you have</strong> a car?</td><td>I <strong>don't have</strong> a car.</td></tr>
+<tr><td>have got</td><td><strong>Have you got</strong> a car?</td><td>I <strong>haven't got</strong> a car.</td></tr>
+<tr><td>have alone (less usual)</td><td><strong>Have you</strong> a car?</td><td>I <strong>haven't</strong> a car.</td></tr>
+</table>
+<p class="grammar-note">For past questions and negatives, use <strong>did/didn't</strong>:</p>
+<div class="example-box">"<strong>Did</strong> you <strong>have</strong> a car when you were young?" / "I <strong>didn't have</strong> a car."</div>`
+      },
+      {
+        id: 'C', title: 'have breakfast / have a shower / have a good time etc.',
+        html: `<p class="grammar-note"><strong>have</strong> also means 'eat', 'drink', 'experience' etc. In these expressions, you <em>cannot</em> use <strong>have got</strong> and <em>can</em> use the continuous:</p>
+<ul>
+<li><strong>have</strong> breakfast / dinner / a cup of coffee / something to eat</li>
+<li><strong>have</strong> a bath / a shower / a swim / a break / a rest / a party</li>
+<li><strong>have</strong> an accident / an experience / a dream</li>
+<li><strong>have</strong> a look (at something) / a chat (with somebody)</li>
+<li><strong>have</strong> a good time / a nice day / a baby / difficulty / trouble / fun</li>
+</ul>
+<div class="example-box">"I <strong>was having</strong> dinner when you called." (continuous OK)</div>
+<div class="example-box">"<strong>Have</strong> a nice day!" (<em>not</em> Have got a nice day)</div>`
+      }
+    ],
+    exercises: [
+      {
+        id: '17.2',
+        title: 'Exercise 17.2',
+        type: 'fill',
+        instructions: "Complete the sentences using have.",
+        items: [
+          { isExample: true, num: 1, display: "She couldn't get into the house. She <strong>didn't have</strong> a key." },
+          { num: 2, before: "Is there anything you want to ask?", after: "any questions?", hints: ["(Do you have / Have you got)"], answers: [["Do you have", "Have you got"]], explanation: "Do you have / Have you got (both correct for present)" },
+          { num: 3, before: "I can't pay my bills.", after: "enough money.", hints: ["(They don't have / They haven't got)"], answers: [["I don't have", "I haven't got"]], explanation: "don't have / haven't got (present negative)" },
+          { num: 4, before: "We got wet because we went out in the rain yesterday. We", after: "an umbrella.", hints: ["(didn't have)"], answers: [["didn't have"]], explanation: "didn't have (past negative — no 'had got' in past)" },
+          { num: 5, before: "Jack", after: "a car. He can't afford one.", hints: ["(doesn't have / hasn't got)"], answers: [["doesn't have", "hasn't got"]], explanation: "doesn't have / hasn't got (present negative)" },
+          { num: 6, before: "Excuse me,", after: "a pen I could borrow?", hints: ["(do you have / have you got)"], answers: [["do you have", "have you got"]], explanation: "do you have / have you got (question — present)" },
+          { num: 7, before: "I was very busy yesterday. I", after: "time to go shopping.", hints: ["(didn't have)"], answers: [["didn't have"]], explanation: "didn't have (past — no 'had got')" },
+          { num: 8, before: "Tell me about Jack.", after: "a job?", hints: ["(Does he have / Has he got)"], answers: [["Does he have", "Has he got"]], explanation: "Does he have / Has he got (question — present)" },
+          { num: 9, before: "When you worked in your last job,", after: "your own office?", hints: ["(did you have)"], answers: [["did you have"]], explanation: "did you have (past question)" },
+          { num: 10, before: "I need the remote control. I", after: "it.", hints: ["(don't have / haven't got)"], answers: [["don't have", "haven't got"]], explanation: "don't have / haven't got (present negative)" }
+        ]
+      },
+      {
+        id: '17.3',
+        title: 'Exercise 17.3',
+        type: 'write',
+        instructions: "Are the underlined words OK? Correct them if necessary.",
+        items: [
+          { isExample: true, num: 1, display: "<u>I've got</u> a driving lesson tomorrow morning. → <strong>OK</strong>" },
+          { num: 2, before: "<u>Lisa had got</u> long hair when she was a child.", after: "", answers: [["Lisa had long hair"]], explanation: "Past = had (not had got)" },
+          { num: 3, before: "<u>I hadn't</u> my phone, so I couldn't call you.", after: "", answers: [["I didn't have"]], explanation: "Past negative = didn't have (not hadn't)" },
+          { num: 4, before: "<u>I'm having</u> a cold. I think I'll stay home today.", after: "", answers: [["I have", "I've got"]], explanation: "Possession/illness = have / have got (not continuous)" },
+          { num: 5, before: "<u>I'm having</u> a break. I'll be back in ten minutes.", after: "", answers: [["OK"]], explanation: "have a break = action, so continuous is fine" },
+          { num: 6, before: "<u>I hadn't</u> any energy, so I stayed in bed.", after: "", answers: [["I didn't have"]], explanation: "Past negative = didn't have" },
+          { num: 7, before: "My town is very small. <u>It doesn't have</u> many shops.", after: "", answers: [["OK"]], explanation: "doesn't have = correct present negative" },
+          { num: 8, before: "<u>Had you</u> any problems finding a place to live?", after: "", answers: [["Did you have"]], explanation: "Past question = Did you have (not Had you)" },
+          { num: 9, before: "Sorry I'm late. <u>I was having</u> breakfast.", after: "", answers: [["OK"]], explanation: "have breakfast = action, so continuous is fine" },
+          { num: 10, before: "When I last saw Tom, <u>he was having</u> a beard.", after: "", answers: [["he had"]], explanation: "have a beard = possession, not an action → no continuous" },
+          { num: 11, before: "There's no hurry. <u>We have</u> plenty of time.", after: "", answers: [["OK"]], explanation: "We have = correct (or We've got)" },
+          { num: 12, before: "When you come tomorrow, <u>have you</u> a shower before you leave?", after: "", answers: [["do you have"]], explanation: "Question about action = do you have" }
+        ]
+      }
+    ]
+  },
+  18: {
+    number: 18,
+    title: "used to (do)",
+    grammar: [
+      {
+        id: 'A', title: 'used to do = did regularly in the past',
+        html: `<p class="grammar-note"><strong>used to do</strong> = something happened regularly in the past but no longer happens:</p>
+<div class="example-box">"She <strong>used to travel</strong> a lot. These days she doesn't go away so often."</div>
+<div class="example-box">"I <strong>used to play</strong> tennis a lot, but I don't play very often now."</div>
+<div class="example-box">"David <strong>used to spend</strong> a lot of money on clothes. Now he can't afford it."</div>`
+      },
+      {
+        id: 'B', title: 'used to for past habits and past states',
+        html: `<p class="grammar-note">We can use <strong>used to</strong> for things that were <em>true</em> but are not true any more:</p>
+<div class="example-box">"This building is now a furniture shop. It <strong>used to be</strong> a cinema."</div>
+<div class="example-box">"Lisa <strong>used to have</strong> long hair when she was a child."</div>
+<p class="grammar-note">'I <strong>used to do</strong> something' is past. There is no present. You cannot say 'I use to do'.</p>
+<div class="example-box">"We <strong>used to live</strong> in a small village, but now we live in London."</div>
+<div class="example-box">"There <strong>used to be</strong> four cinemas in the town. Now there is only one."</div>`
+      },
+      {
+        id: 'C', title: "'I used to do' is past only",
+        html: `<p class="grammar-note">'I <strong>used to do</strong>' is past. There is no present form. For the present we use the <strong>present simple</strong> (<em>I do</em>):</p>
+<div class="example-box"><span class="wrong">He used to drives to work.</span> &rarr; He <strong>drives</strong> to work. (present simple)</div>
+<p>Compare: past &rarr; <strong>He used to drive</strong> to work but now he takes the bus.</p>`
+      },
+      {
+        id: 'D', title: 'Questions and negatives',
+        html: `<p class="grammar-note">The question form is <strong>did … use to …?</strong>:</p>
+<div class="example-box">"<strong>Did</strong> you <strong>use to</strong> eat a lot of sweets when you were a child?"</div>
+<p class="grammar-note">The negative form is <strong>didn't use to …</strong>:</p>
+<div class="example-box">"I <strong>didn't use to</strong> like him, but now I do."</div>`
+      },
+      {
+        id: 'E', title: "Compare 'I used to do' and 'I was doing'",
+        html: `<p class="grammar-note"><strong>I used to do</strong> = I did something regularly in the past (a <em>repeated habit</em>):</p>
+<div class="example-box">"I <strong>used to watch</strong> TV a lot." (= I watched TV regularly in the past)</div>
+<p class="grammar-note"><strong>I was doing</strong> = I was in the middle of doing something:</p>
+<div class="example-box">"I <strong>was watching</strong> TV when the phone rang." (= I was in the middle of watching)</div>
+<p class="grammar-note">You cannot use <em>used to</em> for something that happened only once:</p>
+<div class="example-box">"I <strong>watched</strong> the news last night." (<em>not</em> I used to watch)</div>`
+      }
+    ],
+    exercises: [
+      {
+        id: '18.1',
+        title: 'Exercise 18.1',
+        type: 'fill',
+        instructions: "Complete the sentences with used to + a suitable verb.",
+        items: [
+          { isExample: true, num: 1, display: "Nicola doesn't travel much now. She <strong>used to travel</strong> a lot, but she prefers to stay at home these days." },
+          { num: 2, before: "Sophie had a motorbike, but she sold it. She", after: "a motorbike, but she sold it a few years ago.", hints: [""], answers: [["used to have", "used to ride"]], explanation: "used to have / used to ride (past habit/possession)" },
+          { num: 3, before: "Our friends moved from London to Spain a few years ago. They", after: "in Paris.", hints: [""], answers: [["used to live"]], explanation: "used to live (where they lived before)" },
+          { num: 4, before: "Jackie and I were at school together, but I haven't seen her for ages. She", after: "my best friend, but we aren't friends any more.", hints: [""], answers: [["used to be"]], explanation: "used to be (past state)" },
+          { num: 5, before: "I rarely eat ice cream now, but I", after: "it when I was a child.", hints: [""], answers: [["used to eat", "used to like", "used to love"]], explanation: "used to eat / like / love (past habit)" },
+          { num: 6, before: "Now it takes me about 40 minutes to get to work. It", after: "more than an hour before they built the new road.", hints: [""], answers: [["used to take"]], explanation: "used to take (past regular situation)" },
+          { num: 7, before: "There", after: "a hotel near the airport, but it closed a long time ago.", hints: [""], answers: [["used to be"]], explanation: "used to be (something that existed before)" },
+          { num: 8, before: "When I was a child, I never wanted to be a teacher, but now I teach. I", after: "in a factory. I didn't like it very much.", hints: [""], answers: [["used to work"]], explanation: "used to work (past regular activity)" }
+        ]
+      },
+      {
+        id: '18.2',
+        title: 'Exercise 18.2',
+        type: 'fill',
+        instructions: "Complete the sentences. Choose from the box: did / didn't / to / use / used / used to / used to be / used to have.",
+        items: [
+          { isExample: true, num: 1, display: "Lisa <strong>used to have</strong> very long hair when she was a child." },
+          { num: 2, before: "We", after: "to watch TV a lot, but we don't any more.", hints: [""], answers: [["used"]], explanation: "used (to watch) — past habit" },
+          { num: 3, before: "Lisa works in a shop now. She", after: "a receptionist.", hints: [""], answers: [["used to be"]], explanation: "used to be (past state)" },
+          { num: 4, before: "What games", after: "you use to play when you were a child?", hints: [""], answers: [["did"]], explanation: "did (question form: did … use to …?)" },
+          { num: 5, before: "I don't like big cities. I", after: "like them, but now I prefer the countryside.", hints: [""], answers: [["used to"]], explanation: "used to (like them — past habit)" },
+          { num: 6, before: "When I was younger, how many hours a day did you", after: "to work?", hints: [""], answers: [["use"]], explanation: "use (after 'did', no -d: did you use to)" },
+          { num: 7, before: "I don't travel very much these days, but I used", after: ".", hints: [""], answers: [["to"]], explanation: "to (completing: I used to)" },
+          { num: 8, before: "I used to", after: "able to run ten kilometres without stopping.", hints: [""], answers: [["be"]], explanation: "be (used to be able to…)" },
+          { num: 9, before: "These days I eat more than I used to. I", after: "use to eat as much.", hints: [""], answers: [["didn't"]], explanation: "didn't (negative: didn't use to eat)" }
+        ]
+      }
+    ]
   }
 };
 
@@ -2971,6 +3278,216 @@ const SKILLS = {
     shadowing: [
       { text: "I've never ridden a horse in my life.", slow: "I've never ridden... a horse... in my life." },
       { text: "When did you get married?", slow: "When... did you get... married?" }
+    ]
+  },
+  15: {
+    translation: [
+      { pt: "Quando cheguei na festa, o Paul j\u00e1 tinha ido embora.", answers: ["When I arrived at the party, Paul had already gone home.", "When I arrived at the party, Paul had already left."] },
+      { pt: "Ela n\u00e3o quis ir ao cinema porque j\u00e1 tinha visto o filme.", answers: ["She didn't want to go to the cinema because she'd already seen the film.", "She didn't want to go to the cinema because she had already seen the film."] },
+      { pt: "Quando voltamos para casa, algu\u00e9m tinha roubado o computador.", answers: ["When we got home, somebody had stolen the computer.", "When we got back home, somebody had stolen the computer."] },
+      { pt: "Eu me senti cansado porque tinha trabalhado o dia todo.", answers: ["I felt tired because I had worked all day.", "I felt tired because I'd worked all day."] },
+      { pt: "O filme j\u00e1 tinha come\u00e7ado quando chegamos.", answers: ["The film had already started when we arrived.", "The movie had already started when we arrived."] },
+      { pt: "Eu nunca tinha voado antes daquele dia.", answers: ["I had never flown before that day.", "I'd never flown before that day."] }
+    ],
+    dialogues: [
+      { title: "Missed the Party", lines: [
+        { speaker: 'A', text: "Did you see Paul at the party last night?" },
+        { speaker: 'You', hint: "say no, he had already gone home when you arrived", answers: ["No, he'd already gone home when I arrived.", "No, he had already gone home when I arrived.", "No, he had already left when I arrived."] },
+        { speaker: 'A', text: "What about the food? Was there any left?" },
+        { speaker: 'You', hint: "say they had eaten everything", answers: ["They'd eaten everything.", "They had eaten everything.", "No, they had eaten everything."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "When I arrived, she ___ already ___ (leave).", answers: ["had", "left"], twoBlank: true },
+      { text: "They ___ (not / see) the film before.", answers: ["hadn't seen", "had not seen"] },
+      { text: "I ___ (never / fly) before that trip.", answers: ["had never flown", "'d never flown"] },
+      { text: "The ground was wet. It ___ (rain).", answers: ["had rained", "'d rained"] },
+      { text: "She ___ (already / eat) when I invited her to dinner.", answers: ["had already eaten", "'d already eaten"] },
+      { text: "I ___ (not / hear) that song before.", answers: ["hadn't heard", "had not heard"] },
+      { text: "We ___ (just / finish) dinner when they arrived.", answers: ["had just finished", "'d just finished"] },
+      { text: "He was nervous because he ___ (not / fly) before.", answers: ["hadn't flown", "had not flown", "had never flown"] }
+    ],
+    brazilianErrors: [
+      { wrong: "When I arrived, she already left.", hint: "What happened BEFORE you arrived?", answers: ["When I arrived, she had already left.", "When I arrived, she'd already left."], explanation: "'Already left' happened BEFORE arriving \u2192 past perfect: she <strong>had already left</strong>" },
+      { wrong: "I didn't knew the song. I never heard it before.", hint: "Two issues: past simple form + what happened before?", answers: ["I didn't know the song. I had never heard it before.", "I didn't know the song. I'd never heard it before."], explanation: "didn't + base form (know); and 'never heard before' \u2192 past perfect: <strong>had never heard</strong>" },
+      { wrong: "The film already started when we arrived.", hint: "The start happened BEFORE arriving", answers: ["The film had already started when we arrived."], explanation: "Use past perfect for the earlier event: The film <strong>had already started</strong>" },
+      { wrong: "She didn't want to eat because she already had lunch.", hint: "Lunch happened BEFORE she didn't want to eat", answers: ["She didn't want to eat because she had already had lunch.", "She didn't want to eat because she'd already had lunch."], explanation: "Earlier event \u2192 past perfect: she <strong>had already had</strong> lunch" }
+    ],
+    sentenceBuilding: [
+      { words: ["had", "already", "He", "left", "arrived", "when", "I", "."], answer: "He had already left when I arrived." },
+      { words: ["seen", "hadn't", "the", "I", "film", "before", "."], answer: "I hadn't seen the film before." },
+      { words: ["had", "They", "just", "finished", "dinner", "."], answer: "They had just finished dinner." }
+    ],
+    grammarCards: [
+      { front: "How to form the past perfect?", back: "had + past participle", example: "She <strong>had gone</strong> home before I arrived." },
+      { front: "When do we use the past perfect?", back: "For something that happened BEFORE another past event", example: "When I got home, somebody <strong>had broken</strong> into the flat." },
+      { front: "Past perfect vs past simple?", back: "Past perfect = the earlier event. Past simple = the later event.", example: "He <strong>had left</strong> (earlier) when I <strong>arrived</strong> (later)." }
+    ],
+    dictation: [
+      { text: "When I arrived, she had already left.", words: 7 },
+      { text: "I had never flown before.", words: 5 },
+      { text: "The film had already started when we got there.", words: 9 }
+    ],
+    shadowing: [
+      { text: "When Sarah arrived at the party, Paul had already gone home.", slow: "When Sarah arrived... at the party... Paul had already... gone home." },
+      { text: "I hadn't seen him for five years.", slow: "I hadn't seen him... for five years." }
+    ]
+  },
+  16: {
+    translation: [
+      { pt: "Eu estava cansado porque tinha estado trabalhando o dia todo.", answers: ["I was tired because I had been working all day.", "I was tired because I'd been working all day."] },
+      { pt: "Eles estavam sujos porque tinham estado jogando futebol.", answers: ["They were dirty because they had been playing football.", "They were dirty because they'd been playing football."] },
+      { pt: "Ela estava sem f\u00f4lego. Ela tinha estado correndo.", answers: ["She was out of breath. She had been running.", "She was out of breath. She'd been running."] },
+      { pt: "O ch\u00e3o estava molhado. Tinha estado chovendo.", answers: ["The ground was wet. It had been raining."] },
+      { pt: "Eles estavam esperando havia muito tempo.", answers: ["They had been waiting for a long time.", "They'd been waiting for a long time.", "They had been waiting a long time."] },
+      { pt: "Eu estava decepcionada. Tinha estado esperando ansiosamente por isso.", answers: ["I was disappointed. I had been looking forward to it.", "I was disappointed. I'd been looking forward to it."] }
+    ],
+    dialogues: [
+      { title: "After the Match", lines: [
+        { speaker: 'A', text: "Why were the boys so tired when they came in?" },
+        { speaker: 'You', hint: "say they had been playing football", answers: ["They'd been playing football.", "They had been playing football."] },
+        { speaker: 'A', text: "And why was the ground wet this morning?" },
+        { speaker: 'You', hint: "say it had been raining during the night", answers: ["It had been raining during the night.", "It had been raining."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "He was out of breath. He ___ (run).", answers: ["had been running", "'d been running"] },
+      { text: "The ground was wet. It ___ (rain).", answers: ["had been raining", "'d been raining"] },
+      { text: "We were tired. We ___ (travel) all day.", answers: ["had been travelling", "'d been travelling"] },
+      { text: "She was sad. She ___ (cry).", answers: ["had been crying", "'d been crying"] },
+      { text: "I ___ (wait) for an hour before the bus came.", answers: ["had been waiting", "'d been waiting"] },
+      { text: "They were dirty. They ___ (play) in the mud.", answers: ["had been playing", "'d been playing"] }
+    ],
+    brazilianErrors: [
+      { wrong: "The ground was wet. It was raining.", hint: "Was it raining AT THAT MOMENT, or before?", answers: ["The ground was wet. It had been raining."], explanation: "The rain happened BEFORE that moment \u2192 past perfect continuous: It <strong>had been raining</strong>" },
+      { wrong: "I was tired because I was working all day.", hint: "The work happened over a period BEFORE being tired", answers: ["I was tired because I had been working all day.", "I was tired because I'd been working all day."], explanation: "Activity over time before the result \u2192 <strong>had been working</strong>" },
+      { wrong: "We had been knowing each other for years.", hint: "'know' is a state verb \u2014 continuous?", answers: ["We had known each other for years."], explanation: "State verbs don't use continuous: <strong>had known</strong> (not had been knowing)" },
+      { wrong: "She was out of breath. She was running.", hint: "Was she running AT THAT MOMENT?", answers: ["She was out of breath. She had been running.", "She was out of breath. She'd been running."], explanation: "She wasn't running then \u2014 she had finished \u2192 <strong>had been running</strong>" }
+    ],
+    sentenceBuilding: [
+      { words: ["been", "had", "It", "raining", "."], answer: "It had been raining." },
+      { words: ["had", "She", "been", "waiting", "long", "a", "time", "for", "."], answer: "She had been waiting for a long time." },
+      { words: ["been", "They'd", "all", "playing", "football", "afternoon", "."], answer: "They'd been playing football all afternoon." }
+    ],
+    grammarCards: [
+      { front: "How to form past perfect continuous?", back: "had been + verb-ing", example: "It <strong>had been raining</strong> all morning." },
+      { front: "Past perfect continuous vs past continuous?", back: "Had been -ing = activity over time BEFORE. Was -ing = in the MIDDLE of an action.", example: "<strong>He was reading</strong> (in the middle). He <strong>had been reading</strong> for two hours (duration before)." },
+      { front: "Can you use past perfect continuous with state verbs?", back: "No! Use past perfect simple with state verbs (know, like, have)", example: "We <strong>had known</strong> each other for years. (not had been knowing)" }
+    ],
+    dictation: [
+      { text: "I was tired because I had been working all day.", words: 10 },
+      { text: "It had been raining, so the ground was wet.", words: 9 },
+      { text: "They had been waiting for a long time.", words: 8 }
+    ],
+    shadowing: [
+      { text: "The ground was wet because it had been raining all night.", slow: "The ground was wet... because it had been raining... all night." },
+      { text: "She was out of breath because she had been running.", slow: "She was out of breath... because she had been... running." }
+    ]
+  },
+  17: {
+    translation: [
+      { pt: "Voc\u00ea tem carro?", answers: ["Do you have a car?", "Have you got a car?"] },
+      { pt: "Eu n\u00e3o tenho dinheiro suficiente.", answers: ["I don't have enough money.", "I haven't got enough money."] },
+      { pt: "Ela n\u00e3o tinha telefone naquela \u00e9poca.", answers: ["She didn't have a phone.", "She didn't have a phone at that time."] },
+      { pt: "Tenha um bom dia!", answers: ["Have a nice day!", "Have a good day!"] },
+      { pt: "Eu estava tomando banho quando voc\u00ea ligou.", answers: ["I was having a shower when you called.", "I was having a bath when you called."] },
+      { pt: "Ele tem dor de cabe\u00e7a.", answers: ["He has a headache.", "He's got a headache."] }
+    ],
+    dialogues: [
+      { title: "At the Hotel", lines: [
+        { speaker: 'A', text: "Do you have a reservation?" },
+        { speaker: 'You', hint: "say yes, you have a reservation for two nights", answers: ["Yes, I have a reservation for two nights.", "Yes, I've got a reservation for two nights."] },
+        { speaker: 'A', text: "Would you like to have breakfast at the hotel?" },
+        { speaker: 'You', hint: "say yes, what time do you have breakfast?", answers: ["Yes, what time do you have breakfast?", "Yes, what time can I have breakfast?"] }
+      ]}
+    ],
+    speedRound: [
+      { text: "___ you ___ a car? (possess)", answers: ["Do", "have"], twoBlank: true },
+      { text: "She ___ a headache. (possess, negative)", answers: ["doesn't have", "hasn't got"] },
+      { text: "I ___ a good time at the party last night.", answers: ["had"] },
+      { text: "We ___ any milk. (possess, negative)", answers: ["don't have", "haven't got"] },
+      { text: "I ___ breakfast when you phoned.", answers: ["was having"] },
+      { text: "She ___ long hair when she was young.", answers: ["had"] },
+      { text: "___ a nice weekend!", answers: ["Have"] },
+      { text: "I ___ a shower every morning.", answers: ["have"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I'm having a cold.", hint: "Is a cold an action or a state?", answers: ["I have a cold.", "I've got a cold."], explanation: "Illness = possession/state \u2192 <strong>have / have got</strong>, not continuous" },
+      { wrong: "Lisa had got long hair when she was a child.", hint: "What form do we use for the past?", answers: ["Lisa had long hair when she was a child."], explanation: "Past = <strong>had</strong> (not had got)" },
+      { wrong: "I hadn't my phone yesterday.", hint: "How to make past negative with 'have'?", answers: ["I didn't have my phone yesterday."], explanation: "Past negative = <strong>didn't have</strong> (not hadn't)" },
+      { wrong: "He was having a beard.", hint: "Is a beard an action or possession?", answers: ["He had a beard."], explanation: "Beard = permanent feature/possession \u2192 <strong>had</strong>, not continuous" }
+    ],
+    sentenceBuilding: [
+      { words: ["have", "Do", "you", "any", "questions", "?"], answer: "Do you have any questions?" },
+      { words: ["didn't", "I", "have", "time", "yesterday", "."], answer: "I didn't have time yesterday." },
+      { words: ["having", "was", "I", "breakfast", "."], answer: "I was having breakfast." }
+    ],
+    grammarCards: [
+      { front: "have vs have got", back: "Both correct for possession. Past = only 'had' (not 'had got').", example: "<strong>I have</strong> a car. = I<strong>'ve got</strong> a car." },
+      { front: "When can't you use 'have got'?", back: "For actions: have breakfast, have a shower, have a good time", example: "I<strong>'m having</strong> breakfast. (not I've got breakfast)" },
+      { front: "Past negatives with 'have'", back: "Use didn't have (not hadn't)", example: "I <strong>didn't have</strong> my phone. (not I hadn't my phone)" }
+    ],
+    dictation: [
+      { text: "Do you have any questions?", words: 5 },
+      { text: "She didn't have a car when she was young.", words: 9 },
+      { text: "I was having a shower when you called.", words: 8 }
+    ],
+    shadowing: [
+      { text: "I don't have enough time to go shopping.", slow: "I don't have... enough time... to go shopping." },
+      { text: "Have a nice day and enjoy the weekend!", slow: "Have a nice day... and enjoy... the weekend!" }
+    ]
+  },
+  18: {
+    translation: [
+      { pt: "Eu costumava jogar t\u00eanis, mas n\u00e3o jogo mais.", answers: ["I used to play tennis, but I don't play any more.", "I used to play tennis, but I don't play anymore."] },
+      { pt: "Ela costumava viajar muito.", answers: ["She used to travel a lot."] },
+      { pt: "Esse pr\u00e9dio costumava ser um cinema.", answers: ["This building used to be a cinema."] },
+      { pt: "Voc\u00ea costumava comer doces quando era crian\u00e7a?", answers: ["Did you use to eat sweets when you were a child?"] },
+      { pt: "Eu n\u00e3o costumava gostar dele, mas agora gosto.", answers: ["I didn't use to like him, but now I do."] },
+      { pt: "N\u00f3s costum\u00e1vamos morar em uma vila pequena.", answers: ["We used to live in a small village."] }
+    ],
+    dialogues: [
+      { title: "Catching Up with an Old Friend", lines: [
+        { speaker: 'A', text: "Do you still play football?" },
+        { speaker: 'You', hint: "say you used to play a lot, but not any more", answers: ["I used to play a lot, but not any more.", "I used to play a lot, but I don't any more.", "I used to play a lot, but not anymore."] },
+        { speaker: 'A', text: "What about this area? It's changed a lot, hasn't it?" },
+        { speaker: 'You', hint: "say there used to be a cinema here", answers: ["There used to be a cinema here.", "Yes, there used to be a cinema here."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "She ___ (travel) a lot, but now she stays home.", answers: ["used to travel"] },
+      { text: "This building ___ (be) a cinema.", answers: ["used to be"] },
+      { text: "___ you ___ to play football as a child?", answers: ["Did", "use"], twoBlank: true },
+      { text: "I ___ (not / like) vegetables, but now I love them.", answers: ["didn't use to like"] },
+      { text: "There ___ (be) a hotel here, but it closed.", answers: ["used to be"] },
+      { text: "He ___ (smoke) 20 cigarettes a day.", answers: ["used to smoke"] },
+      { text: "We ___ (live) in a small village.", answers: ["used to live"] },
+      { text: "I didn't ___ to eat so much.", answers: ["use"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I use to play tennis every day.", hint: "'used to' is past only \u2014 what's the present?", answers: ["I play tennis every day.", "I used to play tennis every day."], explanation: "Present = simple present: I <strong>play</strong>. OR if past: I <strong>used to</strong> play." },
+      { wrong: "She didn't used to like coffee.", hint: "After 'didn't', what form?", answers: ["She didn't use to like coffee."], explanation: "After didn't: <strong>use to</strong> (no -d)" },
+      { wrong: "I used to went there every summer.", hint: "After 'used to', what verb form?", answers: ["I used to go there every summer."], explanation: "used to + <strong>base form</strong>: used to go (not went)" },
+      { wrong: "Did you used to live here?", hint: "After 'did', what form?", answers: ["Did you use to live here?"], explanation: "After did: <strong>use to</strong> (no -d)" }
+    ],
+    sentenceBuilding: [
+      { words: ["used", "She", "travel", "to", "a lot", "."], answer: "She used to travel a lot." },
+      { words: ["be", "to", "used", "There", "a", "cinema", "here", "."], answer: "There used to be a cinema here." },
+      { words: ["you", "Did", "to", "use", "play", "football", "?"], answer: "Did you use to play football?" }
+    ],
+    grammarCards: [
+      { front: "What does 'used to' mean?", back: "Something that happened regularly in the past but doesn't happen now", example: "I <strong>used to play</strong> tennis. (but I don't now)" },
+      { front: "Question form with 'used to'?", back: "Did + subject + use to + verb?", example: "<strong>Did</strong> you <strong>use to</strong> play football?" },
+      { front: "Can you use 'used to' for the present?", back: "No! 'Used to' is past only. Use present simple for now.", example: "I <strong>used to live</strong> in Paris. Now I <strong>live</strong> in London." }
+    ],
+    dictation: [
+      { text: "She used to travel a lot.", words: 6 },
+      { text: "Did you use to play football?", words: 7 },
+      { text: "There used to be a cinema here.", words: 7 }
+    ],
+    shadowing: [
+      { text: "I used to play tennis a lot, but I don't play very often now.", slow: "I used to play... tennis a lot... but I don't play... very often now." },
+      { text: "This building used to be a cinema, but now it's a shop.", slow: "This building... used to be a cinema... but now... it's a shop." }
     ]
   }
 };
@@ -4824,7 +5341,15 @@ function getExerciseTopic(exId) {
     '13.3': 'Present perfect vs past: mixed practice',
     '14.1': 'Finished time words: error correction',
     '14.2': 'Unfinished vs finished time: forming sentences',
-    '14.3': 'Present perfect vs past: mixed verb forms'
+    '14.3': 'Present perfect vs past: mixed verb forms',
+    '15.1': 'Past perfect: writing about earlier events',
+    '15.3': 'Past perfect vs past simple: choosing the form',
+    '16.1': 'Past perfect continuous: describing earlier activities',
+    '16.3': 'Past perfect continuous vs past continuous',
+    '17.2': 'have and have got: completing sentences',
+    '17.3': 'have and have got: error correction',
+    '18.1': 'used to: past habits and states',
+    '18.2': 'used to: completing with correct form'
   };
   return topics[exId] || exId;
 }

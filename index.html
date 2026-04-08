@@ -1012,6 +1012,7 @@ main {
     <button onclick="showProgress()" id="nav-progress">Progress</button>
     <button onclick="showPhrases()" id="nav-phrases">Phrases</button>
     <button onclick="showPlan()" id="nav-plan">90 Days</button>
+    <button onclick="showLiveClasses()" id="nav-live">Live Classes</button>
     <button onclick="showSync()" id="nav-sync">Sync</button>
     <button onclick="exportData()">Export</button>
     <button onclick="document.getElementById('import-file').click()">Import</button>
@@ -1052,6 +1053,11 @@ main {
   <div id="plan-view">
     <div class="unit-header"><h2>90-Day Fluency Plan</h2></div>
     <div id="plan-content"></div>
+  </div>
+
+  <div id="live-view">
+    <div class="unit-header"><h2>Live Classes</h2></div>
+    <div id="live-content"></div>
   </div>
 
   <div id="sync-view">
@@ -2501,6 +2507,532 @@ Who <strong>invented</strong> the telephone? (<em>not</em> has invented)</p>`
         ]
       }
     ]
+  },
+  19: {
+    number: 19,
+    title: "Present tenses (I am doing / I do) for the future",
+    grammar: [
+      {
+        id: 'A', title: 'Present continuous for future arrangements',
+        html: `<p class="grammar-note">We use the <strong>present continuous</strong> (I am doing) for something already decided and arranged:</p>
+<div class="example-box">"I<strong>'m playing</strong> tennis on Monday." (= I have arranged to play)</div>
+<div class="example-box">"<strong>Are</strong> you <strong>going</strong> anywhere tonight?"</div>
+<p class="grammar-note">Do not use <em>will</em> to talk about arrangements. Also for just-before actions:</p>
+<div class="example-box">"I<strong>'m going</strong> to bed now. Goodnight!"</div>`
+      },
+      {
+        id: 'B', title: 'Present simple for timetables and programmes',
+        html: `<p class="grammar-note">We use the <strong>present simple</strong> for future events that are part of a timetable, programme or schedule:</p>
+<div class="example-box">"My train <strong>leaves</strong> at 11.30, so I need to be at the station by 11.15."</div>
+<div class="example-box">"What time <strong>does</strong> the film <strong>start</strong>?"</div>
+<p class="grammar-note">Compare:</p>
+<div class="example-box">"I<strong>'m going</strong> to a concert tomorrow." (personal arrangement &rarr; continuous)</div>
+<div class="example-box">"The concert <strong>starts</strong> at 7.30." (scheduled event &rarr; simple)</div>`
+      }
+    ],
+    exercises: [
+      {
+        id: '19.2',
+        title: 'Exercise 19.2',
+        type: 'fill',
+        instructions: "Complete the sentences using the present continuous. Use the verbs in brackets.",
+        items: [
+          { isExample: true, num: 1, display: "Andrew is on holiday. He <strong>is going</strong> to Brazil. (go)" },
+          { num: 2, before: "Ben", after: "football on Saturday. (not / play)", hints: [""], answers: [["isn't playing", "is not playing"]], explanation: "isn't playing (arranged future — negative)" },
+          { num: 3, before: "", after: "a party next Saturday. Would you like to come? (we / have)", hints: [""], answers: [["We're having", "We are having"]], explanation: "We're having (arranged future)" },
+          { num: 4, before: "", after: "tomorrow. (I / not / work)", hints: [""], answers: [["I'm not working", "I am not working"]], explanation: "I'm not working (arranged future — negative)" },
+          { num: 5, before: "", after: "early tomorrow morning. (I / leave)", hints: [""], answers: [["I'm leaving", "I am leaving"]], explanation: "I'm leaving (arranged future)" },
+          { num: 6, before: "", after: "out tonight? (you / go)", hints: [""], answers: [["Are you going"]], explanation: "Are you going (question about arrangement)" },
+          { num: 7, before: "", after: "to the party on Thursday. (Laura / not / come)", hints: [""], answers: [["Laura isn't coming", "Laura is not coming", "Laura's not coming"]], explanation: "Laura isn't coming (arranged future — negative)" },
+          { num: 8, before: "", after: "to the dentist on Monday. (I / go)", hints: [""], answers: [["I'm going", "I am going"]], explanation: "I'm going (arranged future)" },
+          { num: 9, before: "", after: "late at the office this evening. (he / work)", hints: [""], answers: [["He's working", "He is working"]], explanation: "He's working (arranged future)" }
+        ]
+      },
+      {
+        id: '19.4',
+        title: 'Exercise 19.4',
+        type: 'fill',
+        instructions: "Put the verb into the correct form: present continuous or present simple.",
+        items: [
+          { isExample: true, num: 1, display: "I <strong>'m going</strong> to the cinema this evening. (go)" },
+          { num: 2, before: "", after: "anywhere this weekend? (you / go)", hints: [""], answers: [["Are you going"]], explanation: "Are you going (personal arrangement — continuous)" },
+          { num: 3, before: "Steve says", after: "to a new flat next week. (he / move)", hints: [""], answers: [["he's moving", "he is moving"]], explanation: "he's moving (personal arrangement — continuous)" },
+          { num: 4, before: "", after: "to a concert tonight.", hints: [""], answers: [["I'm going", "I am going"]], explanation: "I'm going (personal arrangement)" },
+          { num: 4, before: "What time", after: "? (it / start)", hints: [""], answers: [["does it start"]], explanation: "does it start (scheduled event — simple)" },
+          { num: 5, before: "Tom and I", after: "tomorrow afternoon. (we / meet)", hints: [""], answers: [["we're meeting", "we are meeting"]], explanation: "we're meeting (arranged event — continuous)" },
+          { num: 6, before: "", after: "anything tomorrow morning? (you / do)", hints: [""], answers: [["Are you doing"]], explanation: "Are you doing (question about arrangement — continuous)" },
+          { num: 7, before: "What time", after: "? (this term / end)", hints: [""], answers: [["does this term end"]], explanation: "does this term end (timetable — simple)" },
+          { num: 7, before: "The new term", after: "on 8 September. (start)", hints: [""], answers: [["starts"]], explanation: "starts (timetable — simple)" },
+          { num: 8, before: "", after: "camping next weekend. (we / go)", hints: [""], answers: [["We're going", "We are going"]], explanation: "We're going (personal arrangement — continuous)" },
+          { num: 8, before: "", after: "the shopping? (who / get)", hints: [""], answers: [["Who's getting", "Who is getting"]], explanation: "Who's getting (personal arrangement — continuous)" },
+          { num: 9, before: "", after: "the match on television tonight? (you / watch)", hints: [""], answers: [["Are you watching"]], explanation: "Are you watching (personal arrangement — continuous)" },
+          { num: 10, before: "The train", after: "at 8.30 in the evening and", hints: [""], answers: [["leaves"]], explanation: "leaves (timetable — simple)" },
+          { num: 10, before: "", after: "at 5.30 the next morning. (arrive)", hints: [""], answers: [["arrives"]], explanation: "arrives (timetable — simple)" },
+          { num: 11, before: "The film", after: "at 3.15. (finish)", hints: [""], answers: [["finishes"]], explanation: "finishes (scheduled — simple)" },
+          { num: 12, before: "", after: "the car this evening, so you can have it. (I / not / use)", hints: [""], answers: [["I'm not using", "I am not using"]], explanation: "I'm not using (personal arrangement — continuous)" }
+        ]
+      }
+    ]
+  },
+  20: {
+    number: 20,
+    title: "I'm going to (do)",
+    grammar: [
+      {
+        id: 'A', title: "I am going to do something = I've already decided",
+        html: `<p class="grammar-note"><strong>I am going to do something</strong> = I have already decided to do it, I intend to do it:</p>
+<div class="example-box">"<strong>Are</strong> you <strong>going to eat</strong> anything?" "No, I'm not hungry."</div>
+<div class="example-box">"I'm just <strong>going to make</strong> a quick phone call. Can you wait for me?"</div>`
+      },
+      {
+        id: 'B', title: "'I am doing' vs 'I am going to do'",
+        html: `<p class="grammar-note"><strong>I am doing</strong> = already fixed or arranged. <strong>I am going to do</strong> = decided, maybe not arranged:</p>
+<div class="example-box">"What are you <strong>doing</strong> this weekend?" (asking about arranged plans)</div>
+<div class="example-box">"What are you <strong>going to do</strong> this weekend?" (asking about intentions)</div>
+<p class="grammar-note">In many situations, either form is possible.</p>`
+      },
+      {
+        id: 'C', title: 'Something is going to happen (prediction from evidence)',
+        html: `<p class="grammar-note">We use <strong>going to</strong> to say what we think will happen, especially when the situation now tells us:</p>
+<div class="example-box">"Look at those black clouds! It<strong>'s going to rain</strong>." (we can see the clouds now)</div>
+<div class="example-box">"I feel terrible. I think I<strong>'m going to be</strong> sick."</div>`
+      },
+      {
+        id: 'D', title: 'I was going to (do) = intended but did not do',
+        html: `<p class="grammar-note"><strong>I was going to (do something)</strong> = I intended to do it, but didn't:</p>
+<div class="example-box">"We <strong>were going to</strong> travel by train, but then we decided to drive."</div>
+<div class="example-box">"I <strong>was going to</strong> call you, but I forgot."</div>`
+      }
+    ],
+    exercises: [
+      {
+        id: '20.2',
+        title: 'Exercise 20.2',
+        type: 'fill',
+        instructions: "Complete the sentences with 'I'm going to' or 'I'm not going to' + a suitable verb.",
+        items: [
+          { isExample: true, num: 1, display: "It's cold today. <strong>I'm not going to go</strong> out." },
+          { num: 2, before: "I've been doing the same job for too long.", after: "to find something different. (try)", hints: [""], answers: [["I'm going to try"]], explanation: "I'm going to try (intention — already decided)" },
+          { num: 3, before: "I like the job, but it's not well paid. I don't know what", after: "to the boss. (say)", hints: [""], answers: [["I'm going to say"]], explanation: "I'm going to say (decided intention)" },
+          { num: 4, before: "The car is dirty.", after: "it this afternoon. (wash)", hints: [""], answers: [["I'm going to wash"]], explanation: "I'm going to wash (planned intention)" },
+          { num: 5, before: "I don't think the job offer is very good.", after: "it. (not / accept)", hints: [""], answers: [["I'm not going to accept"]], explanation: "I'm not going to accept (decided intention — negative)" },
+          { num: 6, before: "I want to improve my English.", after: "harder. (learn)", hints: [""], answers: [["I'm going to learn"]], explanation: "I'm going to learn (intention)" },
+          { num: 7, before: "There's a half-marathon next month.", after: "in it. (run)", hints: [""], answers: [["I'm going to run"]], explanation: "I'm going to run (intention)" },
+          { num: 8, before: "The food in this restaurant is awful.", after: "about it. (complain)", hints: [""], answers: [["I'm going to complain"]], explanation: "I'm going to complain (decided intention)" },
+          { num: 9, before: "It's a secret between us. I promise", after: "anybody. (not / tell)", hints: [""], answers: [["I'm not going to tell"]], explanation: "I'm not going to tell (decided — negative)" }
+        ]
+      },
+      {
+        id: '20.3',
+        title: 'Exercise 20.3',
+        type: 'write',
+        instructions: "Look at the pictures and say what is going to happen.",
+        items: [
+          { isExample: true, num: 1, display: "The sky is full of clouds. <strong>It's going to rain.</strong>" },
+          { num: 2, before: "He doesn't look well.", after: "", hints: ["late"], answers: ["He's going to be late.", "He is going to be late."], explanation: "He's going to be late. (we can see the evidence now)" },
+          { num: 3, before: "The boat is full of water.", after: "", hints: ["sink"], answers: ["The boat is going to sink.", "The boat's going to sink."], explanation: "The boat is going to sink. (visible evidence)" },
+          { num: 4, before: "They're driving too fast.", after: "", hints: ["run out of petrol"], answers: ["They're going to run out of petrol.", "They are going to run out of petrol."], explanation: "They're going to run out of petrol. (visible evidence)" },
+          { num: 5, before: "Look at the damage!", after: "", hints: ["cost a lot"], answers: ["It's going to cost a lot to repair the car.", "It is going to cost a lot to repair the car."], explanation: "It's going to cost a lot to repair the car. (visible evidence)" }
+        ]
+      },
+      {
+        id: '20.4',
+        title: 'Exercise 20.4',
+        type: 'fill',
+        instructions: "Complete the sentences with 'was/were going to' + a suitable verb.",
+        items: [
+          { isExample: true, num: 1, display: "We <strong>were going to travel</strong> by train, but then we decided to drive." },
+          { num: 2, before: "I", after: "some new clothes, but I didn't have enough money. (buy)", hints: [""], answers: [["was going to buy"]], explanation: "was going to buy (intended but didn't)" },
+          { num: 3, before: "Peter and I", after: "tennis last week, but he hurt his leg. (play)", hints: [""], answers: [["were going to play"]], explanation: "were going to play (intended but didn't)" },
+          { num: 4, before: "I", after: "you, but I forgot. (phone)", hints: [""], answers: [["was going to phone"]], explanation: "was going to phone (intended but didn't)" },
+          { num: 5, before: "The weather", after: "nice, but then it started raining. (be)", hints: [""], answers: [["was going to be"]], explanation: "was going to be (seemed like it, but didn't happen)" },
+          { num: 6, before: "She", after: "her job, but then she changed her mind. (give up)", hints: [""], answers: [["was going to give up"]], explanation: "was going to give up (intended but didn't)" },
+          { num: 7, before: "What", after: "? You opened your mouth. (you / say)", hints: [""], answers: [["were you going to say"]], explanation: "were you going to say (intended to say)" }
+        ]
+      }
+    ]
+  },
+  21: {
+    number: 21,
+    title: "will and shall 1",
+    grammar: [
+      {
+        id: 'A', title: "I'll = just decided now",
+        html: `<p class="grammar-note">We use <strong>I'll (= I will)</strong> when we decide to do something at the time of speaking (instant decision):</p>
+<div class="example-box">"Oh, I left the door open. <strong>I'll go</strong> and shut it."</div>
+<div class="example-box">"What would you like to drink?" "<strong>I'll have</strong> an orange juice, please."</div>
+<p class="grammar-note">Do not use the present simple (<em>I go</em>) for instant decisions. Use <strong>I'll</strong>.</p>`
+      },
+      {
+        id: 'B', title: "I'll for offering, agreeing, promising",
+        html: `<p class="grammar-note">We use <strong>I'll</strong> when we offer, agree or promise:</p>
+<div class="example-box">"That bag looks heavy. <strong>I'll help</strong> you with it." (offer)</div>
+<div class="example-box">"<strong>I'll pay</strong> you back on Friday." (promise)</div>
+<div class="example-box">"I promise <strong>I won't tell</strong> anyone." (promise — negative)</div>
+<p class="grammar-note"><strong>won't</strong> = will not, for refusals:</p>
+<div class="example-box">"I've asked him, but he <strong>won't help</strong>." (= he refuses to help)</div>`
+      },
+      {
+        id: 'C', title: "Don't use will for already decided/arranged",
+        html: `<p class="grammar-note">Don't use <strong>will</strong> when you have already decided or arranged something. Use the present continuous or going to:</p>
+<div class="example-box">"I<strong>'m going</strong> on holiday next Saturday." (not I'll go)</div>
+<div class="example-box">"Are you <strong>working</strong> tomorrow?" (not Will you work?)</div>`
+      },
+      {
+        id: 'D', title: 'Shall I …? / Shall we …?',
+        html: `<p class="grammar-note">We use <strong>Shall I …?</strong> and <strong>Shall we …?</strong> to ask for suggestions or to offer:</p>
+<div class="example-box">"<strong>Shall I</strong> open the window?" (= Do you want me to open the window?)</div>
+<div class="example-box">"Where <strong>shall we</strong> go for lunch?"</div>`
+      }
+    ],
+    exercises: [
+      {
+        id: '21.1',
+        title: 'Exercise 21.1',
+        type: 'fill',
+        instructions: "Complete the sentences with I'll + a suitable verb.",
+        items: [
+          { isExample: true, num: 1, display: "I'm too tired to walk home. I think <strong>I'll get</strong> a taxi." },
+          { num: 2, before: "It's a bit cold in this room.", after: "on the heating. (turn/switch/put)", hints: [""], answers: [["I'll turn", "I'll switch", "I'll put"]], explanation: "I'll turn/switch/put (instant decision)" },
+          { num: 3, before: "Do we have any milk? I'm not sure.", after: "and see. (check)", hints: [""], answers: [["I'll check", "I'll go and check"]], explanation: "I'll check (instant decision / offer)" },
+          { num: 4, before: "You don't know how to use the machine?", after: "you. (show)", hints: [""], answers: [["I'll show"]], explanation: "I'll show (offering)" },
+          { num: 4, before: "", after: "it for you. (do)", hints: [""], answers: [["I'll do"]], explanation: "I'll do (offering)" },
+          { num: 5, before: "Are you going out? OK.", after: "you the way. (show)", hints: [""], answers: [["I'll show"]], explanation: "I'll show (offering)" },
+          { num: 6, before: "What would you like to eat?", after: "a sandwich, please. (have)", hints: [""], answers: [["I'll have"]], explanation: "I'll have (instant decision)" },
+          { num: 7, before: "The phone is ringing, but I can't answer it now.", after: "here until you come back. (stay/wait)", hints: [""], answers: [["I'll stay", "I'll wait"]], explanation: "I'll stay/wait (offering)" },
+          { num: 8, before: "I can't open this jar.", after: ". Give it to me. (try)", hints: [""], answers: [["I'll try"]], explanation: "I'll try (offering)" }
+        ]
+      },
+      {
+        id: '21.3',
+        title: 'Exercise 21.3',
+        type: 'fill',
+        instructions: "Complete the sentences with will / won't or a present tense form.",
+        items: [
+          { isExample: true, num: 1, display: "A: Are you doing anything this evening? B: Yes, <strong>I'm going</strong> to the cinema." },
+          { isExample: true, num: 2, display: "A: Can you wait for me? I won't be very long. B: OK, <strong>I'll wait</strong>." },
+          { num: 3, before: "A: I need somebody to meet me at the station. B: What time is your train?", after: "you at the station.", hints: [""], answers: [["I'll meet"]], explanation: "I'll meet (offering / instant decision)" },
+          { num: 4, before: "You go out. I'm tired.", after: "at home.", hints: [""], answers: [["I'll stay"]], explanation: "I'll stay (instant decision)" },
+          { num: 5, before: "A: Would you like tea or coffee? B: Coffee, please. And I", after: "lunch at 12.30. (have)", hints: [""], answers: [["I'm having", "'m having"]], explanation: "I'm having (already arranged)" },
+          { num: 6, before: "Thank you for lending me the money. I promise I", after: "it back to you. (not / forget)", hints: [""], answers: [["won't forget"]], explanation: "won't forget (promise)" },
+          { num: 7, before: "A: Are you coming with us? B: Where", after: "? (you / go)", hints: [""], answers: [["we're going", "are you going"]], explanation: "we're going / are you going (asking about arrangement)" },
+          { num: 8, before: "", after: "anything tomorrow evening? (you / do)", hints: [""], answers: [["Are you doing"]], explanation: "Are you doing (asking about arrangement)" },
+          { num: 9, before: "A: I don't want to go out alone.", after: "me a favour? (you / do)", hints: [""], answers: [["Will you do"]], explanation: "Will you do (request)" },
+          { num: 10, before: "", after: "cycling at the weekend? (you / go)", hints: [""], answers: [["Do you go"]], explanation: "Do you go (habitual — simple)" },
+          { num: 11, before: "A: It's a secret between us. B: OK, I promise I", after: "anyone. (not / tell)", hints: [""], answers: [["won't tell"]], explanation: "won't tell (promise)" },
+          { num: 12, before: "A: Can I have these postcards? B: Yes, of course. I", after: "them for you. (wrap)", hints: [""], answers: [["I'll do", "I'll wrap"]], explanation: "I'll do/wrap (offering)" }
+        ]
+      },
+      {
+        id: '21.4',
+        title: 'Exercise 21.4',
+        type: 'write',
+        instructions: "Write questions with shall I / shall we.",
+        items: [
+          { isExample: true, num: 1, display: "We could go to the cinema or the theatre. <strong>What shall we do?</strong>" },
+          { num: 2, before: "We could go out this evening.", after: "", hints: ["where"], answers: ["Where shall we go?"], explanation: "Where shall we go? (suggestion)" },
+          { num: 3, before: "I need a present for Jack.", after: "", hints: ["buy"], answers: ["Shall I buy it?", "What shall I buy?", "What shall I get?"], explanation: "Shall I buy it? / What shall I buy? (asking for suggestion)" },
+          { num: 4, before: "We could walk or take a taxi.", after: "", hints: ["get a taxi or walk"], answers: ["Shall we get a taxi or walk?", "Shall we walk or get a taxi?"], explanation: "Shall we get a taxi or walk? (suggestion)" },
+          { num: 5, before: "It's Helen's birthday. I don't know what to get her.", after: "", hints: ["give/buy/get"], answers: ["What shall I give Helen?", "What shall I buy Helen?", "What shall I get Helen?"], explanation: "What shall I give/buy/get Helen? (asking for suggestion)" },
+          { num: 6, before: "We need to meet. What's a good time?", after: "", hints: ["time / meet"], answers: ["What time shall we meet?", "When shall we meet?"], explanation: "What time shall we meet? (suggestion)" }
+        ]
+      }
+    ]
+  },
+  22: {
+    number: 22,
+    title: "will and shall 2",
+    grammar: [
+      {
+        id: 'A', title: 'will for predictions and beliefs',
+        html: `<p class="grammar-note">Don't use <strong>will</strong> for things already arranged. Use it to say what you <em>believe</em> or <em>predict</em> will happen in the future:</p>
+<div class="example-box">"Kate <strong>will pass</strong> her driving test. She's a very good driver."</div>
+<div class="example-box">"I don't think the exam <strong>will be</strong> very difficult."</div>`
+      },
+      {
+        id: 'B', title: 'will with probably, I think, I\'m sure etc.',
+        html: `<p class="grammar-note">We often use <strong>will</strong> with: <em>probably, I'm sure, I think, I don't think, I wonder</em>:</p>
+<div class="example-box">"I'll <strong>probably</strong> be home late tonight."</div>
+<div class="example-box">"<strong>I'm sure</strong> you'll enjoy the film."</div>
+<p class="grammar-note">After <strong>I hope</strong>, we normally use the <em>present</em> tense:</p>
+<div class="example-box">"I hope Kate <strong>passes</strong> her driving test." (not will pass)</div>`
+      },
+      {
+        id: 'C', title: 'will for future facts and sometimes about now',
+        html: `<p class="grammar-note">We use <strong>will</strong> for future facts:</p>
+<div class="example-box">"The exam <strong>will be</strong> on Friday."</div>
+<p class="grammar-note"><strong>will</strong> can also be used about now (not only for the future):</p>
+<div class="example-box">"Don't phone Ann now. She<strong>'ll be</strong> busy." (= I think she is busy now)</div>`
+      },
+      {
+        id: 'D', title: 'shall only with I and we',
+        html: `<p class="grammar-note"><strong>Shall</strong> is used only with <em>I</em> and <em>we</em>. In spoken English, <strong>I'll</strong> and <strong>we'll</strong> are more common than <em>I shall</em> and <em>we shall</em>:</p>
+<div class="example-box">"<strong>I'll</strong> probably be home late." (or I shall…)</div>
+<p class="grammar-note">Do not use <em>shall</em> with <em>he/she/it/they/you</em>.</p>`
+      }
+    ],
+    exercises: [
+      {
+        id: '22.1',
+        title: 'Exercise 22.1',
+        type: 'fill',
+        instructions: "Complete the sentences with will ('ll) or won't.",
+        items: [
+          { isExample: true, num: 1, display: "Don't worry about the exam. I'm sure you <strong>'ll pass</strong>." },
+          { num: 2, before: "Why are you putting on your coat? I hope it", after: "be cold outside.", hints: [""], answers: [["won't"]], explanation: "won't (hoping it will not be cold)" },
+          { num: 3, before: "I'm sure everything", after: "be fine. Don't worry.", hints: [""], answers: [["'ll", "will"]], explanation: "'ll / will (I'm sure + will)" },
+          { num: 4, before: "I don't think she", after: "like the present I bought her.", hints: [""], answers: [["won't", "'ll"]], explanation: "won't / 'll (prediction about negative)" },
+          { num: 5, before: "I think the exam", after: "be easy.", hints: [""], answers: [["'ll", "will"]], explanation: "'ll / will (I think + will)" },
+          { num: 6, before: "I don't think it", after: "rain today. The sky is clear.", hints: [""], answers: [["won't", "'ll"]], explanation: "won't (prediction)" }
+        ]
+      },
+      {
+        id: '22.2',
+        title: 'Exercise 22.2',
+        type: 'fill',
+        instructions: "Complete the sentences with will + a suitable verb.",
+        items: [
+          { isExample: true, num: 1, display: "Don't worry about your exam. I'm sure you <strong>will pass</strong>." },
+          { num: 2, before: "You should try that new restaurant.", after: "nice.", hints: [""], answers: [["It will look", "It'll look"]], explanation: "It will look (prediction)" },
+          { num: 3, before: "Why don't you try on this jacket?", after: "it.", hints: [""], answers: [["you'll like", "you will like"]], explanation: "you'll like (prediction)" },
+          { num: 4, before: "It's a really good film.", after: "it.", hints: [""], answers: [["You'll enjoy", "You will enjoy"]], explanation: "You'll enjoy (prediction)" },
+          { num: 5, before: "Don't go out without a coat.", after: "cold.", hints: [""], answers: [["You'll get", "You will get"]], explanation: "You'll get (prediction/warning)" },
+          { num: 6, before: "In 50 years' time, more", after: "on the moon.", hints: [""], answers: [["people will live"]], explanation: "people will live (prediction about future)" },
+          { num: 7, before: "I'm sure Tom is at home. If you go there,", after: "him.", hints: [""], answers: [["we'll meet", "you'll meet"]], explanation: "you'll meet (I'm sure + will)" },
+          { num: 8, before: "I'm not sure whether she", after: "to the party.", hints: [""], answers: [["she'll come", "she will come"]], explanation: "she'll come (uncertainty about future)" },
+          { num: 9, before: "I don't think", after: "if you use her phone.", hints: [""], answers: [["she'll mind", "she will mind"]], explanation: "she'll mind (I don't think + will)" },
+          { num: 10, before: "I'm sure you'll have a good time.", after: "great.", hints: [""], answers: [["it will be", "it'll be"]], explanation: "it will be (prediction)" }
+        ]
+      },
+      {
+        id: '22.5',
+        title: 'Exercise 22.5',
+        type: 'fill',
+        instructions: "Complete the sentences with will or going to (or present continuous).",
+        items: [
+          { isExample: true, num: 1, display: "A: Why are you turning on the TV? B: <strong>I'm going to watch</strong> the news. (I / watch)" },
+          { num: 2, before: "It was my first day at school.", after: "that day. (I / never / forget)", hints: [""], answers: [["I'll never forget", "I will never forget"]], explanation: "I'll never forget (general prediction/statement)" },
+          { num: 3, before: "You must tell me about your holiday.", after: "when you hear about it. (you / laugh)", hints: [""], answers: [["You'll laugh", "You will laugh"]], explanation: "You'll laugh (prediction)" },
+          { num: 4, before: "A: Where are you going? B:", after: "to have lunch. (I / go)", hints: [""], answers: [["I'm going"]], explanation: "I'm going (already decided)" },
+          { num: 5, before: "I'm sure Manchester United", after: "tonight. (win)", hints: [""], answers: [["will win"]], explanation: "will win (prediction)" },
+          { num: 6, before: "Sarah", after: "to see us next weekend. (come)", hints: [""], answers: [["is coming"]], explanation: "is coming (arrangement)" },
+          { num: 7, before: "Don't worry about the injection.", after: ". (it / not / hurt)", hints: [""], answers: [["It won't hurt"]], explanation: "It won't hurt (prediction/reassurance)" },
+          { num: 8, before: "What", after: "to people who can't find work? (happen)", hints: [""], answers: [["What will happen", "will happen"]], explanation: "What will happen (prediction)" },
+          { num: 9, before: "A: I've decided to try and learn French. B: You", after: "it easy. (we / go)", hints: [""], answers: [["we're going"]], explanation: "we're going (already decided)" }
+        ]
+      }
+    ]
+  },
+  23: {
+    number: 23,
+    title: "I will and I'm going to",
+    grammar: [
+      {
+        id: 'A', title: 'will = new decision now; going to = already decided before',
+        html: `<p class="grammar-note"><strong>will</strong>: you decide to do something at the time of speaking (a new decision):</p>
+<div class="example-box">"Oh, I left the door open. <strong>I'll go</strong> and shut it."</div>
+<p class="grammar-note"><strong>going to</strong>: you have already decided (before the moment of speaking):</p>
+<div class="example-box">"'Your shoes are dirty.' 'Yes, I know. I<strong>'m going to</strong> clean them.'"</div>`
+      },
+      {
+        id: 'B', title: 'For predictions, both work; "going to" with visible evidence',
+        html: `<p class="grammar-note">For <em>predictions</em>, both <strong>will</strong> and <strong>going to</strong> work:</p>
+<div class="example-box">"I think the weather <strong>will be</strong> nice later." / "I think the weather <strong>is going to be</strong> nice later."</div>
+<p class="grammar-note">When there is visible evidence <em>now</em>, we prefer <strong>going to</strong>:</p>
+<div class="example-box">"Look at those black clouds. It<strong>'s going to rain</strong>." (not It will rain — we can see the clouds now)</div>`
+      }
+    ],
+    exercises: [
+      {
+        id: '23.1',
+        title: 'Exercise 23.1',
+        type: 'fill',
+        instructions: "Complete the sentences with will ('ll) or going to.",
+        items: [
+          { isExample: true, num: 1, display: "A: Why are you turning on the TV? B: <strong>I'm going to watch</strong> the news." },
+          { num: 2, before: "A: I don't have enough money. B: Don't worry.", after: "you some. (lend)", hints: [""], answers: [["I'll lend"]], explanation: "I'll lend (instant decision / offer)" },
+          { num: 3, before: "A: Why have you got that bucket of water? B:", after: "the car. (wash)", hints: [""], answers: [["I'm going to wash"]], explanation: "I'm going to wash (already decided)" },
+          { num: 4, before: "A: I don't know how to use this camera. B: It's easy.", after: "you. (show)", hints: [""], answers: [["I'll show"]], explanation: "I'll show (instant offer)" },
+          { num: 5, before: "A: What colour", after: "this room? (you / paint)", hints: [""], answers: [["are you going to paint"]], explanation: "are you going to paint (already decided)" },
+          { num: 6, before: "A: Where are you going? Are you going shopping? B: Yes,", after: "some food. (buy)", hints: [""], answers: [["I'm going to buy"]], explanation: "I'm going to buy (already decided)" },
+          { num: 7, before: "A: Would you like tea or coffee? B:", after: "coffee, please. (have)", hints: [""], answers: [["I'll have"]], explanation: "I'll have (instant decision)" },
+          { num: 8, before: "A: What are your plans for the weekend? B: I've got a lot of work.", after: "it before Monday. (not / finish)", hints: [""], answers: [["I'm not going to finish"]], explanation: "I'm not going to finish (already aware)" },
+          { num: 9, before: "A: What", after: "at university? (he / study)", hints: [""], answers: [["is he going to study", "'s he going to study"]], explanation: "is he going to study (already decided)" },
+          { num: 10, before: "A: Helen's phone is not working. B: OK,", after: "her on her mobile. (call)", hints: [""], answers: [["I'll call"]], explanation: "I'll call (instant decision)" },
+          { num: 11, before: "A: Is Pete going to the dentist? B: Yes, he says", after: "a filling, and", hints: [""], answers: [["he's going to have"]], explanation: "he's going to have (already known)" },
+          { num: 11, before: "", after: "it this afternoon. (do)", hints: [""], answers: [["he's going to do"]], explanation: "he's going to do (already planned)" }
+        ]
+      },
+      {
+        id: '23.2',
+        title: 'Exercise 23.2',
+        type: 'fill',
+        instructions: "Complete the sentences with will or going to.",
+        items: [
+          { isExample: true, num: 1, display: "A: I've got a terrible headache. B: Have you? Wait here and <strong>I'll get</strong> you an aspirin." },
+          { num: 2, before: "A: Why are you filling that bucket with water? B: I", after: "the car. (wash) ... No wait, I changed my mind.", hints: [""], answers: [["I'll see", "I'll wash"]], explanation: "I'll see (instant decision)" },
+          { num: 3, before: "A: I've decided to repaint this room. B: Really? What colour", after: "it? (you / paint)", hints: [""], answers: [["I'm going to sell", "are you going to paint"]], explanation: "I'm going to sell / are you going to paint (already decided)" },
+          { num: 4, before: "A: Where are you going? B: The shops — I need some things. I hope I", after: "what I want. (find)", hints: [""], answers: [["you'll find", "I'll find"]], explanation: "you'll find (prediction/hope)" },
+          { num: '5a', before: "A: This room is a mess. B: I know.", after: "these old newspapers away. (throw)", hints: [""], answers: [["I'm going to throw"]], explanation: "I'm going to throw (already decided)" },
+          { num: '5b', before: "A: Can I have this newspaper? B: Yes, I've finished with it.", after: "it. (have)", hints: [""], answers: [["I'll have"]], explanation: "I'll have (instant response)" },
+          { num: '6a', before: "A: Did you phone Ruth? B: Oh no, I forgot.", after: "her now. (call)", hints: [""], answers: [["I'll take", "I'll call"]], explanation: "I'll call (instant decision)" },
+          { num: '6b', before: "A: Did you phone Ruth? B: I tried but the line was busy.", after: "again later. (Amy / call)", hints: [""], answers: [["Amy is going to take", "Amy is going to call"]], explanation: "Amy is going to call (already planned)" }
+        ]
+      }
+    ]
+  },
+  24: {
+    number: 24,
+    title: "will be doing and will have done",
+    grammar: [
+      {
+        id: 'A', title: 'Future continuous and future perfect',
+        html: `<p class="grammar-note"><strong>Future continuous</strong>: will be doing = in the middle of doing something at a future time.</p>
+<p class="grammar-note"><strong>Future perfect</strong>: will have done = completed before a future time.</p>
+<div class="example-box">"This time next week <strong>I'll be</strong> on holiday. <strong>I'll be lying</strong> on a beautiful beach."</div>
+<div class="example-box">"Her exam is next Monday. This time next week she<strong>'ll have done</strong> it."</div>`
+      },
+      {
+        id: 'B', title: 'will be doing = in the middle of an action',
+        html: `<p class="grammar-note">Compare:</p>
+<div class="example-box">"Don't phone between 7 and 8. We<strong>'ll be eating</strong>." (= in the middle of eating)</div>
+<div class="example-box">"Let's wait for Maria. She<strong>'ll be</strong> here soon." (= she will arrive)</div>
+<p class="grammar-note"><strong>will be -ing</strong> is also used for planned future events (similar to going to):</p>
+<div class="example-box">"<strong>Will</strong> you <strong>be going</strong> to the shops later?" (= are you planning to go?)</div>`
+      },
+      {
+        id: 'C', title: 'will be -ing for planned future events',
+        html: `<p class="grammar-note"><strong>will be -ing</strong> can also describe planned events, similar to present continuous for the future:</p>
+<div class="example-box">"I<strong>'ll be going</strong> to the city centre later. Can I get you anything?"</div>
+<div class="example-box">"<strong>Will</strong> you <strong>be using</strong> the car tomorrow?"</div>`
+      },
+      {
+        id: 'D', title: 'will have done = completed by a future time',
+        html: `<p class="grammar-note"><strong>will have done</strong> = something will already be complete before a time in the future:</p>
+<div class="example-box">"The film <strong>will have finished</strong> by 9 o'clock."</div>
+<div class="example-box">"I won't be here this time tomorrow. <strong>I'll have gone</strong>."</div>
+<p class="grammar-note">Compare <strong>will have done</strong> and <strong>will be doing</strong>:</p>
+<div class="example-box">"Ted will still <strong>be working</strong> at 11." (in the middle) vs "Ted <strong>will have finished</strong> by 11." (complete)</div>`
+      }
+    ],
+    exercises: [
+      {
+        id: '24.2',
+        title: 'Exercise 24.2',
+        type: 'fill',
+        instructions: "Use will be (do)ing to complete the sentences.",
+        items: [
+          { isExample: true, num: 1, display: "Don't phone between 7 and 8. <strong>We'll be eating</strong> then." },
+          { num: 2, before: "I need to go to the city centre. I think", after: "there later. (go)", hints: [""], answers: [["I'll be going"]], explanation: "I'll be going (planned future event)" },
+          { num: 3, before: "Call me after 8 o'clock. We", after: "dinner by then. (not / play)", hints: [""], answers: [["won't be playing"]], explanation: "won't be playing (not in the middle of)" },
+          { num: 4, before: "It's Monday. A new programme", after: "next week. (start)", hints: [""], answers: [["will be starting"]], explanation: "will be starting (future continuous for plans)" },
+          { num: 5, before: "If you need me, I'll be at home. I", after: "TV. (watch)", hints: [""], answers: [["be watching", "'ll be watching", "will be watching"]], explanation: "'ll be watching (in the middle of)" },
+          { num: 6, before: "Don't call me at 9 — I've got a meeting. What", after: "at noon? (you / do)", hints: [""], answers: [["will you be doing"]], explanation: "will you be doing (asking about future activity)" },
+          { num: 7, before: "You can borrow my car tomorrow. I", after: "it. (not / use)", hints: [""], answers: [["won't be going", "won't be using"]], explanation: "won't be using (not in the middle of using)" },
+          { num: 8, before: "The plane takes off at 2.30. At 3 o'clock we", after: "over the sea. (fly)", hints: [""], answers: [["will be landing", "'ll be landing"]], explanation: "will be landing (in the middle of flying)" }
+        ]
+      },
+      {
+        id: '24.3',
+        title: 'Exercise 24.3',
+        type: 'fill',
+        instructions: "Use will be (do)ing or will have (done).",
+        items: [
+          { isExample: true, num: 1, display: "Don't phone me between 7 and 8. <strong>We'll be having</strong> dinner." },
+          { num: 2, before: "Phone me at 4. I won't be busy.", after: ". (play)", hints: [""], answers: [["we'll be playing", "we will be playing"]], explanation: "we'll be playing (in the middle of)" },
+          { num: 3, before: "I'll come to the station to meet you.", after: "for you outside. (wait)", hints: [""], answers: [["She'll be waiting", "I'll be waiting"]], explanation: "She'll/I'll be waiting (in the middle of)" },
+          { num: 4, before: "Don't phone after 10. The film started at 8 and", after: "by 10. (finish)", hints: [""], answers: [["it will have finished", "it'll have finished"]], explanation: "it will have finished (complete by 10)" },
+          { num: 5, before: "Do you think", after: "here in 20 years? (live)", hints: [""], answers: [["you'll still be living", "you will still be living"]], explanation: "you'll still be living (in the middle of)" },
+          { num: 6, before: "By the time she's 50,", after: "around the world. (travel)", hints: [""], answers: [["she'll have travelled", "she will have travelled"]], explanation: "she'll have travelled (complete by 50)" },
+          { num: 7, before: "I won't be at home tomorrow morning.", after: "at my friend's house. (stay)", hints: [""], answers: [["I'll be staying", "I will be staying"]], explanation: "I'll be staying (in the middle of)" },
+          { num: 8, before: "By the end of his trip,", after: "over €3,000. (spend)", hints: [""], answers: [["he'll have spent", "he will have spent"]], explanation: "he'll have spent (complete by end of trip)" },
+          { num: 9, before: "Don't wait for me — I", after: "anything until 9 tonight. (not / do)", hints: [""], answers: [["I won't be doing", "won't be doing"]], explanation: "I won't be doing (not in the middle of)" }
+        ]
+      }
+    ]
+  },
+  25: {
+    number: 25,
+    title: "when I do / when I've done / if and when",
+    grammar: [
+      {
+        id: 'A', title: "After when/while/before/after/until/as soon as, use present (not will)",
+        html: `<p class="grammar-note">After <strong>when / while / before / after / as soon as / until</strong>, use the <em>present</em> tense for future meaning (not <em>will</em>):</p>
+<div class="example-box">"I'll call you <strong>when I arrive</strong>." (not when I will arrive)</div>
+<div class="example-box">"<strong>Before you go</strong>, there's something I want to ask you."</div>
+<div class="example-box">"Wait here <strong>until I come</strong> back."</div>`
+      },
+      {
+        id: 'B', title: "Present perfect after when/after/until/as soon as",
+        html: `<p class="grammar-note">You can also use the <strong>present perfect</strong> (have done) after <em>when / after / until / as soon as</em>:</p>
+<div class="example-box">"Can I borrow that book <strong>when you've finished</strong> it?"</div>
+<div class="example-box">"Don't say anything <strong>until he has gone</strong>."</div>
+<p class="grammar-note">Both present simple and present perfect are possible:</p>
+<div class="example-box">"I'll come <strong>as soon as I finish</strong>." = "I'll come <strong>as soon as I've finished</strong>."</div>`
+      },
+      {
+        id: 'C', title: "if vs when",
+        html: `<p class="grammar-note"><strong>if</strong> = it is possible that something will happen (not sure):</p>
+<div class="example-box">"<strong>If</strong> it rains this weekend, we won't go out."</div>
+<p class="grammar-note"><strong>when</strong> = something is sure to happen (we know it will):</p>
+<div class="example-box">"<strong>When</strong> I get home this evening, I'm going to have a bath."</div>
+<p class="grammar-note">Compare: <strong>if</strong> I go out (maybe) vs <strong>when</strong> I go out (for sure)</p>`
+      }
+    ],
+    exercises: [
+      {
+        id: '25.1',
+        title: 'Exercise 25.1',
+        type: 'fill',
+        instructions: "Complete the sentences using the correct form of the verb.",
+        items: [
+          { isExample: true, num: 1, display: "You can borrow my umbrella, but I want it back. Please give it back to me <strong>when you've finished</strong> with it." },
+          { num: 2, before: "When we get the results,", after: "you know. (let)", hints: [""], answers: [["we'll let"]], explanation: "we'll let (will in the main clause)" },
+          { num: 3, before: "Before you leave, make sure the alarm", after: ". (start)", hints: [""], answers: [["starts"]], explanation: "starts (present simple after before)" },
+          { num: 4, before: "I'll phone you when", after: ". (change)", hints: [""], answers: [["it changes"]], explanation: "it changes (present simple after when)" },
+          { num: 5, before: "When the meal is ready,", after: "you something to eat. (make)", hints: [""], answers: [["I'll make"]], explanation: "I'll make (will in the main clause)" },
+          { num: 6, before: "I'll retire when", after: ". (be)", hints: [""], answers: [["I'm 40", "I am 40"]], explanation: "I'm 40 (present simple after when)" },
+          { num: 7, before: "Stay here until", after: "back. (come)", hints: [""], answers: [["I'll wait", "I come"]], explanation: "I come / I'll wait (present after until)" },
+          { num: 8, before: "I wonder what he'll be like when", after: ". (grow up)", hints: [""], answers: [["he grows up"]], explanation: "he grows up (present simple after when)" },
+          { num: 9, before: "I'll let you know as soon as", after: "ready. (be)", hints: [""], answers: [["you're", "you are"]], explanation: "you're (present simple after as soon as)" },
+          { num: 10, before: "Before you go home, the house", after: "clean. (be)", hints: [""], answers: [["is"]], explanation: "is (present simple after before)" },
+          { num: 11, before: "When the exam is over, I", after: "free. (be)", hints: [""], answers: [["will be", "'ll be"]], explanation: "will be (will in main clause)" },
+          { num: 12, before: "I'll lend you the book after", after: "it. (read)", hints: [""], answers: [["you've had", "you've read", "you have read"]], explanation: "you've read (present perfect after after)" }
+        ]
+      },
+      {
+        id: '25.2',
+        title: 'Exercise 25.2',
+        type: 'fill',
+        instructions: "Use a present tense or will (+ verb).",
+        items: [
+          { isExample: true, num: 1, display: "I'm going to bed when this programme <strong>finishes</strong>." },
+          { num: 2, before: "I'm going to carry on studying until", after: "a job. (find)", hints: [""], answers: [["she goes", "she finds"]], explanation: "she goes / she finds (present after until)" },
+          { num: 3, before: "Please let me know as soon as", after: "anything. (know)", hints: [""], answers: [["you know"]], explanation: "you know (present after as soon as)" },
+          { num: 4, before: "", after: "until you're ready. (wait)", hints: [""], answers: [["I'll wait...you're", "I'll wait...you are"]], explanation: "I'll wait...you're (will + present after until)" },
+          { num: 5, before: "", after: "be working when", after: "home? (get)", hints: [""], answers: [["Will you still be...I get"]], explanation: "Will you still be... I get (present after when)" },
+          { num: 6, before: "If", after: "problems,", after: "you know. (be ... let)", hints: [""], answers: [["there are...I'll let"]], explanation: "there are... I'll let (present in if clause, will in main)" },
+          { num: 7, before: "", after: "me when you see me. I've changed a lot. (recognise)", hints: [""], answers: [["You won't recognise...you see"]], explanation: "You won't recognise... you see (present after when)" },
+          { num: 8, before: "Call me if", after: "help. (need)", hints: [""], answers: [["you need...I'm", "you need"]], explanation: "you need (present after if)" }
+        ]
+      },
+      {
+        id: '25.4',
+        title: 'Exercise 25.4',
+        type: 'fill',
+        instructions: "Complete the sentences with if or when.",
+        items: [
+          { isExample: true, num: 1, display: "I might go out later. <strong>If</strong> I go out, I'll get some bread." },
+          { num: 2, before: "I'm going out later.", after: "I go out, I'll get some bread.", hints: [""], answers: [["if"]], explanation: "if (possibly buying bread)" },
+          { num: 3, before: "", after: "you're in bed tonight, will you think about tomorrow's exam?", hints: [""], answers: [["If"]], explanation: "If (maybe thinking about it)" },
+          { num: 4, before: "I'm going out shortly.", after: "I go out, I'll post your letters.", hints: [""], answers: [["when"]], explanation: "when (sure to go out)" },
+          { num: 5, before: "", after: "I don't see you again, have a nice holiday.", hints: [""], answers: [["If"]], explanation: "If (maybe won't see)" },
+          { num: 6, before: "", after: "you wake up, will you make me a cup of tea?", hints: [""], answers: [["When"]], explanation: "When (sure to wake up)" },
+          { num: 7, before: "I want you to come to the party, but", after: "you don't want to come, you don't have to.", hints: [""], answers: [["if"]], explanation: "if (maybe don't want to)" },
+          { num: 8, before: "I think Steve will get the job, but", after: "he doesn't get it, I'm sure he'll be very disappointed.", hints: [""], answers: [["if"]], explanation: "if (maybe won't get it)" }
+        ]
+      }
+    ]
   }
 };
 
@@ -3489,6 +4021,369 @@ const SKILLS = {
       { text: "I used to play tennis a lot, but I don't play very often now.", slow: "I used to play... tennis a lot... but I don't play... very often now." },
       { text: "This building used to be a cinema, but now it's a shop.", slow: "This building... used to be a cinema... but now... it's a shop." }
     ]
+  },
+  19: {
+    translation: [
+      { pt: "Estou jogando t\u00eanis na segunda-feira.", answers: ["I'm playing tennis on Monday.", "I am playing tennis on Monday."] },
+      { pt: "Voc\u00ea vai sair hoje \u00e0 noite?", answers: ["Are you going out tonight?", "Are you going out this evening?"] },
+      { pt: "Meu trem sai \u00e0s 11h30.", answers: ["My train leaves at 11.30.", "My train leaves at 11:30.", "My train leaves at half past eleven."] },
+      { pt: "A que horas come\u00e7a o filme?", answers: ["What time does the film start?", "What time does the movie start?"] },
+      { pt: "Estou indo ao dentista na segunda.", answers: ["I'm going to the dentist on Monday.", "I am going to the dentist on Monday."] },
+      { pt: "N\u00e3o estou trabalhando amanh\u00e3.", answers: ["I'm not working tomorrow.", "I am not working tomorrow."] }
+    ],
+    dialogues: [
+      { title: "Making Plans for the Weekend", lines: [
+        { speaker: 'A', text: "Are you doing anything this weekend?" },
+        { speaker: 'You', hint: "say you're playing tennis on Saturday", answers: ["I'm playing tennis on Saturday.", "Yes, I'm playing tennis on Saturday."] },
+        { speaker: 'A', text: "What time does the match start?" },
+        { speaker: 'You', hint: "say it starts at 2 o'clock", answers: ["It starts at 2 o'clock.", "It starts at 2.", "The match starts at 2 o'clock."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "I ___ (play) tennis on Monday. (arrangement)", answers: ["'m playing", "am playing"] },
+      { text: "My train ___ (leave) at 11.30. (timetable)", answers: ["leaves"] },
+      { text: "What time ___ the film ___ ? (start — timetable)", answers: ["does", "start"], twoBlank: true },
+      { text: "We ___ (have) a party next Saturday.", answers: ["'re having", "are having"] },
+      { text: "The concert ___ (start) at 7.30.", answers: ["starts"] },
+      { text: "I ___ (go) to the dentist on Monday.", answers: ["'m going", "am going"] },
+      { text: "I ___ (not / work) tomorrow.", answers: ["'m not working", "am not working"] },
+      { text: "The new term ___ (start) on 8 September.", answers: ["starts"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I will play tennis on Monday. (already arranged)", hint: "For arrangements, use present continuous, not will.", answers: ["I'm playing tennis on Monday.", "I am playing tennis on Monday."], explanation: "Arrangements = present continuous: I<strong>'m playing</strong>" },
+      { wrong: "The film will start at 7.30. (timetable)", hint: "For timetables, use present simple.", answers: ["The film starts at 7.30."], explanation: "Timetables = present simple: The film <strong>starts</strong>" },
+      { wrong: "What time does the concert starting?", hint: "After 'does', use base form.", answers: ["What time does the concert start?"], explanation: "After does: <strong>start</strong> (not starting)" },
+      { wrong: "I'm not go to work tomorrow.", hint: "Present continuous needs be + -ing.", answers: ["I'm not going to work tomorrow."], explanation: "I'm not <strong>going</strong> (be + -ing form)" }
+    ],
+    sentenceBuilding: [
+      { words: ["playing", "I'm", "tennis", "on", "Monday", "."], answer: "I'm playing tennis on Monday." },
+      { words: ["leaves", "My", "at", "train", "11.30", "."], answer: "My train leaves at 11.30." },
+      { words: ["you", "Are", "going", "out", "tonight", "?"], answer: "Are you going out tonight?" }
+    ],
+    grammarCards: [
+      { front: "When do we use present continuous for the future?", back: "For things already decided and arranged", example: "I<strong>'m playing</strong> tennis on Monday." },
+      { front: "When do we use present simple for the future?", back: "For timetables, programmes and schedules", example: "My train <strong>leaves</strong> at 11.30." },
+      { front: "Arrangement vs timetable?", back: "Personal arrangement = continuous. Scheduled event = simple.", example: "I<strong>'m going</strong> to a concert. It <strong>starts</strong> at 7.30." }
+    ],
+    dictation: [
+      { text: "I'm playing tennis on Monday.", words: 5 },
+      { text: "What time does the film start?", words: 7 },
+      { text: "I'm not working tomorrow.", words: 4 }
+    ],
+    shadowing: [
+      { text: "I'm playing tennis on Monday and then I'm meeting some friends for dinner.", slow: "I'm playing tennis... on Monday... and then I'm meeting... some friends for dinner." },
+      { text: "My train leaves at 11.30, so I need to be at the station by 11.15.", slow: "My train leaves... at 11.30... so I need to be... at the station by 11.15." }
+    ]
+  },
+  20: {
+    translation: [
+      { pt: "Eu vou tentar encontrar algo diferente.", answers: ["I'm going to try to find something different.", "I'm going to try and find something different."] },
+      { pt: "Olha aquelas nuvens! Vai chover.", answers: ["Look at those clouds! It's going to rain."] },
+      { pt: "O que voc\u00ea vai estudar na universidade?", answers: ["What are you going to study at university?"] },
+      { pt: "N\u00f3s \u00edamos viajar de trem, mas decidimos dirigir.", answers: ["We were going to travel by train, but we decided to drive.", "We were going to travel by train, but decided to drive."] },
+      { pt: "Eu ia te ligar, mas esqueci.", answers: ["I was going to call you, but I forgot.", "I was going to phone you, but I forgot."] },
+      { pt: "N\u00e3o vou aceitar a oferta.", answers: ["I'm not going to accept the offer."] }
+    ],
+    dialogues: [
+      { title: "Discussing Weekend Plans", lines: [
+        { speaker: 'A', text: "What are you going to do this weekend?" },
+        { speaker: 'You', hint: "say you're going to wash the car", answers: ["I'm going to wash the car.", "I am going to wash the car."] },
+        { speaker: 'A', text: "Look at those black clouds!" },
+        { speaker: 'You', hint: "say it's going to rain", answers: ["It's going to rain.", "It is going to rain."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "I've decided: I ___ (try) to find a new job.", answers: ["'m going to try", "am going to try"] },
+      { text: "Look at those clouds! It ___ (rain).", answers: ["'s going to rain", "is going to rain"] },
+      { text: "She ___ (give up) her job, but changed her mind.", answers: ["was going to give up"] },
+      { text: "We ___ (travel) by train, but decided to drive.", answers: ["were going to travel"] },
+      { text: "I ___ (not / accept) the offer.", answers: ["'m not going to accept", "am not going to accept"] },
+      { text: "He ___ (be) late. Look at the time!", answers: ["'s going to be", "is going to be"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I will wash the car. (already decided before)", hint: "Already decided = going to, not will.", answers: ["I'm going to wash the car."], explanation: "Already decided before = <strong>going to</strong>: I'm going to wash" },
+      { wrong: "Look! It will rain. (visible evidence)", hint: "When you can see evidence now, use going to.", answers: ["Look! It's going to rain."], explanation: "Visible evidence = <strong>going to</strong>: It's going to rain" },
+      { wrong: "I was going to phone you, but I was forgetting.", hint: "'Forgot' is a single past action, not continuous.", answers: ["I was going to phone you, but I forgot."], explanation: "Single past action = past simple: I <strong>forgot</strong>" },
+      { wrong: "She is going to having a baby.", hint: "After 'going to', use base form.", answers: ["She is going to have a baby.", "She's going to have a baby."], explanation: "going to + <strong>base form</strong>: going to have" }
+    ],
+    sentenceBuilding: [
+      { words: ["going", "I'm", "to", "wash", "the", "car", "."], answer: "I'm going to wash the car." },
+      { words: ["to", "going", "It's", "rain", "."], answer: "It's going to rain." },
+      { words: ["going", "were", "We", "to", "travel", "by", "train", "."], answer: "We were going to travel by train." }
+    ],
+    grammarCards: [
+      { front: "What does 'I'm going to do' mean?", back: "I have already decided to do it (intention)", example: "I<strong>'m going to wash</strong> the car. (already decided)" },
+      { front: "When do we use 'going to' for predictions?", back: "When we can see evidence NOW that something will happen", example: "Look at those clouds! It<strong>'s going to rain</strong>." },
+      { front: "What does 'I was going to' mean?", back: "I intended to do it, but I didn't", example: "I <strong>was going to</strong> call you, but I forgot." }
+    ],
+    dictation: [
+      { text: "I'm going to wash the car this afternoon.", words: 8 },
+      { text: "Look at those clouds! It's going to rain.", words: 8 },
+      { text: "We were going to travel by train.", words: 7 }
+    ],
+    shadowing: [
+      { text: "I'm going to try to find something different because I've been doing the same job for too long.", slow: "I'm going to try... to find something different... because I've been doing... the same job for too long." },
+      { text: "We were going to travel by train, but then we decided to drive instead.", slow: "We were going to... travel by train... but then we decided... to drive instead." }
+    ]
+  },
+  21: {
+    translation: [
+      { pt: "Deixei a porta aberta. Vou l\u00e1 fechar.", answers: ["I left the door open. I'll go and shut it.", "I left the door open. I'll go and close it."] },
+      { pt: "Eu te ajudo com isso.", answers: ["I'll help you with that.", "I'll help you with it."] },
+      { pt: "Eu te pago na sexta.", answers: ["I'll pay you back on Friday.", "I'll pay you on Friday."] },
+      { pt: "Prometo que n\u00e3o vou contar a ningu\u00e9m.", answers: ["I promise I won't tell anyone.", "I won't tell anyone, I promise."] },
+      { pt: "Quer que eu abra a janela?", answers: ["Shall I open the window?"] },
+      { pt: "Onde vamos almo\u00e7ar?", answers: ["Where shall we go for lunch?", "Where shall we have lunch?"] }
+    ],
+    dialogues: [
+      { title: "Offering Help", lines: [
+        { speaker: 'A', text: "This bag is really heavy." },
+        { speaker: 'You', hint: "offer to help", answers: ["I'll help you.", "I'll carry it for you.", "I'll help you with it."] },
+        { speaker: 'A', text: "Thanks! Where shall we put it?" },
+        { speaker: 'You', hint: "suggest putting it by the door", answers: ["Shall we put it by the door?", "Let's put it by the door."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "It's cold. I ___ (shut) the window.", answers: ["'ll shut", "will shut"] },
+      { text: "That bag looks heavy. I ___ (help) you.", answers: ["'ll help", "will help"] },
+      { text: "I promise I ___ (not / tell) anyone.", answers: ["won't tell"] },
+      { text: "___ I open the window? (offer)", answers: ["Shall"] },
+      { text: "Where ___ we go for lunch?", answers: ["shall"] },
+      { text: "I ___ (pay) you back on Friday. (promise)", answers: ["'ll pay", "will pay"] },
+      { text: "What would you like? I ___ (have) coffee, please.", answers: ["'ll have", "will have"] },
+      { text: "He ___ (not / help). He refuses.", answers: ["won't help"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I go and shut the door. (just decided now)", hint: "For instant decisions, use will, not present simple.", answers: ["I'll go and shut the door."], explanation: "Instant decision = <strong>I'll</strong>: I'll go and shut the door" },
+      { wrong: "I'll go on holiday next Saturday. (already arranged)", hint: "Already arranged = present continuous, not will.", answers: ["I'm going on holiday next Saturday."], explanation: "Already arranged = present continuous: I<strong>'m going</strong>" },
+      { wrong: "Will I open the window? (offer to someone)", hint: "For offers with I/we, use 'shall', not 'will'.", answers: ["Shall I open the window?"], explanation: "Offers = <strong>Shall</strong> I open the window?" },
+      { wrong: "I'll paying you back on Friday.", hint: "After will, use base form (no -ing).", answers: ["I'll pay you back on Friday."], explanation: "will + <strong>base form</strong>: I'll pay" }
+    ],
+    sentenceBuilding: [
+      { words: ["help", "I'll", "you", "with", "it", "."], answer: "I'll help you with it." },
+      { words: ["Shall", "the", "open", "I", "window", "?"], answer: "Shall I open the window?" },
+      { words: ["shall", "Where", "go", "we", "for", "lunch", "?"], answer: "Where shall we go for lunch?" }
+    ],
+    grammarCards: [
+      { front: "When do we use 'I'll' (will)?", back: "When we decide to do something NOW (instant decision), or for offers, promises", example: "I left the door open. <strong>I'll go</strong> and shut it." },
+      { front: "When do we use 'shall I/we'?", back: "For suggestions and offers", example: "<strong>Shall I</strong> open the window?" },
+      { front: "Will vs present continuous for the future?", back: "Will = instant decision now. Present continuous = already arranged.", example: "<strong>I'll get</strong> a taxi. (now) vs I<strong>'m going</strong> on holiday. (arranged)" }
+    ],
+    dictation: [
+      { text: "I'll help you with that bag.", words: 7 },
+      { text: "Shall I open the window?", words: 5 },
+      { text: "I promise I won't tell anyone.", words: 6 }
+    ],
+    shadowing: [
+      { text: "I left the door open. I'll go and shut it before it gets cold in here.", slow: "I left the door open... I'll go and shut it... before it gets cold... in here." },
+      { text: "That bag looks heavy. I'll help you carry it to the car.", slow: "That bag looks heavy... I'll help you... carry it... to the car." }
+    ]
+  },
+  22: {
+    translation: [
+      { pt: "Kate vai passar no exame de dire\u00e7\u00e3o. Ela dirige muito bem.", answers: ["Kate will pass her driving test. She's a very good driver.", "Kate will pass her driving test. She is a very good driver."] },
+      { pt: "Eu provavelmente vou chegar tarde hoje \u00e0 noite.", answers: ["I'll probably be home late tonight.", "I will probably be home late tonight."] },
+      { pt: "Tenho certeza de que voc\u00ea vai gostar do filme.", answers: ["I'm sure you'll enjoy the film.", "I'm sure you'll enjoy the movie.", "I am sure you will enjoy the film."] },
+      { pt: "Acho que n\u00e3o vai ser dif\u00edcil.", answers: ["I don't think it will be difficult.", "I don't think it'll be difficult."] },
+      { pt: "N\u00e3o ligue agora. Ela vai estar ocupada.", answers: ["Don't phone now. She'll be busy.", "Don't call now. She'll be busy."] },
+      { pt: "Espero que ele passe no exame.", answers: ["I hope he passes the exam."] }
+    ],
+    dialogues: [
+      { title: "Predicting the Future", lines: [
+        { speaker: 'A', text: "Do you think Kate will pass her driving test?" },
+        { speaker: 'You', hint: "say yes, you're sure she'll pass", answers: ["Yes, I'm sure she'll pass.", "Yes, she'll pass. She's a very good driver."] },
+        { speaker: 'A', text: "What about the weather this weekend?" },
+        { speaker: 'You', hint: "say you think it'll be nice", answers: ["I think it'll be nice.", "I think it will be nice this weekend."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "I'm sure she ___ (pass) the exam.", answers: ["'ll pass", "will pass"] },
+      { text: "I ___ probably be home late.", answers: ["'ll", "will"] },
+      { text: "I don't think it ___ (rain) today.", answers: ["will rain", "'ll rain"] },
+      { text: "I hope Kate ___ (pass) her test. (after hope)", answers: ["passes"] },
+      { text: "Don't phone Ann now. She ___ (be) busy.", answers: ["'ll be", "will be"] },
+      { text: "I wonder what ___ (happen).", answers: ["will happen", "'ll happen"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I hope she will pass the exam.", hint: "After 'I hope', use present tense, not will.", answers: ["I hope she passes the exam."], explanation: "After I hope: <strong>present</strong> tense: I hope she passes" },
+      { wrong: "I think it will probably be rain.", hint: "'will be' + adjective, or 'will rain' (verb).", answers: ["I think it will probably rain.", "I think it'll probably rain."], explanation: "will + <strong>verb</strong>: will rain (not will be rain)" },
+      { wrong: "She will be pass the exam.", hint: "After 'will', use base form directly.", answers: ["She will pass the exam.", "She'll pass the exam."], explanation: "will + <strong>base form</strong>: will pass (not will be pass)" },
+      { wrong: "I am sure you will enjoyed the film.", hint: "After 'will', use base form, not past.", answers: ["I'm sure you'll enjoy the film.", "I am sure you will enjoy the film."], explanation: "will + <strong>base form</strong>: will enjoy (not enjoyed)" }
+    ],
+    sentenceBuilding: [
+      { words: ["pass", "will", "Kate", "her", "driving", "test", "."], answer: "Kate will pass her driving test." },
+      { words: ["probably", "I'll", "be", "home", "late", "tonight", "."], answer: "I'll probably be home late tonight." },
+      { words: ["hope", "I", "passes", "she", "the", "exam", "."], answer: "I hope she passes the exam." }
+    ],
+    grammarCards: [
+      { front: "When do we use 'will' for predictions?", back: "To say what we believe/predict will happen", example: "Kate <strong>will pass</strong> her driving test." },
+      { front: "What tense after 'I hope'?", back: "Present tense, not will", example: "I hope she <strong>passes</strong>. (not will pass)" },
+      { front: "Can 'will' be used about the present?", back: "Yes! To say what we think is true now.", example: "Don't phone now. She<strong>'ll be</strong> busy." }
+    ],
+    dictation: [
+      { text: "I'm sure you'll enjoy the film.", words: 6 },
+      { text: "I'll probably be home late tonight.", words: 7 },
+      { text: "I hope she passes the exam.", words: 6 }
+    ],
+    shadowing: [
+      { text: "I'm sure Kate will pass her driving test because she's a very good driver.", slow: "I'm sure Kate... will pass her driving test... because she's a very good... driver." },
+      { text: "I'll probably be home late tonight, so don't wait for me for dinner.", slow: "I'll probably be... home late tonight... so don't wait for me... for dinner." }
+    ]
+  },
+  23: {
+    translation: [
+      { pt: "Eu vou te emprestar o dinheiro. (decidiu agora)", answers: ["I'll lend you the money.", "I will lend you the money."] },
+      { pt: "Eu vou lavar o carro. (j\u00e1 decidido antes)", answers: ["I'm going to wash the car."] },
+      { pt: "Olha aquelas nuvens! Vai chover.", answers: ["Look at those clouds! It's going to rain."] },
+      { pt: "Que cor voc\u00ea vai pintar o quarto? (j\u00e1 decidido)", answers: ["What colour are you going to paint the room?", "What color are you going to paint the room?"] },
+      { pt: "Vou tomar caf\u00e9, por favor. (decis\u00e3o instant\u00e2nea)", answers: ["I'll have coffee, please."] },
+      { pt: "Ele vai estudar medicina. (j\u00e1 decidido)", answers: ["He's going to study medicine.", "He is going to study medicine."] }
+    ],
+    dialogues: [
+      { title: "At a Restaurant", lines: [
+        { speaker: 'A', text: "What would you like to have?" },
+        { speaker: 'You', hint: "decide now to have the pasta", answers: ["I'll have the pasta, please.", "I'll have the pasta."] },
+        { speaker: 'A', text: "What are your plans for the weekend?" },
+        { speaker: 'You', hint: "say you're going to visit your parents (already decided)", answers: ["I'm going to visit my parents.", "I am going to visit my parents."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "Oh no, I forgot to call her. I ___ (call) her now. (instant)", answers: ["'ll call", "will call"] },
+      { text: "I've decided. I ___ (sell) my car. (already decided)", answers: ["'m going to sell", "am going to sell"] },
+      { text: "Look! The boat ___ (sink). (visible evidence)", answers: ["'s going to sink", "is going to sink"] },
+      { text: "What would you like? I ___ (have) tea, please.", answers: ["'ll have", "will have"] },
+      { text: "We bought paint. We ___ (paint) the kitchen.", answers: ["'re going to paint", "are going to paint"] },
+      { text: "I'm sure you ___ (find) a job soon. (prediction)", answers: ["'ll find", "will find"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I will wash the car. (I already decided)", hint: "Already decided before = going to, not will.", answers: ["I'm going to wash the car."], explanation: "Already decided = <strong>going to</strong>: I'm going to wash" },
+      { wrong: "I'm going to have coffee, please. (deciding now)", hint: "Deciding at the moment of speaking = will.", answers: ["I'll have coffee, please."], explanation: "Instant decision = <strong>will</strong>: I'll have coffee" },
+      { wrong: "Look at those clouds. It will rain. (evidence now)", hint: "When you can SEE evidence, use going to.", answers: ["Look at those clouds. It's going to rain."], explanation: "Visible evidence = <strong>going to</strong>: It's going to rain" },
+      { wrong: "I going to study medicine.", hint: "Missing 'am' — going to needs be + going to.", answers: ["I'm going to study medicine.", "I am going to study medicine."], explanation: "Subject + <strong>am/is/are</strong> + going to: I'm going to study" }
+    ],
+    sentenceBuilding: [
+      { words: ["lend", "I'll", "you", "the", "money", "."], answer: "I'll lend you the money." },
+      { words: ["going", "I'm", "to", "wash", "the", "car", "."], answer: "I'm going to wash the car." },
+      { words: ["clouds", "those", "at", "Look", "!", "going", "It's", "rain", "to", "."], answer: "Look at those clouds! It's going to rain." }
+    ],
+    grammarCards: [
+      { front: "will vs going to: when to use will?", back: "When you decide NOW at the moment of speaking", example: "I'll have coffee, please. (deciding now)" },
+      { front: "will vs going to: when to use going to?", back: "When you already decided BEFORE the moment of speaking", example: "I<strong>'m going to wash</strong> the car. (decided earlier)" },
+      { front: "Predictions: will or going to?", back: "Both work, but use 'going to' when you can see evidence NOW", example: "Look at those clouds! It<strong>'s going to rain</strong>." }
+    ],
+    dictation: [
+      { text: "I'll have coffee, please.", words: 4 },
+      { text: "I'm going to wash the car this afternoon.", words: 8 },
+      { text: "Look at those clouds! It's going to rain.", words: 8 }
+    ],
+    shadowing: [
+      { text: "I don't have enough money, so I'll lend you some if you need it.", slow: "I don't have... enough money... so I'll lend you some... if you need it." },
+      { text: "I've already decided. I'm going to sell my car and buy a new one.", slow: "I've already decided... I'm going to sell my car... and buy a new one." }
+    ]
+  },
+  24: {
+    translation: [
+      { pt: "N\u00e3o ligue entre 7 e 8. Estaremos jantando.", answers: ["Don't phone between 7 and 8. We'll be eating.", "Don't call between 7 and 8. We'll be eating."] },
+      { pt: "A essa hora na semana que vem, estarei na praia.", answers: ["This time next week I'll be lying on a beach.", "This time next week, I'll be on a beach."] },
+      { pt: "O filme j\u00e1 vai ter terminado \u00e0s 9 horas.", answers: ["The film will have finished by 9 o'clock.", "The movie will have finished by 9 o'clock."] },
+      { pt: "Voc\u00ea ainda vai estar morando aqui em 20 anos?", answers: ["Will you still be living here in 20 years?"] },
+      { pt: "At\u00e9 os 50, ela vai ter viajado o mundo todo.", answers: ["By the time she's 50, she'll have travelled around the world.", "By the time she is 50, she will have travelled around the world."] },
+      { pt: "O que voc\u00ea vai estar fazendo ao meio-dia?", answers: ["What will you be doing at noon?", "What will you be doing at midday?"] }
+    ],
+    dialogues: [
+      { title: "Making Plans Around Schedules", lines: [
+        { speaker: 'A', text: "Can I call you at 7 tonight?" },
+        { speaker: 'You', hint: "say no, you'll be eating dinner then", answers: ["No, I'll be eating dinner then.", "No, we'll be eating then.", "Sorry, I'll be having dinner then."] },
+        { speaker: 'A', text: "What about 9?" },
+        { speaker: 'You', hint: "say yes, the film will have finished by then", answers: ["Yes, the film will have finished by then.", "Yes, that's fine. The film will have finished by 9."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "Don't phone at 8. We ___ (eat) dinner.", answers: ["'ll be eating", "will be eating"] },
+      { text: "The film ___ (finish) by 9 o'clock.", answers: ["will have finished", "'ll have finished"] },
+      { text: "This time tomorrow I ___ (fly) over the Atlantic.", answers: ["'ll be flying", "will be flying"] },
+      { text: "By the end of the year, he ___ (spend) \u20ac5,000.", answers: ["will have spent", "'ll have spent"] },
+      { text: "I ___ (go) to the shops later. Can I get you anything?", answers: ["'ll be going", "will be going"] },
+      { text: "___ you ___ (use) the car tomorrow?", answers: ["Will", "be using"], twoBlank: true }
+    ],
+    brazilianErrors: [
+      { wrong: "I will eating dinner at 8.", hint: "Future continuous = will be + -ing.", answers: ["I will be eating dinner at 8.", "I'll be eating dinner at 8."], explanation: "Future continuous: will <strong>be</strong> eating (not will eating)" },
+      { wrong: "The film will have finish by 9.", hint: "Future perfect = will have + past participle.", answers: ["The film will have finished by 9."], explanation: "Future perfect: will have <strong>finished</strong> (past participle)" },
+      { wrong: "By 50, she will have travel the world.", hint: "After 'have', use past participle.", answers: ["By 50, she will have travelled the world."], explanation: "will have + <strong>past participle</strong>: will have travelled" },
+      { wrong: "What will you be do at noon?", hint: "Future continuous = will be + -ing form.", answers: ["What will you be doing at noon?"], explanation: "will be + <strong>-ing</strong>: will be doing (not be do)" }
+    ],
+    sentenceBuilding: [
+      { words: ["be", "We'll", "eating", "dinner", "at", "8", "."], answer: "We'll be eating dinner at 8." },
+      { words: ["have", "The", "film", "will", "finished", "by", "9", "."], answer: "The film will have finished by 9." },
+      { words: ["be", "Will", "you", "using", "the", "car", "tomorrow", "?"], answer: "Will you be using the car tomorrow?" }
+    ],
+    grammarCards: [
+      { front: "What is the future continuous?", back: "will be + -ing = in the middle of doing something at a future time", example: "Don't phone at 8. We<strong>'ll be eating</strong>." },
+      { front: "What is the future perfect?", back: "will have + past participle = completed before a future time", example: "The film <strong>will have finished</strong> by 9." },
+      { front: "Future continuous vs future perfect?", back: "Continuous = in the middle of. Perfect = already complete by.", example: "At 8: <strong>will be eating</strong>. By 9: <strong>will have finished</strong>." }
+    ],
+    dictation: [
+      { text: "This time next week I'll be on holiday.", words: 8 },
+      { text: "The film will have finished by nine o'clock.", words: 8 },
+      { text: "Will you be using the car tomorrow?", words: 7 }
+    ],
+    shadowing: [
+      { text: "Don't phone me between seven and eight because we'll be having dinner then.", slow: "Don't phone me... between seven and eight... because we'll be having... dinner then." },
+      { text: "By the time she's fifty, she'll have travelled around the whole world.", slow: "By the time she's fifty... she'll have travelled... around the whole world." }
+    ]
+  },
+  25: {
+    translation: [
+      { pt: "Eu te ligo quando eu chegar.", answers: ["I'll call you when I arrive.", "I'll phone you when I arrive."] },
+      { pt: "Espere aqui at\u00e9 eu voltar.", answers: ["Wait here until I come back.", "Wait here till I come back."] },
+      { pt: "Antes de voc\u00ea sair, tem algo que eu quero perguntar.", answers: ["Before you go, there's something I want to ask you.", "Before you leave, there's something I want to ask you."] },
+      { pt: "Se chover, n\u00e3o vamos sair.", answers: ["If it rains, we won't go out."] },
+      { pt: "Quando eu chegar em casa, vou tomar banho.", answers: ["When I get home, I'm going to have a bath.", "When I get home, I'll have a bath."] },
+      { pt: "Vou te emprestar o livro quando eu terminar.", answers: ["I'll lend you the book when I finish.", "I'll lend you the book when I've finished."] }
+    ],
+    dialogues: [
+      { title: "Making Conditional Plans", lines: [
+        { speaker: 'A', text: "When will you let me know the results?" },
+        { speaker: 'You', hint: "say you'll call as soon as you know", answers: ["I'll call you as soon as I know.", "I'll let you know as soon as I know.", "I'll phone you as soon as I find out."] },
+        { speaker: 'A', text: "What if you don't get the job?" },
+        { speaker: 'You', hint: "say if you don't get it, you'll try again", answers: ["If I don't get it, I'll try again.", "If I don't get the job, I'll try again."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "I'll call you when I ___ (arrive). (not will!)", answers: ["arrive"] },
+      { text: "Wait until I ___ (come) back.", answers: ["come", "'ve come", "have come"] },
+      { text: "___ it rains, we won't go out. (possible)", answers: ["If"] },
+      { text: "___ I get home, I'll have dinner. (certain)", answers: ["When"] },
+      { text: "I'll lend you the book as soon as I ___ (finish).", answers: ["finish", "'ve finished", "have finished"] },
+      { text: "Before you ___ (go), I need to ask you something.", answers: ["go"] },
+      { text: "Don't say anything until he ___ (leave).", answers: ["leaves", "has left", "'s left"] },
+      { text: "I hope she ___ (pass) the exam. (after hope)", answers: ["passes"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I'll call you when I will arrive.", hint: "After 'when' (future), use present, not will.", answers: ["I'll call you when I arrive."], explanation: "After when: <strong>present</strong> tense: when I arrive (not will arrive)" },
+      { wrong: "Wait until I will come back.", hint: "After 'until' (future), use present, not will.", answers: ["Wait until I come back."], explanation: "After until: <strong>present</strong>: until I come back" },
+      { wrong: "When I will get home, I'll have dinner.", hint: "No 'will' in the when-clause for future.", answers: ["When I get home, I'll have dinner."], explanation: "when + <strong>present</strong>: When I get home" },
+      { wrong: "If it will rain, we won't go out.", hint: "No 'will' in the if-clause.", answers: ["If it rains, we won't go out."], explanation: "if + <strong>present</strong>: If it rains" }
+    ],
+    sentenceBuilding: [
+      { words: ["call", "I'll", "you", "when", "I", "arrive", "."], answer: "I'll call you when I arrive." },
+      { words: ["until", "Wait", "I", "come", "back", "."], answer: "Wait until I come back." },
+      { words: ["rains", "If", "it", ",", "won't", "we", "go", "out", "."], answer: "If it rains, we won't go out." }
+    ],
+    grammarCards: [
+      { front: "What tense after when/before/after/until/as soon as for the future?", back: "Present tense (NOT will)", example: "I'll call you <strong>when I arrive</strong>. (not will arrive)" },
+      { front: "Can you use present perfect after when/after/until?", back: "Yes! Both present simple and present perfect are possible.", example: "I'll lend you the book when I <strong>finish</strong> / <strong>'ve finished</strong>." },
+      { front: "if vs when?", back: "if = maybe it will happen. when = sure to happen.", example: "<strong>If</strong> it rains (maybe). <strong>When</strong> I get home (sure)." }
+    ],
+    dictation: [
+      { text: "I'll call you when I arrive.", words: 6 },
+      { text: "Wait until I come back.", words: 5 },
+      { text: "If it rains, we won't go out.", words: 7 }
+    ],
+    shadowing: [
+      { text: "I'll call you when I arrive at the station, so please wait for me there.", slow: "I'll call you... when I arrive... at the station... so please wait for me there." },
+      { text: "If it rains this weekend, we won't go out, but when the weather improves, we'll go for a walk.", slow: "If it rains this weekend... we won't go out... but when the weather improves... we'll go for a walk." }
+    ]
   }
 };
 
@@ -3804,10 +4699,168 @@ document.getElementById('import-file').addEventListener('change', function(e) {
 });
 
 // ============================================================
+// LIVE CLASSES DATA
+// ============================================================
+const LIVE_LESSONS = [
+  {
+    id: 'L1',
+    date: '2026-04-07',
+    title: 'Spending vs Saving Money',
+    vocabulary: [
+      {
+        word: 'budget',
+        ipa: '/\u02C8b\u028Cd\u0292\u026At/',
+        meaning: 'A plan for how to spend your money over a period of time',
+        example: 'I made a monthly budget to control my spending.',
+        extra: 'Can be a noun or verb: "I need to budget carefully this month."',
+        ptBr: 'or\u00E7amento'
+      },
+      {
+        word: 'savings',
+        ipa: '/\u02C8se\u026Av\u026A\u014Bz/',
+        meaning: 'Money that you keep in a bank or safe place for future use',
+        example: 'She has good savings for emergencies.',
+        extra: 'Always plural when meaning "money saved". A "savings account" is a bank account for this purpose.',
+        ptBr: 'economia / poupan\u00E7a'
+      },
+      {
+        word: 'expense',
+        ipa: '/\u026Ak\u02C8sp\u025Bns/',
+        meaning: 'An amount of money that you spend on something',
+        example: 'Rent is my biggest monthly expense.',
+        extra: '"Expenses" (plural) = all the money you spend. "I need to manage my expenses." Related: "expensive" (adjective).',
+        ptBr: 'despesa / gasto'
+      },
+      {
+        word: 'luxury',
+        ipa: '/\u02C8l\u028Ck\u0283\u0259ri/',
+        meaning: 'Something expensive that you enjoy but don\'t really need',
+        example: 'Buying a new phone every year is a luxury.',
+        extra: 'Adjective form: "luxurious". Opposite: "necessity" (something you need).',
+        ptBr: 'luxo'
+      },
+      {
+        word: 'invest',
+        ipa: '/\u026An\u02C8v\u025Bst/',
+        meaning: 'To put money into something hoping to get more money back, or to spend time/effort on something valuable',
+        example: 'She decided to invest in stocks.',
+        extra: 'You can invest money, time, or energy. "Investment" = noun. "Investor" = person who invests.',
+        ptBr: 'investir'
+      },
+      {
+        word: 'clutter',
+        ipa: '/\u02C8kl\u028Ct\u0259r/',
+        meaning: 'A lot of things in a messy, disorganised state',
+        example: 'There\'s too much clutter in my room.',
+        extra: 'Can be noun or verb: "Don\'t clutter up the table." Related: "declutter" = remove clutter.',
+        ptBr: 'desordem / baguncia'
+      },
+      {
+        word: 'hoarder',
+        ipa: '/\u02C8h\u0254\u02D0rd\u0259r/',
+        meaning: 'A person who collects and keeps large amounts of things, often things they don\'t need',
+        example: 'My grandmother is a bit of a hoarder \u2014 she never throws anything away.',
+        extra: 'Verb: "to hoard". "Hoarding" = the action. Can be a serious psychological condition.',
+        ptBr: 'acumulador'
+      }
+    ],
+    idioms: [
+      {
+        phrase: 'save for a rainy day',
+        meaning: 'To save money now so you have it when you need it in the future (when problems come)',
+        example: 'I always try to save for a rainy day \u2014 you never know what might happen.',
+        usage: 'Used to encourage people to save money. The "rainy day" = a future difficult time.',
+        ptBr: 'guardar dinheiro para uma emerg\u00EAncia'
+      },
+      {
+        phrase: 'break the bank',
+        meaning: 'To cost too much money; to be very expensive',
+        example: 'That restaurant won\'t break the bank \u2014 it\'s quite affordable.',
+        usage: 'Often used in negative: "It won\'t break the bank." Related: "I\'m broke" = I have no money.',
+        ptBr: 'gastar demais / ficar sem dinheiro'
+      },
+      {
+        phrase: 'on a tight budget',
+        meaning: 'Having very little money available to spend',
+        example: 'We\'re on a tight budget this month, so no eating out.',
+        usage: '"Tight" here means "limited/restricted". Similar: "on a shoestring budget" = even less money.',
+        ptBr: 'com o or\u00E7amento apertado'
+      },
+      {
+        phrase: 'money slips through your fingers',
+        meaning: 'You spend money very quickly without realising it',
+        example: 'I don\'t know where my salary goes \u2014 money just slips through my fingers.',
+        usage: 'Describes someone who spends without thinking. The image: money is like water escaping through your hands.',
+        ptBr: 'o dinheiro escorre pelas m\u00E3os'
+      }
+    ],
+    grammarNotes: [
+      {
+        title: 'Common mistake: "doesn\'t makes"',
+        wrong: 'My mind doesn\'t makes sense.',
+        correct: 'My mind doesn\'t make sense.',
+        explanation: 'After <strong>doesn\'t / don\'t</strong>, always use the <strong>base form</strong> of the verb (no -s). The auxiliary "does" already carries the third person.'
+      },
+      {
+        title: '"separate" \u2014 spelling & pronunciation',
+        wrong: 'seperate',
+        correct: 'separate',
+        explanation: 'A common spelling mistake! Remember: there\'s <strong>a rat</strong> in sep<strong>a</strong>r<strong>a</strong>te. Adjective: /\u02C8s\u025Bp.\u0259r.\u0259t/. Verb: /\u02C8s\u025Bp.\u0259.re\u026At/.'
+      },
+      {
+        title: '"since" with present perfect',
+        wrong: 'I do this since I was a child.',
+        correct: 'I\'ve been doing this since I was a child.',
+        explanation: 'When something started in the past and continues now, use <strong>present perfect</strong> (simple or continuous) with "since". See Units 11-12.'
+      }
+    ],
+    exercises: [
+      {
+        id: 'L1.1',
+        title: 'Vocabulary Match',
+        type: 'fill',
+        instructions: 'Complete the sentences with the correct word: <em>budget, savings, expense, luxury, invest, clutter</em>.',
+        items: [
+          { num: 1, before: "I need to make a monthly", after: "so I don't overspend.", answers: [["budget"]], explanation: "A budget is a plan for spending money." },
+          { num: 2, before: "Eating out every day is a", after: "I can't afford.", answers: [["luxury"]], explanation: "A luxury is something expensive and not necessary." },
+          { num: 3, before: "Rent is my biggest", after: "every month.", answers: [["expense"]], explanation: "An expense is money spent on something." },
+          { num: 4, before: "She has enough", after: "to buy a car.", answers: [["savings"]], explanation: "Savings = money kept for future use." },
+          { num: 5, before: "I want to", after: "in my education \u2014 it's the best investment.", answers: [["invest"]], explanation: "Invest = put money/time into something valuable." },
+          { num: 6, before: "There's too much", after: "in this room. Let's clean up.", answers: [["clutter"]], explanation: "Clutter = messy disorganised things." }
+        ]
+      },
+      {
+        id: 'L1.2',
+        title: 'Idiom Practice',
+        type: 'fill',
+        instructions: 'Complete with the correct idiom: <em>save for a rainy day, break the bank, on a tight budget, slips through my fingers</em>.',
+        items: [
+          { num: 1, before: "Don't spend everything! You should always", after: ".", answers: [["save for a rainy day"]], explanation: "Save for a rainy day = save for future problems." },
+          { num: 2, before: "That jacket is nice but it costs \u20AC500. It would", after: "!", answers: [["break the bank"]], explanation: "Break the bank = cost too much money." },
+          { num: 3, before: "I can't go to the restaurant. I'm", after: "this month.", answers: [["on a tight budget"]], explanation: "On a tight budget = very limited money." },
+          { num: 4, before: "I never have money at the end of the month. It just", after: ".", answers: [["slips through my fingers"]], explanation: "Slips through fingers = spent quickly without noticing." }
+        ]
+      },
+      {
+        id: 'L1.3',
+        title: 'Grammar Fix',
+        type: 'write',
+        instructions: 'Correct the mistakes in these sentences.',
+        items: [
+          { num: 1, before: "My mind doesn't makes sense.", after: "", answers: [["My mind doesn't make sense."]], explanation: "After doesn't, use base form: make (not makes)." },
+          { num: 2, before: "I do this seperate thing since I was a child.", after: "", answers: [["I've been doing this separate thing since I was a child.", "I've done this separate thing since I was a child."]], explanation: "1) separate (not seperate). 2) Present perfect with 'since'." },
+          { num: 3, before: "Yesterday I broke the bank.", after: "", hints: ["Is this correct English?"], answers: [["OK"]], explanation: "This is actually correct! 'I broke the bank' = I spent too much money. Past simple of 'break the bank'." }
+        ]
+      }
+    ]
+  }
+];
+
+// ============================================================
 // RENDERING
 // ============================================================
 function hideAllViews() {
-  ['unit-view','flashcard-view','progress-view','phrases-view','plan-view','sync-view'].forEach(id => {
+  ['unit-view','flashcard-view','progress-view','phrases-view','plan-view','live-view','sync-view'].forEach(id => {
     document.getElementById(id).style.display = 'none';
   });
 }
@@ -3853,6 +4906,8 @@ function updateNav() {
     document.getElementById('nav-phrases').classList.add('active');
   } else if (currentView === 'plan') {
     document.getElementById('nav-plan').classList.add('active');
+  } else if (currentView === 'live') {
+    document.getElementById('nav-live').classList.add('active');
   } else if (currentView === 'sync') {
     document.getElementById('nav-sync').classList.add('active');
   }
@@ -3874,6 +4929,152 @@ function showPlan() {
   updateNav();
 }
 
+function showLiveClasses() {
+  currentView = 'live';
+  hideAllViews();
+  document.getElementById('live-view').style.display = 'block';
+  renderLiveClassesView();
+  updateNav();
+}
+
+let currentLesson = null;
+
+function renderLiveClassesView() {
+  const container = document.getElementById('live-content');
+  if (currentLesson) {
+    renderLessonDetail(currentLesson);
+    return;
+  }
+  let html = '<div style="max-width:600px;margin:0 auto">';
+  html += '<p style="text-align:center;color:var(--text-light);margin-bottom:1.5rem">Content from your live English classes with vocabulary, idioms, exercises, and flashcards.</p>';
+  LIVE_LESSONS.forEach(lesson => {
+    const d = new Date(lesson.date);
+    const dateStr = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    html += `<div class="card" style="margin-bottom:1rem;cursor:pointer;padding:1.2rem" onclick="currentLesson='${lesson.id}';renderLiveClassesView()">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:700;font-size:1.1rem;color:var(--primary)">${lesson.title}</div>
+          <div style="font-size:0.85rem;color:var(--text-light);margin-top:0.3rem">${dateStr} &middot; ${lesson.vocabulary.length} words &middot; ${lesson.idioms.length} idioms &middot; ${lesson.exercises.length} exercises</div>
+        </div>
+        <span style="font-size:1.3rem;color:var(--text-light)">&rsaquo;</span>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderLessonDetail(lessonId) {
+  const lesson = LIVE_LESSONS.find(l => l.id === lessonId);
+  if (!lesson) return;
+  const container = document.getElementById('live-content');
+  const d = new Date(lesson.date);
+  const dateStr = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  let html = `<div style="max-width:700px;margin:0 auto">
+    <button class="btn btn-secondary" onclick="currentLesson=null;renderLiveClassesView()" style="margin-bottom:1rem">&larr; All Classes</button>
+    <div class="unit-number">${dateStr}</div>
+    <h2 style="text-align:center;margin-bottom:1.5rem">${lesson.title}</h2>`;
+
+  // VOCABULARY
+  html += `<div class="card" style="margin-bottom:1.5rem"><h3 style="margin-bottom:1rem;color:var(--primary)">Vocabulary</h3>`;
+  lesson.vocabulary.forEach(v => {
+    html += `<div style="border-bottom:1px solid var(--border);padding:0.8rem 0">
+      <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:0.5rem">
+        <div>
+          <strong style="font-size:1.1rem">${v.word}</strong>
+          <span style="color:var(--text-light);font-size:0.85rem;margin-left:0.5rem">${v.ipa}</span>
+          <span style="color:var(--text-light);font-size:0.8rem;margin-left:0.5rem">(${v.ptBr})</span>
+        </div>
+        <div style="display:flex;gap:0.4rem">
+          <button class="btn btn-secondary" style="padding:0.2rem 0.5rem;font-size:0.75rem" onclick="speakWord('${v.word}')">&#128266;</button>
+          <button class="btn btn-secondary" style="padding:0.2rem 0.5rem;font-size:0.75rem" onclick="addLiveFlashcard('${v.word}','${v.ptBr}','${v.example.replace(/'/g,"\\'")}')">+ Card</button>
+        </div>
+      </div>
+      <div style="font-size:0.9rem;margin-top:0.3rem">${v.meaning}</div>
+      <div style="font-size:0.85rem;color:var(--text-light);margin-top:0.3rem;font-style:italic">"${v.example}"</div>
+      ${v.extra ? '<div style="font-size:0.8rem;color:var(--success);margin-top:0.3rem">&#128161; ' + v.extra + '</div>' : ''}
+    </div>`;
+  });
+  html += `</div>`;
+
+  // IDIOMS
+  html += `<div class="card" style="margin-bottom:1.5rem"><h3 style="margin-bottom:1rem;color:var(--warning)">Idioms</h3>`;
+  lesson.idioms.forEach(idiom => {
+    html += `<div style="border-bottom:1px solid var(--border);padding:0.8rem 0">
+      <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:0.5rem">
+        <strong style="font-size:1.05rem">${idiom.phrase}</strong>
+        <div style="display:flex;gap:0.4rem">
+          <button class="btn btn-secondary" style="padding:0.2rem 0.5rem;font-size:0.75rem" onclick="speakWord('${idiom.phrase}')">&#128266;</button>
+          <button class="btn btn-secondary" style="padding:0.2rem 0.5rem;font-size:0.75rem" onclick="addLiveFlashcard('${idiom.phrase}','${idiom.ptBr}','${idiom.example.replace(/'/g,"\\'")}')">+ Card</button>
+        </div>
+      </div>
+      <div style="font-size:0.9rem;margin-top:0.3rem">${idiom.meaning}</div>
+      <div style="font-size:0.85rem;color:var(--text-light);margin-top:0.3rem;font-style:italic">"${idiom.example}"</div>
+      <div style="font-size:0.8rem;color:var(--primary);margin-top:0.3rem">&#128172; ${idiom.usage}</div>
+      <div style="font-size:0.8rem;color:var(--text-light);margin-top:0.2rem">PT-BR: ${idiom.ptBr}</div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // GRAMMAR NOTES
+  if (lesson.grammarNotes && lesson.grammarNotes.length) {
+    html += `<div class="card" style="margin-bottom:1.5rem"><h3 style="margin-bottom:1rem;color:var(--error)">Grammar Notes</h3>`;
+    lesson.grammarNotes.forEach(note => {
+      html += `<div style="border-bottom:1px solid var(--border);padding:0.8rem 0">
+        <strong>${note.title}</strong>
+        <div style="margin-top:0.4rem">
+          <span style="background:var(--error-light);padding:0.15rem 0.4rem;border-radius:4px;font-size:0.85rem;text-decoration:line-through">${note.wrong}</span>
+          <span style="margin:0 0.5rem">&rarr;</span>
+          <span style="background:var(--success-light);padding:0.15rem 0.4rem;border-radius:4px;font-size:0.85rem">${note.correct}</span>
+        </div>
+        <div style="font-size:0.85rem;margin-top:0.4rem;color:var(--text)">${note.explanation}</div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // EXERCISES
+  html += `<div class="card" style="margin-bottom:1.5rem"><h3 style="margin-bottom:1rem;color:var(--success)">Practice Exercises</h3>`;
+  lesson.exercises.forEach(ex => {
+    html += renderExercise(ex);
+  });
+  html += `</div>`;
+
+  html += `</div>`;
+  container.innerHTML = html;
+}
+
+function speakWord(text) {
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB';
+    u.rate = 0.85;
+    speechSynthesis.speak(u);
+  }
+}
+
+function addLiveFlashcard(word, definition, example) {
+  if (flashcards.some(f => f.word === word)) {
+    showToast('Already in flashcards!');
+    return;
+  }
+  flashcards.push({
+    word: word,
+    definition: definition,
+    example: example,
+    audioUrl: '',
+    interval: 0,
+    nextReview: new Date().toISOString().split('T')[0],
+    ease: 2.5,
+    repetitions: 0,
+    lastReview: null
+  });
+  saveState();
+  updateFcBadge();
+  showToast('Added to flashcards: ' + word);
+}
+
 function showSync() {
   currentView = 'sync';
   hideAllViews();
@@ -3888,6 +5089,7 @@ function renderCurrentView() {
   else if (currentView === 'progress') renderProgressView();
   else if (currentView === 'phrases') renderPhrasesView();
   else if (currentView === 'plan') renderPlanView();
+  else if (currentView === 'live') renderLiveClassesView();
   else if (currentView === 'sync') renderSyncView();
 }
 

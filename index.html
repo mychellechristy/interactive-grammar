@@ -4845,11 +4845,11 @@ const LIVE_LESSONS = [
         id: 'L1.3',
         title: 'Grammar Fix',
         type: 'write',
-        instructions: 'Correct the mistakes in these sentences.',
+        instructions: 'Correct the mistakes in these sentences. If the sentence is correct, type OK.',
         items: [
-          { num: 1, before: "My mind doesn't makes sense.", after: "", answers: [["My mind doesn't make sense."]], explanation: "After doesn't, use base form: make (not makes)." },
-          { num: 2, before: "I do this seperate thing since I was a child.", after: "", answers: [["I've been doing this separate thing since I was a child.", "I've done this separate thing since I was a child."]], explanation: "1) separate (not seperate). 2) Present perfect with 'since'." },
-          { num: 3, before: "Yesterday I broke the bank.", after: "", hints: ["Is this correct English?"], answers: [["OK"]], explanation: "This is actually correct! 'I broke the bank' = I spent too much money. Past simple of 'break the bank'." }
+          { num: 1, context: "My mind doesn't makes sense.", answers: ["My mind doesn't make sense."], explanation: "After doesn't, use base form: make (not makes)." },
+          { num: 2, context: "I do this seperate thing since I was a child.", answers: ["I've been doing this separate thing since I was a child.", "I've done this separate thing since I was a child."], explanation: "1) separate (not seperate). 2) Present perfect with 'since'." },
+          { num: 3, context: "Yesterday I broke the bank.", hint: "Is this correct English?", answers: ["OK"], explanation: "This is actually correct! 'I broke the bank' = I spent too much money. Past simple of 'break the bank'." }
         ]
       }
     ]

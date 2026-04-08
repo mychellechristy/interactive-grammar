@@ -999,6 +999,10 @@ main {
       <option value="8">Unit 8: Present Perfect 2</option>
       <option value="9">Unit 9: Present Perfect Continuous</option>
       <option value="10">Unit 10: Perfect Continuous vs Simple</option>
+      <option value="11">Unit 11: How long have you (been)...?</option>
+      <option value="12">Unit 12: For and Since</option>
+      <option value="13">Unit 13: Present Perfect and Past 1</option>
+      <option value="14">Unit 14: Present Perfect and Past 2</option>
     </select>
     <button onclick="showFlashcards()" id="nav-fc">Flashcards <span class="badge" id="fc-badge" style="display:none">0</span></button>
     <button onclick="showProgress()" id="nav-progress">Progress</button>
@@ -1767,6 +1771,429 @@ const UNITS = {
         ]
       }
     ]
+  },
+  11: {
+    number: 11,
+    title: "how long have you (been) ... ?",
+    grammar: [
+      {
+        id: 'A', title: 'Present perfect for things that started in the past and still continue',
+        html: `<p>We use the <strong>present perfect</strong> to talk about something that began in the past and still continues now.</p>
+<p>Compare the <em>present</em> and <em>present perfect</em>:</p>
+<ul>
+<li>Paul <strong>is</strong> in hospital. (present)<br><em>but</em> He<strong>'s been</strong> in hospital <strong>since Monday</strong>. (= He has been … started Monday, still there now)</li>
+<li>We <strong>know</strong> each other very well.<br><em>but</em> We<strong>'ve known</strong> each other <strong>for a long time</strong>. (<em>not</em> We know)</li>
+<li>Do they <strong>have</strong> a car?<br><em>but</em> <strong>How long have</strong> they <strong>had</strong> their car?</li>
+<li>She<strong>'s waiting</strong> for somebody.<br><em>but</em> She <strong>hasn't been waiting</strong> very long.</li>
+</ul>`
+      },
+      {
+        id: 'B', title: 'Present perfect simple vs continuous with "how long"',
+        html: `<p><strong>I've known / I've had / I've lived</strong> etc. is the <em>present perfect simple</em>.<br>
+<strong>I've been learning / I've been waiting</strong> etc. is the <em>present perfect continuous</em>.</p>
+<p>When we ask or say 'how long', the continuous is more usual (see Unit 10):</p>
+<ul>
+<li>I<strong>'ve been learning</strong> English <strong>since January</strong>.</li>
+<li>It<strong>'s been raining</strong> all morning.</li>
+<li>Richard <strong>has been doing</strong> the same job <strong>for 20 years</strong>.</li>
+<li>'<strong>How long have</strong> you <strong>been driving</strong>?' 'Since I was 17.'</li>
+</ul>
+<p>Some verbs (for example, <strong>know</strong> and <strong>like</strong>) are not normally used in the continuous:</p>
+<ul>
+<li>How long <strong>have</strong> you <strong>known</strong> Jane? (<em>not</em> have you been knowing)</li>
+<li>I<strong>'ve had</strong> these shoes for ages. (<em>not</em> I've been having)</li>
+</ul>`
+      },
+      {
+        id: 'C', title: 'Continuous or simple with live and work',
+        html: `<p>You can use either the continuous or simple with <strong>live</strong> and <strong>work</strong>:</p>
+<ul>
+<li>Julia <strong>has been living</strong> in this house for a long time. <em>or</em> Julia <strong>has lived</strong> …</li>
+<li>How long <strong>have</strong> you <strong>been working</strong> here? <em>or</em> How long <strong>have</strong> you <strong>worked</strong> here?</li>
+</ul>
+<p>But we use the simple (<strong>have lived</strong> etc.) with <strong>always</strong>:</p>
+<ul><li>I<strong>'ve always lived</strong> in the country. (<em>not</em> always been living)</li></ul>`
+      },
+      {
+        id: 'D', title: "I haven't (done something) since/for",
+        html: `<p>We say '<strong>I haven't</strong> (done something) <strong>since/for</strong> …' (<em>present perfect simple</em>):</p>
+<ul>
+<li>I <strong>haven't seen</strong> Tom since Monday. (= Monday was the last time I saw him)</li>
+<li>Sarah <strong>hasn't phoned</strong> for ages. (= the last time she phoned was ages ago)</li>
+</ul>`
+      }
+    ],
+    exercises: [
+      {
+        id: '11.1',
+        title: 'Exercise 11.1',
+        type: 'fill',
+        instructions: "Which is right? Choose the correct answer.",
+        items: [
+          { isExample: true, num: 1, display: "Ben is a friend of mine. I <strong>know</strong> / I've known him very well. (<em>I know</em> is correct)" },
+          { num: 2, before: "I like your house. How long", after: "here?", answers: [["have you lived", "have you been living"]], explanation: "Present perfect: started in past, continues now" },
+          { num: 3, before: "You'll need an umbrella if you go out now.", after: ".", answers: [["It's been raining", "It has been raining"]], explanation: "Present perfect continuous for ongoing action" },
+          { num: 4, before: "The weather", after: "awful since I arrived here.", answers: [["has been", "'s been"]], explanation: "has been (state verb = simple)" },
+          { num: 5, before: "I'm sorry I'm late.", after: "long?", answers: [["Have you been waiting", "Are you waiting"]], explanation: "Present perfect continuous for duration" },
+          { num: 6, before: "We've moved.", after: "in New Street now.", answers: [["We're living", "We are living", "We've been living"]], explanation: "Present continuous or present perfect continuous both work" },
+          { num: 7, before: "I met Maria only recently. I", after: "her very long.", answers: [["haven't known", "don't know"]], explanation: "haven't known: present perfect for duration" },
+          { num: 8, before: "Lisa is in Germany.", after: "there on a business trip.", answers: [["She's been", "She has been", "She's"]], explanation: "She's been or She's (present perfect or present)" },
+          { num: 9, before: "That's a very old bike. How long", after: "it?", answers: [["have you had", "do you have"]], explanation: "have you had: present perfect for possession duration" },
+          { num: 10, before: "I'm not feeling good.", after: "ill all day.", answers: [["I've been feeling", "I have been feeling"]], explanation: "Present perfect continuous for temporary state" }
+        ]
+      },
+      {
+        id: '11.2',
+        title: 'Exercise 11.2',
+        type: 'write',
+        instructions: "Read the situations and write questions using the words in brackets.",
+        items: [
+          { isExample: true, num: 1, display: "A friend tells you that Paul is in hospital. You ask: (how long / Paul / hospital?)<br><strong>How long has Paul been in hospital?</strong>" },
+          { num: 2, before: "You know that Jane is a good friend of Katherine's. You ask Jane:", after: "", hints: ["(how long / you / know / Katherine?)"], answers: [["How long have you known Katherine?"]], explanation: "know = state verb → present perfect simple" },
+          { num: 3, before: "Your friend's sister went to Australia some time ago and she's still there. You ask:", after: "", hints: ["(how long / sister / in Australia?)"], answers: [["How long has your sister been in Australia?"]], explanation: "been in = present perfect" },
+          { num: 4, before: "You meet a woman who tells you that she teaches English. You ask her:", after: "", hints: ["(how long / you / teach / English?)"], answers: [["How long have you been teaching English?", "How long have you taught English?"]], explanation: "teach = action verb → continuous or simple" },
+          { num: 5, before: "Tom always wears the same jacket. It's very old. You ask him:", after: "", hints: ["(how long / you / have / that jacket?)"], answers: [["How long have you had that jacket?"]], explanation: "have = state verb → simple" },
+          { num: 6, before: "You are talking to a friend about Joe, who now works at the airport. You ask:", after: "", hints: ["(how long / Joe / work / airport?)"], answers: [["How long has Joe been working at the airport?", "How long has Joe worked at the airport?"]], explanation: "work = continuous or simple" },
+          { num: 7, before: "You meet somebody on a plane. She says she lives in Chicago. You ask her:", after: "", hints: ["(you / always / live / in Chicago?)"], answers: [["Have you always lived in Chicago?"]], explanation: "always → present perfect simple" }
+        ]
+      },
+      {
+        id: '11.3',
+        title: 'Exercise 11.3',
+        type: 'fill',
+        instructions: "Complete B's answers to A's questions.",
+        items: [
+          { isExample: true, num: 1, display: "Paul is in hospital, isn't he? — Yes, he <strong>has been</strong> in hospital since Monday." },
+          { isExample: true, num: 2, display: "Do you see Lisa very often? — No, I <strong>haven't seen</strong> her for three months." },
+          { num: 3, before: "Is Paul married? — Yes, he", after: "married for ten years.", answers: [["'s been", "has been"]], explanation: "'s been / has been" },
+          { num: 4, before: "Is Amy married? — Yes, she", after: "married to a German guy.", answers: [["'s been", "has been", "'s"]], explanation: "state continuing now" },
+          { num: 5, before: "Do you still play tennis? — No, I", after: "tennis for years.", answers: [["haven't played"]], explanation: "haven't played for years" },
+          { num: 6, before: "Are you waiting for the bus? — Yes, I", after: "for about 20 minutes.", answers: [["'ve been waiting", "have been waiting"]], explanation: "continuous for ongoing waiting" },
+          { num: 7, before: "You know Mel, don't you? — Yes, we", after: "each other a long time.", answers: [["'ve known", "have known"]], explanation: "know = state verb → simple" },
+          { num: 8, before: "Jack is never ill, is he? — No, he", after: "ill since I've known him.", answers: [["hasn't been"]], explanation: "hasn't been ill" },
+          { num: 9, before: "Martin lives in Italy, doesn't he? — Yes, he", after: "in Milan.", answers: [["'s been living", "has been living", "'s lived", "has lived", "lives"]], explanation: "lives/has lived/has been living" },
+          { num: 10, before: "Sue lives in Berlin, doesn't she? — Yes, she", after: "in Berlin for many years.", answers: [["'s lived", "has lived", "'s been living", "has been living"]], explanation: "has lived / has been living" },
+          { num: 11, before: "Is Joe watching TV? — Yes, he", after: "TV all evening.", answers: [["'s been watching", "has been watching"]], explanation: "continuous for ongoing action" },
+          { num: 12, before: "Do you watch TV a lot? — No, I", after: "TV since last weekend.", answers: [["haven't watched"]], explanation: "haven't watched since" },
+          { num: 13, before: "Do you have a headache? — Yes, I", after: "a headache all morning.", answers: [["'ve had", "have had"]], explanation: "have had for duration" },
+          { num: 14, before: "Do you go to the cinema a lot? — No, I", after: "to the cinema for ages.", answers: [["haven't been"]], explanation: "haven't been for ages" },
+          { num: 15, before: "Would you like to go to New York one day? — Yes, I", after: "to go to New York.", hints: ["(use always / want)"], answers: [["'ve always wanted", "have always wanted"]], explanation: "have always wanted" }
+        ]
+      }
+    ]
+  },
+  12: {
+    number: 12,
+    title: "for and since, when ... ? and how long ... ?",
+    grammar: [
+      {
+        id: 'A', title: 'for and since',
+        html: `<p>We use <strong>for</strong> and <strong>since</strong> to say how long something has been happening.</p>
+<p><strong>for</strong> + a period of time:</p>
+<table><tr><td>two hours</td><td>a long time</td><td>a week</td></tr>
+<tr><td>20 minutes</td><td>six months</td><td>ages</td></tr>
+<tr><td>five days</td><td>50 years</td><td>years</td></tr></table>
+<ul>
+<li>Sally has been working here <strong>for six months</strong>. (<em>not</em> since six months)</li>
+<li>I haven't seen Tom <strong>for three days</strong>.</li>
+</ul>
+<p><strong>since</strong> + the start of a period:</p>
+<table><tr><td>8 o'clock</td><td>April</td><td>lunchtime</td></tr>
+<tr><td>Monday</td><td>2001</td><td>we arrived</td></tr>
+<tr><td>12 May</td><td>Christmas</td><td>I got up</td></tr></table>
+<ul>
+<li>Sally has been working here <strong>since April</strong>. (= from April until now)</li>
+<li>I haven't seen Tom <strong>since Monday</strong>.</li>
+</ul>`
+      },
+      {
+        id: 'B', title: 'for in negative sentences / for + all',
+        html: `<p>We often leave out <strong>for</strong> (but not usually in negative sentences):</p>
+<ul>
+<li>They've been married <strong>for ten years</strong>. <em>or</em> They've been married <strong>ten years</strong>.</li>
+<li>They <strong>haven't had</strong> a holiday <strong>for</strong> ten years. (you need <strong>for</strong>)</li>
+</ul>
+<p>You can use <strong>in</strong> instead of <strong>for</strong> in negative sentences (I haven't … etc.):</p>
+<ul><li>They haven't had a holiday <strong>in ten years</strong>. (= for ten years)</li></ul>
+<p>We do <em>not</em> use <strong>for + all</strong> … (all day / all my life etc.):</p>
+<ul><li>I've lived here <strong>all my life</strong>. (<em>not</em> for all my life)</li></ul>`
+      },
+      {
+        id: 'C', title: 'when …? (past simple) vs how long …? (present perfect)',
+        html: `<p>Compare <strong>when</strong> …? (+ <em>past simple</em>) and <strong>how long</strong> …? (+ <em>present perfect</em>):</p>
+<ul>
+<li>A: <strong>When</strong> did it start raining? — B: It started raining <strong>an hour ago / at 1 o'clock</strong>.</li>
+<li>A: <strong>How long</strong> has it been raining? — B: It's been raining <strong>for an hour / since 1 o'clock</strong>.</li>
+</ul>
+<ul>
+<li>A: <strong>When</strong> did Joe and Kate first meet? — B: They first met <strong>a long time ago / when they were at school</strong>.</li>
+<li>A: <strong>How long</strong> have they known each other? — B: They've known each other <strong>for a long time / since they were at school</strong>.</li>
+</ul>`
+      },
+      {
+        id: 'D', title: "It's (been) … since …",
+        html: `<p>We say: <strong>it's</strong> (= it <strong>is</strong>) <em>or</em> <strong>it's been</strong> (= it <strong>has been</strong>) + a long time / six months (etc.) + <strong>since</strong> something happened:</p>
+<ul>
+<li><strong>It's two years since</strong> I last saw Joe. <em>or</em> <strong>It's been two years since</strong> … (= I <strong>haven't seen</strong> Joe for two years)</li>
+<li><strong>It's ages since</strong> we went to the cinema. <em>or</em> <strong>It's been ages since</strong> … (= We <strong>haven't been</strong> to the cinema for ages)</li>
+<li><strong>How long is it since</strong> Mrs Hill died? <em>or</em> <strong>How long has it been since</strong> … (= when did she die?)</li>
+</ul>`
+      }
+    ],
+    exercises: [
+      {
+        id: '12.1',
+        title: 'Exercise 12.1',
+        type: 'fill',
+        instructions: "Write <strong>for</strong> or <strong>since</strong>.",
+        items: [
+          { isExample: true, num: 1, display: "It's been raining <strong>since</strong> lunchtime." },
+          { num: 2, before: "Paul has lived in Brazil", after: "ten years.", answers: [["for"]], explanation: "ten years = period of time → for" },
+          { num: 3, before: "I'm tired of waiting. We've been sitting here", after: "an hour.", answers: [["for"]], explanation: "an hour = period → for" },
+          { num: 4, before: "Kevin has been looking for a job", after: "he left school.", answers: [["since"]], explanation: "he left school = point in time → since" },
+          { num: 5, before: "I haven't been to a party", after: "ages.", answers: [["for"]], explanation: "ages = period → for" },
+          { num: 6, before: "I wonder where Joe is. I haven't seen him", after: "last week.", answers: [["since"]], explanation: "last week = point in time → since" },
+          { num: 7, before: "Jane is away on holiday. She's been away", after: "Friday.", answers: [["since"]], explanation: "Friday = point in time → since" },
+          { num: 8, before: "The weather is dry. It hasn't rained", after: "a few weeks.", answers: [["for"]], explanation: "a few weeks = period → for" }
+        ]
+      },
+      {
+        id: '12.2',
+        title: 'Exercise 12.2',
+        type: 'fill',
+        instructions: "Look at each answer and choose the right question.",
+        items: [
+          { isExample: true, num: 1, display: "Ten years ago. → <strong>When did they get married?</strong> (not How long have they been married?)" },
+          { num: 2, before: "About five years. →", after: "", hints: ["How long have you had this car? / When did you buy this car?"], answers: [["How long have you had this car?"]], explanation: "About five years = duration → How long" },
+          { num: 3, before: "Only a few minutes. →", after: "", hints: ["How long have you been waiting? / When did you get here?"], answers: [["How long have you been waiting?"]], explanation: "Only a few minutes = duration → How long" },
+          { num: 4, before: "September. →", after: "", hints: ["How long have you been doing your course? / When did your course start?"], answers: [["When did your course start?"]], explanation: "September = point in time → When" },
+          { num: 5, before: "Last week. →", after: "", hints: ["How long has Anna been in London? / When did Anna arrive in London?"], answers: [["When did Anna arrive in London?"]], explanation: "Last week = point → When" },
+          { num: 6, before: "A long time. →", after: "", hints: ["How long have you known each other? / When did you first meet each other?"], answers: [["How long have you known each other?"]], explanation: "A long time = duration → How long" }
+        ]
+      },
+      {
+        id: '12.3',
+        title: 'Exercise 12.3',
+        type: 'write',
+        instructions: "Read the situations and complete the sentences.",
+        items: [
+          { isExample: true, num: 1, display: "It's raining. It's been raining since lunchtime. It <strong>started raining</strong> at lunchtime." },
+          { isExample: true, num: 2, display: "Ann and Jess are friends. They first met years ago. They've <strong>known each other for</strong> years." },
+          { num: 3, before: "Mark is unwell. He became ill on Sunday. He has", after: "Sunday.", answers: [["been ill since", "been unwell since"]], explanation: "He has been ill since Sunday" },
+          { num: 4, before: "Sarah is married. She's been married for a year. She got", after: ".", answers: [["married a year ago"]], explanation: "She got married a year ago" },
+          { num: 5, before: "You have a headache. It started when you woke up. I've", after: "I woke up.", answers: [["had a headache since"]], explanation: "I've had a headache since I woke up" },
+          { num: 6, before: "Sue is in a meeting at work. It's been going on since 9 o'clock. The meeting", after: "at 9 o'clock.", answers: [["started", "began"]], explanation: "The meeting started at 9 o'clock" },
+          { num: 7, before: "You're working in a hotel. You started working there six months ago. I've been", after: ".", answers: [["working in a hotel for six months", "working there for six months"]], explanation: "I've been working in a hotel for six months" },
+          { num: 8, before: "Kate is learning Japanese. She's been doing this for a long time. Kate started", after: ".", answers: [["learning Japanese a long time ago"]], explanation: "Kate started learning Japanese a long time ago" }
+        ]
+      },
+      {
+        id: '12.4',
+        title: 'Exercise 12.4',
+        type: 'write',
+        instructions: "Complete B's sentences. Use for or since, then rewrite using It's … since …",
+        items: [
+          { isExample: true, num: 1, display: "Do you often go on holiday? — No, I <strong>haven't had a holiday for</strong> five years.<br>It's <strong>five years since I last had a holiday</strong>." },
+          { num: 2, before: "Have you seen Lisa recently? — No, I haven't seen", after: "about a month.", answers: [["her for", "Lisa for"]], explanation: "haven't seen her for about a month" },
+          { num: 3, before: "Do you still go swimming regularly? — No, I haven't been swimming", after: "a long time.", answers: [["for"]], explanation: "haven't been swimming for a long time" },
+          { num: 4, before: "Do you still ride a bike these days? — No, I haven't ridden a bike", after: "ages.", answers: [["for"]], explanation: "haven't ridden a bike for ages" }
+        ]
+      }
+    ]
+  },
+  13: {
+    number: 13,
+    title: "Present perfect and past 1 (I have done and I did)",
+    grammar: [
+      {
+        id: 'A', title: 'Present perfect vs past simple: the key difference',
+        html: `<p>Study this example situation:</p>
+<p>Tom is looking for his key. He can't find it. He <strong>has lost</strong> his key. (<em>present perfect</em>)<br>
+This means that he doesn't have his key <em>now</em>.</p>
+<p>Ten minutes later: Now Tom <strong>has found</strong> his key. He has it now.</p>
+<p><strong>Has</strong> he <strong>lost</strong> his key? No, he <strong>has found</strong> it.<br>
+<strong>Did</strong> he <strong>lose</strong> his key? Yes, he <strong>did</strong>.</p>
+<p>He <strong>lost</strong> his key (<em>past simple</em>) but now he <strong>has found</strong> it. (<em>present perfect</em>)</p>
+<p>The present perfect (something <strong>has happened</strong>) is a <em>present</em> tense. It tells us about the situation <em>now</em>.<br>
+'Tom <strong>has lost</strong> his key' = he doesn't have his key <em>now</em>.</p>
+<p>The past simple (something <strong>happened</strong>) tells us only about the <em>past</em>. If somebody says 'Tom <strong>lost</strong> his key', we don't know whether he has the key now or not.</p>
+<p>Compare:</p>
+<ul>
+<li>They<strong>'ve gone</strong> away. They'll be back on Friday. (they are away <em>now</em>)</li>
+<li>They <strong>went</strong> away, but I think they're back at home now. (<em>not</em> They've gone away)</li>
+<li>It <strong>has stopped</strong> raining now, so we don't need the umbrella. (it isn't raining <em>now</em>)</li>
+<li>It <strong>stopped</strong> raining for a while, but now it's raining again. (<em>not</em> It has stopped)</li>
+</ul>`
+      },
+      {
+        id: 'B', title: 'Present perfect for new/recent happenings',
+        html: `<p>You can use the present perfect for new or recent happenings:</p>
+<ul>
+<li>I<strong>'ve repaired</strong> the washing machine. It's working OK now.</li>
+<li>'Hannah <strong>has had</strong> a baby! It's a boy.' 'That's great news.'</li>
+</ul>
+<p>Usually, you can also use the past simple: I <strong>repaired</strong> the washing machine.</p>
+<p>Use the past simple (<em>not</em> the present perfect) for things that are not recent or new:</p>
+<ul>
+<li>Mozart <strong>was</strong> a composer. He <strong>wrote</strong> more than 600 pieces of music. (<em>not</em> has been … has written)</li>
+<li>My mother <strong>grew</strong> up in Italy. (<em>not</em> has grown)</li>
+</ul>
+<p>Compare: Somebody <strong>has invented</strong> a new type of washing machine.<br>
+Who <strong>invented</strong> the telephone? (<em>not</em> has invented)</p>`
+      },
+      {
+        id: 'C', title: 'Present perfect for new info, then past simple to continue',
+        html: `<p>We use the present perfect to give new information (see Unit 7). But if we continue to talk about it, we normally use the past simple:</p>
+<ul>
+<li>A: Ow! I<strong>'ve burnt</strong> myself. — B: How <strong>did</strong> you <strong>do</strong> that? (<em>not</em> have you done) — A: I <strong>picked</strong> up a hot dish. (<em>not</em> have picked)</li>
+<li>A: Look! Somebody <strong>has spilt</strong> something on the sofa. — B: Well, it <strong>wasn't</strong> me. I <strong>didn't do</strong> it. (<em>not</em> hasn't been … haven't done)</li>
+</ul>`
+      }
+    ],
+    exercises: [
+      {
+        id: '13.1',
+        title: 'Exercise 13.1',
+        type: 'fill',
+        instructions: "Complete the sentences. Use the present perfect where possible. Otherwise use the past simple.",
+        items: [
+          { isExample: true, num: 1, display: "I can't get in. I<strong>'ve lost</strong> my key. (lose)" },
+          { num: 2, before: "The office is empty. Everybody", after: "home.", hints: ["(go)"], answers: [["has gone", "'s gone"]], explanation: "has gone (they are away now)" },
+          { num: 3, before: "I meant to call you last night, but I", after: ".", hints: ["(forget)"], answers: [["forgot"]], explanation: "forgot (past simple — last night)" },
+          { num: 4, before: "Helen", after: "to New York for a holiday, but she's back home in London now.", hints: ["(go)"], answers: [["went"]], explanation: "went (she's back now, so past simple)" },
+          { num: 5, before: "Are you OK? Yes, I", after: "a headache, but it's OK now.", hints: ["(have)"], answers: [["had"]], explanation: "had (it's finished now)" },
+          { num: 6, before: "Can you help us? Our car", after: "down.", hints: ["(break)"], answers: [["has broken", "'s broken"]], explanation: "has broken (current problem)" }
+        ]
+      },
+      {
+        id: '13.2',
+        title: 'Exercise 13.2',
+        type: 'write',
+        instructions: "Are the underlined parts of these sentences OK? Correct them where necessary.",
+        items: [
+          { isExample: true, num: 1, display: "Did you hear about Sophie? <u>She's given up</u> her job. → <strong>OK</strong>" },
+          { num: 2, before: "<u>My mother has grown up</u> in Italy.", after: "", answers: [["My mother grew up"]], explanation: "Past simple for completed past events" },
+          { num: 3, before: "How many plays <u>has William Shakespeare written</u>?", after: "", answers: [["did William Shakespeare write"]], explanation: "Shakespeare is dead — past simple" },
+          { num: 4, before: "<u>I've forgotten</u> his name. Is it Joe or Jack?", after: "", answers: [["OK"]], explanation: "Present perfect: I don't remember now" },
+          { num: 5, before: "Who <u>has invented</u> paper?", after: "", answers: [["invented", "Who invented"]], explanation: "Historical fact — past simple" },
+          { num: 6, before: "<u>Drugs have become</u> a big problem everywhere.", after: "", answers: [["OK"]], explanation: "Present perfect: situation continuing now" },
+          { num: 7, before: "We've washed the car, but now it's dirty again.", after: "", answers: [["OK", "We washed"]], explanation: "Both are acceptable" },
+          { num: 8, before: "Where <u>have you been born</u>?", after: "", answers: [["were you born", "Where were you born?"]], explanation: "Past simple: birth is a completed event" },
+          { num: 9, before: "<u>Ellie has gone</u> shopping. She'll be back in about an hour.", after: "", answers: [["OK"]], explanation: "Present perfect: she is away now" },
+          { num: 10, before: "Albert Einstein <u>has been</u> the scientist who <u>has developed</u> the theory of relativity.", after: "", answers: [["was the scientist who developed", "Albert Einstein was the scientist who developed"]], explanation: "Past simple: Einstein is dead" }
+        ]
+      },
+      {
+        id: '13.3',
+        title: 'Exercise 13.3',
+        type: 'fill',
+        instructions: "Put the verb into the correct form, present perfect or past simple.",
+        items: [
+          { isExample: true, num: 1, display: "It <strong>stopped</strong> raining for a while, but now it's raining again. (it / stop)" },
+          { num: 2, before: "The town where I live is very different now.", after: "a lot.", hints: ["(it / change)"], answers: [["It has changed", "It's changed"]], explanation: "has changed (different now)" },
+          { num: 3, before: "I studied German at school, but", after: "most of it now.", hints: ["(I / forget)"], answers: [["I've forgotten", "I have forgotten"]], explanation: "have forgotten (don't remember now)" },
+          { num: 4, before: "The police", after: "three people, but later they let them go.", hints: ["(arrest)"], answers: [["arrested"]], explanation: "arrested (completed past action)" },
+          { num: 5, before: "What do you think of my English? Do you think", after: "?", hints: ["(it / improve)"], answers: [["it's improved", "it has improved"]], explanation: "has improved (situation now)" },
+          { num: 6, before: "Are you ready to go?", after: "your coffee?", hints: ["(you / finish)"], answers: [["Have you finished"]], explanation: "Have you finished (now?)" },
+          { num: 7, before: "", after: "for a job as a tour guide, but I wasn't successful.", hints: ["(I / apply)"], answers: [["I applied"]], explanation: "applied (completed past event)" },
+          { num: 8, before: "Where's my bike?", after: "outside the house, but it's not there now.", hints: ["(it / be)"], answers: [["It was"]], explanation: "was (past location)" },
+          { num: 9, before: "Quick! We need to call an ambulance.", after: "an accident.", hints: ["(there / be)"], answers: [["There's been", "There has been"]], explanation: "There has been (current situation)" },
+          { num: 10, before: "A: I've found my phone. B: Oh, good. Where", after: "it?", hints: ["(you / find)"], answers: [["did you find"]], explanation: "did you find (continuing to discuss)" },
+          { num: 11, before: "A: Ben won't be able to play tennis for a while. He", after: "his arm.", hints: ["(He / break)"], answers: [["'s broken", "has broken", "He's broken", "He has broken"]], explanation: "has broken (current situation)" }
+        ]
+      }
+    ]
+  },
+  14: {
+    number: 14,
+    title: "Present perfect and past 2 (I have done and I did)",
+    grammar: [
+      {
+        id: 'A', title: "Don't use present perfect with finished time words",
+        html: `<p>We do <em>not</em> use the present perfect (<strong>I have done</strong>) when we talk about a <em>finished</em> time (for example, <strong>yesterday / last year / ten minutes ago</strong> etc.). We use a past tense:</p>
+<ul>
+<li>It <strong>was</strong> very cold <strong>yesterday</strong>. (<em>not</em> has been)</li>
+<li>Paul and Lucy <strong>arrived</strong> ten minutes <strong>ago</strong>. (<em>not</em> have arrived)</li>
+<li><strong>Did</strong> you <strong>eat</strong> a lot of sweets <strong>when you were a child</strong>? (<em>not</em> have you eaten)</li>
+<li>I <strong>got</strong> home late <strong>last night</strong>. I <strong>was</strong> very tired and <strong>went</strong> straight to bed.</li>
+</ul>
+<p>Use the past to ask <strong>When …?</strong> or <strong>What time …?</strong>:</p>
+<ul>
+<li><strong>When did</strong> your friends <strong>arrive</strong>? (<em>not</em> have … arrived)</li>
+<li><strong>What time did</strong> you <strong>finish</strong> work?</li>
+</ul>`
+      },
+      {
+        id: 'B', title: 'Present perfect for unfinished time vs past simple for finished time',
+        html: `<p>Compare:</p>
+<table>
+<tr><th>Present perfect (<strong>have done</strong>)</th><th>Past simple (<strong>did</strong>)</th></tr>
+<tr><td>I<strong>'ve done</strong> a lot of work <strong>today</strong>.</td><td>I <strong>did</strong> a lot of work <strong>yesterday</strong>.</td></tr>
+<tr><td>It <strong>hasn't rained this week</strong>.</td><td>It <strong>didn't rain last week</strong>.</td></tr>
+<tr><td>Have you <strong>seen</strong> Anna <strong>this morning</strong>? (it is still morning)</td><td><strong>Did</strong> you <strong>see</strong> Anna <strong>this morning</strong>? (it is now afternoon or evening)</td></tr>
+<tr><td>I<strong>'ve been working</strong> here <strong>since 2010</strong>. (I still work here now)</td><td>I <strong>worked</strong> here <strong>from 2010 to 2014</strong>. (I don't work here now)</td></tr>
+<tr><td>I <strong>haven't seen</strong> her. (= I haven't seen her recently)</td><td>A: <strong>Was</strong> Lisa at the party <strong>on Sunday</strong>? — B: I don't think so. I <strong>didn't see</strong> her.</td></tr>
+<tr><td>We<strong>'ve been waiting</strong> for an hour. (we are still waiting now)</td><td>We <strong>waited</strong> (or <strong>were waiting</strong>) for an hour. (we are no longer waiting)</td></tr>
+<tr><td>I<strong>'ve never ridden</strong> a horse. (in my life)</td><td>I <strong>never rode</strong> a bike <strong>when I was a child</strong>.</td></tr>
+</table>`
+      }
+    ],
+    exercises: [
+      {
+        id: '14.1',
+        title: 'Exercise 14.1',
+        type: 'write',
+        instructions: "Are the underlined parts of these sentences OK? Correct them where necessary.",
+        items: [
+          { isExample: true, num: 1, display: "<u>I've lost</u> my key. I can't find it anywhere. → <strong>OK</strong>" },
+          { num: 2, before: "<u>Have you eaten</u> a lot of sweets when you were a child?", after: "", answers: [["Did you eat"]], explanation: "when you were a child = finished time → past simple" },
+          { num: 3, before: "<u>I've bought</u> a new car. You must come and see it.", after: "", answers: [["OK"]], explanation: "Present perfect: new happening with current relevance" },
+          { num: 4, before: "<u>I've bought</u> a new car last week.", after: "", answers: [["I bought"]], explanation: "last week = finished time → past simple" },
+          { num: 5, before: "<u>Where have you been</u> yesterday evening?", after: "", answers: [["Where were you"]], explanation: "yesterday = finished time → past simple" },
+          { num: 6, before: "<u>Maria has left</u> school in 1999.", after: "", answers: [["Maria left"]], explanation: "in 1999 = finished time → past simple" },
+          { num: 7, before: "I'm looking for Mike. <u>Have you seen</u> him?", after: "", answers: [["OK"]], explanation: "Present perfect: asking about now" },
+          { num: 8, before: "'<u>Have you been</u> to Paris?' 'Yes, many times.'", after: "", answers: [["OK"]], explanation: "Present perfect: life experience" },
+          { num: 9, before: "I'm very hungry. <u>I haven't eaten</u> much today.", after: "", answers: [["OK"]], explanation: "today = unfinished time → present perfect OK" },
+          { num: 10, before: "When <u>has this bridge been</u> built?", after: "", answers: [["was this bridge built", "When was this bridge built?"]], explanation: "When …? = asking about finished time → past simple" }
+        ]
+      },
+      {
+        id: '14.2',
+        title: 'Exercise 14.2',
+        type: 'write',
+        instructions: "Make sentences from the words in brackets. Use the present perfect or past simple.",
+        items: [
+          { isExample: true, num: 1, display: "(it / not / rain / this week) <strong>It hasn't rained this week.</strong>" },
+          { num: 2, before: "(the weather / be / cold / recently) The weather", after: ".", answers: [["has been cold recently", "'s been cold recently"]], explanation: "recently = unfinished time → present perfect" },
+          { num: 3, before: "(it / cold / last week) It", after: ".", answers: [["was cold last week"]], explanation: "last week = finished → past simple" },
+          { num: 4, before: "(I / not / eat / any fruit yesterday) I", after: ".", answers: [["didn't eat any fruit yesterday"]], explanation: "yesterday = finished → past simple" },
+          { num: 5, before: "(I / not / eat / any fruit today) I", after: ".", answers: [["haven't eaten any fruit today"]], explanation: "today = unfinished → present perfect" },
+          { num: 6, before: "(Emily / earn / a lot of money / this year) Emily", after: ".", answers: [["has earned a lot of money this year", "'s earned a lot of money this year"]], explanation: "this year = unfinished → present perfect" },
+          { num: 7, before: "(she / not / earn / so much / last year) She", after: ".", answers: [["didn't earn so much last year"]], explanation: "last year = finished → past simple" },
+          { num: 8, before: "(you / have / a holiday recently?) Have", after: "?", answers: [["you had a holiday recently"]], explanation: "recently = present perfect" }
+        ]
+      },
+      {
+        id: '14.3',
+        title: 'Exercise 14.3',
+        type: 'fill',
+        instructions: "Put the verb into the correct form, present perfect or past simple.",
+        items: [
+          { isExample: true, num: 1, display: "I <strong>haven't been</strong> to Canada, but I'd like to go there. (I / not / be)" },
+          { num: 2, before: "Paul and Lucy", after: "about ten minutes ago.", hints: ["(arrive)"], answers: [["arrived"]], explanation: "ten minutes ago = finished time" },
+          { num: 3, before: "I'm tired.", after: "well last night.", hints: ["(I / not / sleep)"], answers: [["I didn't sleep"]], explanation: "last night = finished" },
+          { num: 4, before: "", after: "a bus drivers' strike last week, so", hints: ["(There / be)"], answers: [["There was"]], explanation: "last week = finished" },
+          { num: 5, before: "Edward", after: "in a bank for 15 years. Then he gave it up.", hints: ["(work)"], answers: [["worked"]], explanation: "worked … then he gave it up = finished period" },
+          { num: 6, before: "Mary lives in Dublin.", after: "there all her life.", hints: ["(She / live)"], answers: [["She's lived", "She has lived"]], explanation: "She's lived there all her life = still there" },
+          { num: 7, before: "My grandfather", after: "before I was born.", hints: ["(die)"], answers: [["died"]], explanation: "before I was born = finished time" },
+          { num: 8, before: "I don't know Karen's husband.", after: "him.", hints: ["(I / never / meet)"], answers: [["I've never met", "I have never met"]], explanation: "never = life experience → present perfect" },
+          { num: 9, before: "It's nearly lunchtime, and", after: "Martin all morning. I wonder where he is.", hints: ["(I / not / see)"], answers: [["I haven't seen"]], explanation: "all morning = unfinished → present perfect" },
+          { num: 10, before: "A:", after: "to the cinema last night?", hints: ["(you / go)"], answers: [["Did you go"]], explanation: "last night = finished" },
+          { num: 11, before: "A:", after: "very warm here since we arrived.", hints: ["(It / be)"], answers: [["It's been", "It has been"]], explanation: "since = present perfect" },
+          { num: 12, before: "A: Where do you live? B: In Boston. A: How long", after: "there? B: Five years.", hints: ["(you / live)"], answers: [["have you lived", "have you been living"]], explanation: "How long = present perfect" }
+        ]
+      }
+    ]
   }
 };
 
@@ -2337,6 +2764,214 @@ const SKILLS = {
       { text: "How long have you been reading that book?", slow: "How long... have you been reading... that book?" },
       { text: "She's been travelling for three months.", slow: "She's been travelling... for three months." }
     ]
+  },
+  11: {
+    translation: [
+      { pt: "Há quanto tempo você mora aqui?", answers: ["How long have you lived here?", "How long have you been living here?"] },
+      { pt: "Eu conheço ele desde 2010.", answers: ["I've known him since 2010.", "I have known him since 2010."] },
+      { pt: "Ela está esperando há meia hora.", answers: ["She's been waiting for half an hour.", "She has been waiting for half an hour."] },
+      { pt: "Há quanto tempo você tem esse carro?", answers: ["How long have you had this car?", "How long have you had that car?"] },
+      { pt: "Eu não vejo o Tom faz semanas.", answers: ["I haven't seen Tom for weeks."] },
+      { pt: "Está chovendo desde de manhã.", answers: ["It's been raining since this morning.", "It has been raining since this morning."] }
+    ],
+    dialogues: [
+      { title: "Meeting an Old Friend", lines: [
+        { speaker: 'A', text: "Hi! I didn't know you lived in Dublin!" },
+        { speaker: 'You', hint: "say you've been living here for two years", answers: ["I've been living here for two years.", "I have been living here for two years."] },
+        { speaker: 'A', text: "Do you like it?" },
+        { speaker: 'You', hint: "say you've always liked Dublin", answers: ["I've always liked Dublin.", "I have always liked Dublin.", "Yes, I've always liked it."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "How long ___ you ___ (know) her?", answers: ["have, known"] },
+      { text: "I ___ ___ (wait) for an hour.", answers: ["'ve been waiting", "have been waiting"] },
+      { text: "She ___ ___ (live) here all her life.", answers: ["'s lived", "has lived"] },
+      { text: "We ___ ___ (not / see) each other for ages.", answers: ["haven't seen"] },
+      { text: "How long ___ he ___ (have) that bike?", answers: ["has, had"] },
+      { text: "I ___ ___ ___ (learn) English since January.", answers: ["'ve been learning", "have been learning"] }
+    ],
+    brazilianErrors: [
+      { wrong: "How long you know him?", hint: "Missing auxiliary", answers: ["How long have you known him?"], explanation: "Questions need 'have' + past participle: How long have you known him?" },
+      { wrong: "I am knowing her for five years.", hint: "Know doesn't take continuous + wrong tense", answers: ["I've known her for five years.", "I have known her for five years."], explanation: "'Know' is a state verb — use present perfect simple: I've known her for five years." },
+      { wrong: "I'm living here since 2020.", hint: "Since needs present perfect", answers: ["I've been living here since 2020.", "I have been living here since 2020."], explanation: "With 'since', use present perfect: I've been living here since 2020." },
+      { wrong: "She has been here since three years.", hint: "Since vs for", answers: ["She has been here for three years."], explanation: "'Three years' is a period → use 'for', not 'since'." }
+    ],
+    sentenceBuilding: [
+      { words: ["have", "How", "you", "long", "here", "lived", "?"], answer: "How long have you lived here?" },
+      { words: ["been", "waiting", "She's", "for", "ages", "."], answer: "She's been waiting for ages." },
+      { words: ["haven't", "I", "Tom", "seen", "Monday", "since", "."], answer: "I haven't seen Tom since Monday." }
+    ],
+    grammarCards: [
+      { front: "When do we use present perfect with 'how long'?", back: "For situations that started in the past and continue now", example: "<strong>How long have you lived</strong> here? (you still live here)" },
+      { front: "Know, like, have: continuous or simple with 'how long'?", back: "Simple! These state verbs don't take continuous.", example: "How long <strong>have you known</strong> her? (not been knowing)" },
+      { front: "Live and work with 'how long': continuous or simple?", back: "Both are correct!", example: "How long <strong>have you been working</strong> / <strong>have you worked</strong> here?" }
+    ],
+    dictation: [
+      { text: "How long have you been waiting?", words: 6 },
+      { text: "I've known her since we were at school.", words: 9 },
+      { text: "She hasn't been feeling well for a few days.", words: 9 }
+    ],
+    shadowing: [
+      { text: "How long have you been learning English?", slow: "How long... have you been learning... English?" },
+      { text: "I've known him since I was a child.", slow: "I've known him... since I was... a child." }
+    ]
+  },
+  12: {
+    translation: [
+      { pt: "Eu trabalho aqui desde março.", answers: ["I've been working here since March.", "I have been working here since March.", "I've worked here since March."] },
+      { pt: "Faz cinco anos que não vejo a Maria.", answers: ["I haven't seen Maria for five years.", "It's five years since I last saw Maria.", "It's been five years since I saw Maria."] },
+      { pt: "Está chovendo há duas horas.", answers: ["It's been raining for two hours.", "It has been raining for two hours."] },
+      { pt: "Quando vocês se casaram?", answers: ["When did you get married?"] },
+      { pt: "Há quanto tempo vocês se conhecem?", answers: ["How long have you known each other?"] },
+      { pt: "Eu moro aqui desde que nasci.", answers: ["I've lived here since I was born.", "I have lived here since I was born."] }
+    ],
+    dialogues: [
+      { title: "Job Interview", lines: [
+        { speaker: 'A', text: "How long have you been working at your current job?" },
+        { speaker: 'You', hint: "say for three years", answers: ["I've been working there for three years.", "For three years."] },
+        { speaker: 'A', text: "And when did you start learning English?" },
+        { speaker: 'You', hint: "say when you were 10", answers: ["I started learning English when I was 10.", "When I was 10."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "I've lived here ___ 2015.", answers: ["since"] },
+      { text: "She's been away ___ three days.", answers: ["for"] },
+      { text: "We've been married ___ ten years.", answers: ["for"] },
+      { text: "I haven't eaten ___ breakfast.", answers: ["since"] },
+      { text: "He's been ill ___ last week.", answers: ["since"] },
+      { text: "It hasn't rained ___ ages.", answers: ["for"] },
+      { text: "I've had this phone ___ Christmas.", answers: ["since"] },
+      { text: "They've known each other ___ a long time.", answers: ["for"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I work here since 2020.", hint: "Since needs present perfect", answers: ["I've worked here since 2020.", "I've been working here since 2020."], explanation: "With 'since', use present perfect: I've worked here since 2020." },
+      { wrong: "I live here for five years.", hint: "Wrong tense for duration", answers: ["I've lived here for five years.", "I've been living here for five years."], explanation: "For duration up to now, use present perfect: I've lived here for five years." },
+      { wrong: "It has three years since I saw her.", hint: "It's / It has been", answers: ["It's three years since I saw her.", "It's been three years since I saw her."], explanation: "Use 'it's' or 'it's been': It's three years since I saw her." },
+      { wrong: "I'm here since Monday.", hint: "Wrong tense", answers: ["I've been here since Monday."], explanation: "Since + present perfect: I've been here since Monday." }
+    ],
+    sentenceBuilding: [
+      { words: ["been", "for", "raining", "It's", "hours", "two", "."], answer: "It's been raining for two hours." },
+      { words: ["since", "haven't", "I", "Monday", "her", "seen", "."], answer: "I haven't seen her since Monday." },
+      { words: ["years", "since", "five", "It's", "met", "we", "."], answer: "It's five years since we met." }
+    ],
+    grammarCards: [
+      { front: "for vs since: what's the rule?", back: "FOR + period of time, SINCE + starting point", example: "<strong>for</strong> two hours / <strong>since</strong> 8 o'clock" },
+      { front: "Can you leave out 'for'?", back: "Yes in positive sentences, but not usually in negative.", example: "Married <strong>ten years</strong> (OK) / Haven't had a holiday <strong>for</strong> ages (need 'for')" },
+      { front: "When …? vs How long …?", back: "When = past simple / How long = present perfect", example: "<strong>When</strong> did you arrive? / <strong>How long</strong> have you been here?" }
+    ],
+    dictation: [
+      { text: "It's been raining since lunchtime.", words: 5 },
+      { text: "How long have you had that jacket?", words: 7 },
+      { text: "It's three years since I last saw Joe.", words: 9 }
+    ],
+    shadowing: [
+      { text: "I've been waiting for you since 8 o'clock.", slow: "I've been waiting... for you... since 8 o'clock." },
+      { text: "How long has it been since you last had a holiday?", slow: "How long... has it been... since you last... had a holiday?" }
+    ]
+  },
+  13: {
+    translation: [
+      { pt: "Eu perdi minha chave. Não consigo encontrar.", answers: ["I've lost my key. I can't find it.", "I have lost my key. I can't find it."] },
+      { pt: "Ela foi embora. Volta na sexta.", answers: ["She's gone away. She'll be back on Friday.", "She has gone away. She'll be back on Friday."] },
+      { pt: "Mozart escreveu mais de 600 peças musicais.", answers: ["Mozart wrote more than 600 pieces of music."] },
+      { pt: "Ai! Eu me queimei!", answers: ["Ow! I've burnt myself!", "Ow! I've burned myself!"] },
+      { pt: "Quem inventou o telefone?", answers: ["Who invented the telephone?"] },
+      { pt: "Alguém inventou uma nova máquina de lavar.", answers: ["Somebody has invented a new washing machine.", "Someone has invented a new washing machine."] }
+    ],
+    dialogues: [
+      { title: "Breaking News", lines: [
+        { speaker: 'A', text: "Have you heard? The neighbours have moved out!" },
+        { speaker: 'You', hint: "ask when they moved", answers: ["When did they move?", "Really? When did they move out?"] },
+        { speaker: 'A', text: "Last weekend. The house is empty now." },
+        { speaker: 'You', hint: "say you've never spoken to them", answers: ["I've never spoken to them.", "I never spoke to them."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "Tom ___ (lose) his key. He can't get in.", answers: ["has lost", "'s lost"] },
+      { text: "Mozart ___ (write) more than 600 pieces.", answers: ["wrote"] },
+      { text: "They ___ (go) away. They'll be back Friday.", answers: ["'ve gone", "have gone"] },
+      { text: "It ___ (stop) raining for a while, but now it's raining again.", answers: ["stopped"] },
+      { text: "Who ___ (invent) the telephone?", answers: ["invented"] },
+      { text: "Somebody ___ (spill) coffee on the sofa.", answers: ["has spilt", "'s spilt", "has spilled", "'s spilled"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I lost my key. I can't find it.", hint: "Current result needs present perfect", answers: ["I've lost my key. I can't find it."], explanation: "When the result matters NOW, use present perfect: I've lost my key." },
+      { wrong: "Who has discovered America?", hint: "Historical fact = past simple", answers: ["Who discovered America?"], explanation: "Historical facts use past simple: Who discovered America?" },
+      { wrong: "She has gone to Paris last week.", hint: "Last week = finished time", answers: ["She went to Paris last week."], explanation: "Finished time (last week) → past simple: She went to Paris last week." },
+      { wrong: "My mother has grown up in Italy.", hint: "Completed past = past simple", answers: ["My mother grew up in Italy."], explanation: "Growing up is completed → past simple: My mother grew up in Italy." }
+    ],
+    sentenceBuilding: [
+      { words: ["lost", "I've", "my", "key", "."], answer: "I've lost my key." },
+      { words: ["invented", "Who", "telephone", "the", "?"], answer: "Who invented the telephone?" },
+      { words: ["has", "raining", "stopped", "It", "."], answer: "It has stopped raining." }
+    ],
+    grammarCards: [
+      { front: "Present perfect: what does it tell us?", back: "About the situation NOW (present result)", example: "I<strong>'ve lost</strong> my key = I don't have it <strong>now</strong>" },
+      { front: "Past simple: what does it tell us?", back: "Only about the PAST (no connection to now)", example: "I <strong>lost</strong> my key = maybe I found it later, maybe not" },
+      { front: "New info then continue talking: which tenses?", back: "Present perfect for the news, then past simple to discuss", example: "I<strong>'ve burnt</strong> myself! → How <strong>did</strong> you do that?" }
+    ],
+    dictation: [
+      { text: "Somebody has broken the window.", words: 5 },
+      { text: "It stopped raining, but now it's raining again.", words: 8 },
+      { text: "Mozart was a composer. He wrote over 600 pieces.", words: 9 }
+    ],
+    shadowing: [
+      { text: "I've lost my key. I can't find it anywhere.", slow: "I've lost... my key. I can't find it... anywhere." },
+      { text: "She's gone away. She'll be back on Friday.", slow: "She's gone away... She'll be back... on Friday." }
+    ]
+  },
+  14: {
+    translation: [
+      { pt: "Estava muito frio ontem.", answers: ["It was very cold yesterday."] },
+      { pt: "Eu não comi nenhuma fruta hoje.", answers: ["I haven't eaten any fruit today."] },
+      { pt: "Quando vocês chegaram?", answers: ["When did you arrive?"] },
+      { pt: "Eu nunca andei a cavalo.", answers: ["I've never ridden a horse.", "I have never ridden a horse."] },
+      { pt: "Ela trabalha aqui desde 2010.", answers: ["She's been working here since 2010.", "She's worked here since 2010.", "She has worked here since 2010."] },
+      { pt: "Eu trabalhei aqui de 2010 a 2014.", answers: ["I worked here from 2010 to 2014."] }
+    ],
+    dialogues: [
+      { title: "Catching Up", lines: [
+        { speaker: 'A', text: "Did you go to the cinema last night?" },
+        { speaker: 'You', hint: "say yes and the movie was good", answers: ["Yes, I did. The movie was good.", "Yes. It was good."] },
+        { speaker: 'A', text: "Have you seen any good films recently?" },
+        { speaker: 'You', hint: "say you've seen three this week", answers: ["I've seen three this week.", "Yes, I've seen three films this week."] }
+      ]}
+    ],
+    speedRound: [
+      { text: "It ___ (be) very cold yesterday.", answers: ["was"] },
+      { text: "I ___ (not / eat) any fruit today.", answers: ["haven't eaten"] },
+      { text: "She ___ (leave) school in 1999.", answers: ["left"] },
+      { text: "I ___ (never / ride) a horse.", answers: ["'ve never ridden", "have never ridden"] },
+      { text: "When ___ you ___ (arrive)?", answers: ["did, arrive"] },
+      { text: "I ___ (not / see) Martin all morning.", answers: ["haven't seen"] },
+      { text: "My grandfather ___ (die) before I was born.", answers: ["died"] },
+      { text: "We ___ (live) in Boston for five years.", answers: ["'ve lived", "have lived", "'ve been living", "have been living"] }
+    ],
+    brazilianErrors: [
+      { wrong: "I have been to Paris last year.", hint: "Last year = finished time", answers: ["I went to Paris last year."], explanation: "Finished time words (last year) → past simple: I went to Paris last year." },
+      { wrong: "When have you arrived?", hint: "When = past simple", answers: ["When did you arrive?"], explanation: "Questions with 'When' use past simple: When did you arrive?" },
+      { wrong: "I didn't eat any fruit today.", hint: "Today = unfinished time", answers: ["I haven't eaten any fruit today."], explanation: "Today is unfinished → present perfect: I haven't eaten any fruit today." },
+      { wrong: "She has left school in 1999.", hint: "In 1999 = finished time", answers: ["She left school in 1999."], explanation: "Specific past year → past simple: She left school in 1999." }
+    ],
+    sentenceBuilding: [
+      { words: ["cold", "It", "very", "yesterday", "was", "."], answer: "It was very cold yesterday." },
+      { words: ["eaten", "haven't", "I", "fruit", "any", "today", "."], answer: "I haven't eaten any fruit today." },
+      { words: ["arrive", "When", "you", "did", "?"], answer: "When did you arrive?" }
+    ],
+    grammarCards: [
+      { front: "Can you use present perfect with 'yesterday / last week / ago'?", back: "NO! These are finished time words → past simple only", example: "I <strong>went</strong> there <strong>yesterday</strong>. (not have gone)" },
+      { front: "'this morning' — present perfect or past?", back: "Depends! If it's still morning → present perfect. If afternoon → past simple.", example: "Have you seen Anna <strong>this morning</strong>? (still morning)" },
+      { front: "today / this week / since 2010: which tense?", back: "Present perfect (unfinished time period)", example: "I<strong>'ve done</strong> a lot of work <strong>today</strong>." }
+    ],
+    dictation: [
+      { text: "It was very cold yesterday.", words: 6 },
+      { text: "I haven't eaten anything today.", words: 5 },
+      { text: "When did your friends arrive?", words: 5 }
+    ],
+    shadowing: [
+      { text: "I've never ridden a horse in my life.", slow: "I've never ridden... a horse... in my life." },
+      { text: "When did you get married?", slow: "When... did you get... married?" }
+    ]
   }
 };
 
@@ -2829,12 +3464,12 @@ function renderFillExercise(ex) {
         <span class="sentence">
           ${item.before ? item.before + ' ' : ''}
           <input type="text" class="answer-input ${isCorrect ? 'correct' : isWrong ? 'incorrect' : ''}" id="input-${ex.id}-${idx}-0"
-            placeholder="${item.hints[0] || ''}"
+            placeholder="${(item.hints && item.hints[0]) || ''}"
             value="${isCorrect ? cv0 : ''}"
             ${result !== undefined ? 'disabled' : ''}>
           ${item.after}
           <input type="text" class="answer-input ${isCorrect ? 'correct' : isWrong ? 'incorrect' : ''}" id="input-${ex.id}-${idx}-1"
-            placeholder="${item.hints[1] || ''}"
+            placeholder="${(item.hints && item.hints[1]) || ''}"
             value="${isCorrect ? cv1 : ''}"
             ${result !== undefined ? 'disabled' : ''}>
           ${item.afterTwo || ''}
@@ -2849,7 +3484,7 @@ function renderFillExercise(ex) {
         <span class="sentence">
           ${item.before ? item.before + ' ' : ''}
           <input type="text" class="answer-input ${isCorrect ? 'correct' : isWrong ? 'incorrect' : ''}" id="input-${ex.id}-${idx}"
-            placeholder="${item.hints[0] || ''}"
+            placeholder="${(item.hints && item.hints[0]) || ''}"
             value="${correctVal}"
             ${result !== undefined ? 'disabled' : ''}>
           ${item.after ? ' ' + item.after : ''}
@@ -4176,7 +4811,20 @@ function getExerciseTopic(exId) {
     '9.2': 'Present perfect continuous: questions',
     '9.3': 'Present perfect continuous: for/since',
     '10.1': 'Perfect continuous vs simple: activity vs result',
-    '10.3': 'Perfect continuous vs simple: mixed practice'
+    '10.3': 'Perfect continuous vs simple: mixed practice',
+    '11.1': 'How long: choosing correct tense',
+    '11.2': 'How long: writing questions',
+    '11.3': 'How long: completing answers',
+    '12.1': 'For vs since: choosing correctly',
+    '12.2': 'When vs how long: right question',
+    '12.3': 'For/since: completing sentences',
+    '12.4': 'For/since with It\'s … since …',
+    '13.1': 'Present perfect vs past: current result',
+    '13.2': 'Present perfect vs past: error correction',
+    '13.3': 'Present perfect vs past: mixed practice',
+    '14.1': 'Finished time words: error correction',
+    '14.2': 'Unfinished vs finished time: forming sentences',
+    '14.3': 'Present perfect vs past: mixed verb forms'
   };
   return topics[exId] || exId;
 }

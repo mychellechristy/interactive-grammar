@@ -5511,40 +5511,87 @@ function retryMistakes(exId) {
 // ============================================================
 // AUDIO
 // ============================================================
+function buildLocalDictionary() {
+  const dict = {};
+  // Pull from Live Lessons vocabulary
+  for (const lesson of LIVE_LESSONS) {
+    for (const v of (lesson.vocabulary || [])) {
+      dict[v.word.toLowerCase()] = {
+        word: v.word, phonetic: v.ipa || '', definition: v.meaning,
+        example: v.example, audioUrl: '', ptBr: v.ptBr || ''
+      };
+    }
+    for (const idiom of (lesson.idioms || [])) {
+      // Index each key word of the idiom phrase
+      const words = idiom.phrase.toLowerCase().split(/\s+/);
+      words.forEach(w => {
+        if (w.length >= 3 && !dict[w]) {
+          dict[w] = {
+            word: w, phonetic: '', audioUrl: '',
+            definition: `Part of idiom "${idiom.phrase}": ${idiom.meaning}`,
+            example: idiom.example, ptBr: idiom.ptBr || ''
+          };
+        }
+      });
+      // Also index full phrase
+      dict[idiom.phrase.toLowerCase()] = {
+        word: idiom.phrase, phonetic: '', definition: idiom.meaning,
+        example: idiom.example, audioUrl: '', ptBr: idiom.ptBr || ''
+      };
+    }
+  }
+  return dict;
+}
+
+const LOCAL_DICT = buildLocalDictionary();
+
 async function fetchWordData(word) {
   if (audioCache[word]) return audioCache[word];
+
+  // Try external API first
   try {
     const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!Array.isArray(data) || !data[0]) return null;
-
-    const entry = data[0];
-    let audioUrl = '';
-    let phonetic = entry.phonetic || '';
-
-    for (const p of (entry.phonetics || [])) {
-      if (p.audio) { audioUrl = p.audio; break; }
-      if (p.text && !phonetic) phonetic = p.text;
-    }
-
-    let definition = '';
-    let example = '';
-    for (const m of (entry.meanings || [])) {
-      for (const d of (m.definitions || [])) {
-        if (!definition) definition = d.definition;
-        if (d.example && !example) example = d.example;
-        if (definition && example) break;
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data[0]) {
+        const entry = data[0];
+        let audioUrl = '';
+        let phonetic = entry.phonetic || '';
+        for (const p of (entry.phonetics || [])) {
+          if (p.audio) { audioUrl = p.audio; break; }
+          if (p.text && !phonetic) phonetic = p.text;
+        }
+        let definition = '';
+        let example = '';
+        for (const m of (entry.meanings || [])) {
+          for (const d of (m.definitions || [])) {
+            if (!definition) definition = d.definition;
+            if (d.example && !example) example = d.example;
+            if (definition && example) break;
+          }
+          if (definition && example) break;
+        }
+        // Enrich with local PT-BR if available
+        const local = LOCAL_DICT[word.toLowerCase()];
+        const result = {
+          word: entry.word, audioUrl, phonetic, definition, example,
+          ptBr: local ? local.ptBr : ''
+        };
+        audioCache[word] = result;
+        return result;
       }
-      if (definition && example) break;
     }
+  } catch(e) { /* fall through to local */ }
 
-    const result = { word: entry.word, audioUrl, phonetic, definition, example };
+  // Fallback: local dictionary from app content
+  const local = LOCAL_DICT[word.toLowerCase()];
+  if (local) {
+    const result = { ...local };
     audioCache[word] = result;
     return result;
-  } catch(e) {
-    return null;
   }
+
+  return null;
 }
 
 async function playWord(word) {
@@ -5606,11 +5653,15 @@ async function showWordPopup(word, x, y) {
     const alreadyAdded = flashcards.some(c => c.word === word);
     content.innerHTML = `<div class="popup-header">
       <span class="popup-word">${word}</span>
-      <button class="popup-audio" onclick="playWord('${word}')">&#128266;</button>
+      <button class="popup-audio" onclick="speakWord('${word}')">&#128266;</button>
     </div>
-    <p class="popup-def" style="color:var(--text-light)">Definition not found in dictionary.</p>
+    <p class="popup-def" style="color:var(--text-light)">Definition not found.</p>
+    <a href="https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(word)}" target="_blank"
+      style="display:block;text-align:center;color:var(--primary);font-size:0.85rem;margin:0.5rem 0">
+      Look up on Cambridge Dictionary &rarr;
+    </a>
     <button class="popup-add-btn ${alreadyAdded ? 'added' : ''}"
-      onclick="addToFlashcards('${word}', 'No definition found', '', '')"
+      onclick="addToFlashcards('${word}', '', '', '')"
       ${alreadyAdded ? 'disabled' : ''}>
       ${alreadyAdded ? '&#10003; Already in flashcards' : 'Add to Flashcards'}
     </button>`;
@@ -5618,15 +5669,19 @@ async function showWordPopup(word, x, y) {
   }
 
   const alreadyAdded = flashcards.some(c => c.word === data.word);
+  const safeDef = (data.definition||'').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  const safeEx = (data.example||'').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  const safeWord = data.word.replace(/'/g, "\\'");
   content.innerHTML = `<div class="popup-header">
     <span class="popup-word">${data.word}</span>
-    <button class="popup-audio" onclick="playWord('${data.word}')">&#128266;</button>
+    <button class="popup-audio" onclick="${data.audioUrl ? "playWord('" + safeWord + "')" : "speakWord('" + safeWord + "')"}">&#128266;</button>
   </div>
   ${data.phonetic ? `<div class="popup-phonetic">${data.phonetic}</div>` : ''}
+  ${data.ptBr ? `<div style="font-size:0.8rem;color:var(--primary);margin-bottom:0.3rem">PT-BR: ${data.ptBr}</div>` : ''}
   ${data.definition ? `<p class="popup-def">${data.definition}</p>` : ''}
   ${data.example ? `<p class="popup-example">"${data.example}"</p>` : ''}
   <button class="popup-add-btn ${alreadyAdded ? 'added' : ''}" id="popup-add-btn"
-    onclick="addToFlashcards('${data.word.replace(/'/g, "\\'")}', '${(data.definition||'').replace(/'/g, "\\'")}', '${(data.example||'').replace(/'/g, "\\'")}', '${data.audioUrl || ''}')"
+    onclick="addToFlashcards('${safeWord}', '${safeDef}', '${safeEx}', '${data.audioUrl || ''}')"
     ${alreadyAdded ? 'disabled' : ''}>
     ${alreadyAdded ? '&#10003; Already in flashcards' : 'Add to Flashcards'}
   </button>`;

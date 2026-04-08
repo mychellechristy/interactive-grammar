@@ -954,6 +954,31 @@ main {
   padding: 1rem; margin-bottom: 1rem;
 }
 .plan-progress-label { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.3rem; }
+/* Sync */
+.sync-panel {
+  background: white; border-radius: var(--radius); box-shadow: var(--shadow-lg);
+  padding: 1.5rem; max-width: 400px; margin: 2rem auto; text-align: center;
+}
+.sync-panel h3 { margin-bottom: 0.5rem; }
+.sync-panel p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 1rem; }
+.sync-code {
+  font-family: monospace; font-size: 1.3rem; font-weight: 700; letter-spacing: 0.15em;
+  background: var(--bg); padding: 0.6rem 1.2rem; border-radius: 8px; display: inline-block;
+  margin: 0.5rem 0; color: var(--primary-dark); user-select: all;
+}
+.sync-input {
+  font-family: monospace; font-size: 1.1rem; text-align: center; letter-spacing: 0.1em;
+  padding: 0.5rem; border: 2px solid var(--border); border-radius: 8px; width: 100%;
+  margin-bottom: 0.5rem;
+}
+.sync-input:focus { outline: none; border-color: var(--primary); }
+.sync-status {
+  font-size: 0.8rem; padding: 0.3rem 0.6rem; border-radius: 12px; display: inline-block; margin-top: 0.5rem;
+}
+.sync-status.ok { background: var(--success-light); color: var(--success); }
+.sync-status.syncing { background: var(--warning-light); color: var(--warning); }
+.sync-status.error { background: var(--error-light); color: var(--error); }
+#sync-view { display: none; }
 </style>
 </head>
 <body>
@@ -978,6 +1003,7 @@ main {
     <button onclick="showProgress()" id="nav-progress">Progress</button>
     <button onclick="showPhrases()" id="nav-phrases">Phrases</button>
     <button onclick="showPlan()" id="nav-plan">90 Days</button>
+    <button onclick="showSync()" id="nav-sync">Sync</button>
     <button onclick="exportData()">Export</button>
     <button onclick="document.getElementById('import-file').click()">Import</button>
     <input type="file" id="import-file" accept=".json" style="display:none">
@@ -1017,6 +1043,11 @@ main {
   <div id="plan-view">
     <div class="unit-header"><h2>90-Day Fluency Plan</h2></div>
     <div id="plan-content"></div>
+  </div>
+
+  <div id="sync-view">
+    <div class="unit-header"><h2>Cloud Sync</h2></div>
+    <div id="sync-content"></div>
   </div>
 </main>
 
@@ -2529,7 +2560,7 @@ document.getElementById('import-file').addEventListener('change', function(e) {
 // RENDERING
 // ============================================================
 function hideAllViews() {
-  ['unit-view','flashcard-view','progress-view','phrases-view','plan-view'].forEach(id => {
+  ['unit-view','flashcard-view','progress-view','phrases-view','plan-view','sync-view'].forEach(id => {
     document.getElementById(id).style.display = 'none';
   });
 }
@@ -2575,6 +2606,8 @@ function updateNav() {
     document.getElementById('nav-phrases').classList.add('active');
   } else if (currentView === 'plan') {
     document.getElementById('nav-plan').classList.add('active');
+  } else if (currentView === 'sync') {
+    document.getElementById('nav-sync').classList.add('active');
   }
 }
 
@@ -2594,12 +2627,21 @@ function showPlan() {
   updateNav();
 }
 
+function showSync() {
+  currentView = 'sync';
+  hideAllViews();
+  document.getElementById('sync-view').style.display = 'block';
+  renderSyncView();
+  updateNav();
+}
+
 function renderCurrentView() {
   if (currentView === 'unit') renderUnit(currentUnit);
   else if (currentView === 'flashcards') renderFlashcardView();
   else if (currentView === 'progress') renderProgressView();
   else if (currentView === 'phrases') renderPhrasesView();
   else if (currentView === 'plan') renderPlanView();
+  else if (currentView === 'sync') renderSyncView();
 }
 
 function renderUnit(num) {
@@ -4340,11 +4382,159 @@ function checkPractice(exId) {
 }
 
 // ============================================================
+// CLOUD SYNC (jsonblob.com — free, no signup)
+// ============================================================
+const SYNC_API = 'https://jsonblob.com/api/jsonBlob';
+let syncId = localStorage.getItem('grammar-sync-id') || '';
+let syncBusy = false;
+
+function getAllSaveData() {
+  return {
+    exerciseResults,
+    firstAttemptResults,
+    flashcards,
+    plan: getPlanState(),
+    syncedAt: new Date().toISOString()
+  };
+}
+
+function applySaveData(data) {
+  if (data.exerciseResults) exerciseResults = data.exerciseResults;
+  if (data.firstAttemptResults) firstAttemptResults = data.firstAttemptResults;
+  if (data.flashcards) flashcards = data.flashcards;
+  if (data.plan) savePlanState(data.plan);
+  saveState();
+  updateFcBadge();
+}
+
+async function cloudCreate() {
+  syncBusy = true;
+  renderSyncView();
+  try {
+    const res = await fetch(SYNC_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(getAllSaveData())
+    });
+    if (!res.ok) throw new Error('Failed to create');
+    const loc = res.headers.get('Location') || res.url;
+    syncId = loc.split('/').pop();
+    localStorage.setItem('grammar-sync-id', syncId);
+    showToast('Cloud sync created!');
+  } catch(e) { showToast('Sync error: ' + e.message); }
+  syncBusy = false;
+  renderSyncView();
+}
+
+async function cloudPush() {
+  if (!syncId || syncBusy) return;
+  syncBusy = true;
+  try {
+    await fetch(`${SYNC_API}/${syncId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(getAllSaveData())
+    });
+    showToast('Progress saved to cloud!');
+  } catch(e) { showToast('Sync push failed'); }
+  syncBusy = false;
+}
+
+async function cloudPull() {
+  if (!syncId || syncBusy) return;
+  syncBusy = true;
+  renderSyncView();
+  try {
+    const res = await fetch(`${SYNC_API}/${syncId}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error('Not found');
+    const data = await res.json();
+    applySaveData(data);
+    showToast('Progress loaded from cloud!');
+  } catch(e) { showToast('Sync pull failed: ' + e.message); }
+  syncBusy = false;
+  renderSyncView();
+}
+
+function connectSync(id) {
+  syncId = id.trim();
+  localStorage.setItem('grammar-sync-id', syncId);
+  cloudPull();
+}
+
+function disconnectSync() {
+  syncId = '';
+  localStorage.removeItem('grammar-sync-id');
+  renderSyncView();
+  showToast('Sync disconnected');
+}
+
+// Auto-push after any save (debounced)
+let _syncDebounce;
+const _origSave = saveState;
+saveState = function() {
+  _origSave();
+  if (syncId) {
+    clearTimeout(_syncDebounce);
+    _syncDebounce = setTimeout(cloudPush, 5000); // push 5s after last change
+  }
+};
+
+function renderSyncView() {
+  const container = document.getElementById('sync-content');
+  if (!container) return;
+
+  if (syncBusy) {
+    container.innerHTML = `<div class="sync-panel">
+      <h3>&#9889; Syncing...</h3>
+      <p>Please wait.</p>
+      <span class="sync-status syncing">Syncing</span>
+    </div>`;
+    return;
+  }
+
+  if (syncId) {
+    container.innerHTML = `<div class="sync-panel">
+      <h3>&#9989; Cloud Sync Active</h3>
+      <p>Your progress syncs automatically between devices.</p>
+      <div style="margin-bottom:0.8rem">
+        <div style="font-size:0.8rem;color:var(--text-light)">Your sync code:</div>
+        <div class="sync-code" onclick="navigator.clipboard.writeText('${syncId}');showToast('Code copied!')">${syncId.substring(0,8)}...</div>
+        <div style="font-size:0.75rem;color:var(--text-light)">Click to copy</div>
+      </div>
+      <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="cloudPush()">&#9650; Push (save to cloud)</button>
+        <button class="btn btn-primary" onclick="cloudPull()">&#9660; Pull (load from cloud)</button>
+      </div>
+      <div style="margin-top:1rem">
+        <button class="btn btn-secondary btn-sm" onclick="disconnectSync()">Disconnect</button>
+      </div>
+      <span class="sync-status ok">Auto-sync ON</span>
+    </div>`;
+  } else {
+    container.innerHTML = `<div class="sync-panel">
+      <h3>&#9729; Cloud Sync</h3>
+      <p>Sync your progress between Mac and phone.<br>No account needed.</p>
+      <button class="btn btn-primary" onclick="cloudCreate()" style="margin-bottom:1.5rem;width:100%">Create New Sync</button>
+      <div style="border-top:1px solid var(--border);padding-top:1rem">
+        <p style="font-size:0.85rem;margin-bottom:0.5rem"><strong>Already syncing on another device?</strong></p>
+        <input type="text" class="sync-input" id="sync-code-input" placeholder="Paste sync code here">
+        <button class="btn btn-secondary" onclick="connectSync(document.getElementById('sync-code-input').value)" style="width:100%">Connect</button>
+      </div>
+    </div>`;
+  }
+}
+
+// ============================================================
 // INIT
 // ============================================================
 loadState();
 updateFcBadge();
 showUnit(1);
+
+// Auto-pull on page load if sync is active
+if (syncId) { setTimeout(cloudPull, 1000); }
 </script>
 </body>
 </html>

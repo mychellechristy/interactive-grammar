@@ -5598,13 +5598,9 @@ async function playWord(word) {
   const data = await fetchWordData(word);
   if (data && data.audioUrl) {
     const audio = new Audio(data.audioUrl);
-    audio.play().catch(() => {
-      // Fallback: open Cambridge Dictionary
-      window.open(`https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(word)}`, '_blank');
-    });
+    audio.play().catch(() => speakWord(word));
   } else {
-    // Fallback: open Cambridge Dictionary
-    window.open(`https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(word)}`, '_blank');
+    speakWord(word);
   }
 }
 

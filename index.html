@@ -5346,9 +5346,31 @@ function recordResult(key, isCorrect) {
   }
 }
 
+function findExerciseById(exId) {
+  for (const unit of Object.values(UNITS)) {
+    const ex = unit.exercises.find(e => e.id === exId);
+    if (ex) return ex;
+  }
+  for (const lesson of LIVE_LESSONS) {
+    const ex = lesson.exercises.find(e => e.id === exId);
+    if (ex) return ex;
+  }
+  return null;
+}
+
+function reRenderCurrentContext() {
+  if (currentView === 'live' && currentLesson) {
+    renderLessonDetail(currentLesson);
+  } else if (currentView === 'unit') {
+    renderUnit(currentUnit);
+  } else {
+    renderCurrentView();
+  }
+}
+
 function checkAll(exId) {
-  const unit = Object.values(UNITS).find(u => u.exercises.some(e => e.id === exId));
-  const ex = unit.exercises.find(e => e.id === exId);
+  const ex = findExerciseById(exId);
+  if (!ex) return;
   let correct = 0;
   let total = 0;
 
@@ -5432,8 +5454,8 @@ function checkAll(exId) {
 }
 
 function resetExercise(exId) {
-  const unit = Object.values(UNITS).find(u => u.exercises.some(e => e.id === exId));
-  const ex = unit.exercises.find(e => e.id === exId);
+  const ex = findExerciseById(exId);
+  if (!ex) return;
   const items = ex.type === 'match' ? ex.left : ex.items;
 
   items.forEach((item, idx) => {
@@ -5442,12 +5464,12 @@ function resetExercise(exId) {
   });
 
   saveState();
-  renderUnit(currentUnit);
+  reRenderCurrentContext();
 }
 
 function retryMistakes(exId) {
-  const unit = Object.values(UNITS).find(u => u.exercises.some(e => e.id === exId));
-  const ex = unit.exercises.find(e => e.id === exId);
+  const ex = findExerciseById(exId);
+  if (!ex) return;
   const items = ex.type === 'match' ? ex.left : ex.items;
   let hasWrong = false;
 
@@ -5465,7 +5487,7 @@ function retryMistakes(exId) {
   }
 
   saveState();
-  renderUnit(currentUnit);
+  reRenderCurrentContext();
 
   // Scroll to and open the exercise
   setTimeout(() => {

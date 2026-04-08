@@ -1082,6 +1082,7 @@ const SUPABASE_URL = 'https://bemkdfkayiyxbeeqximt.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlbWtkZmtheWl5eGJlZXF4aW10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMDc5MTQsImV4cCI6MjA4MDc4MzkxNH0.DJhIL7p0R-vxOwIGD6VEIQQO5Lkj4fJnCAt5SyVYvbg';
 const SYNC_USER_ID = 'mychelle';
 const _supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
 let syncTimer = null;
 let lastSyncAt = null;
 
@@ -4610,6 +4611,7 @@ function updateSyncIndicator(status) {
 }
 
 async function pushToSupabase() {
+  if (IS_LOCAL) { updateSyncIndicator('offline'); return; }
   try {
     updateSyncIndicator('syncing');
     const grammarBook = { exerciseResults, firstAttemptResults, flashcards, version: 2 };
@@ -4630,6 +4632,7 @@ async function pushToSupabase() {
 }
 
 async function pullFromSupabase() {
+  if (IS_LOCAL) { updateSyncIndicator('offline'); return false; }
   try {
     const { data, error } = await _supa
       .from('grammar_progress')

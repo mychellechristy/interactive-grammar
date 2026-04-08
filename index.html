@@ -4416,9 +4416,13 @@ async function cloudCreate() {
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(getAllSaveData())
     });
-    if (!res.ok) throw new Error('Failed to create');
-    const loc = res.headers.get('Location') || res.url;
-    syncId = loc.split('/').pop();
+    if (!res.ok) throw new Error('Server returned ' + res.status);
+    // Try multiple ways to get the blob ID
+    const blobId = res.headers.get('x-jsonblob-id')
+      || (res.headers.get('Location') || '').split('/').pop()
+      || '';
+    if (!blobId) throw new Error('Could not get sync ID from response');
+    syncId = blobId;
     localStorage.setItem('grammar-sync-id', syncId);
     showToast('Cloud sync created!');
   } catch(e) { showToast('Sync error: ' + e.message); }
@@ -4500,7 +4504,7 @@ function renderSyncView() {
       <p>Your progress syncs automatically between devices.</p>
       <div style="margin-bottom:0.8rem">
         <div style="font-size:0.8rem;color:var(--text-light)">Your sync code:</div>
-        <div class="sync-code" onclick="navigator.clipboard.writeText('${syncId}');showToast('Code copied!')">${syncId.substring(0,8)}...</div>
+        <div class="sync-code" onclick="navigator.clipboard.writeText('${syncId}');showToast('Code copied!')">${syncId}</div>
         <div style="font-size:0.75rem;color:var(--text-light)">Click to copy</div>
       </div>
       <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap">

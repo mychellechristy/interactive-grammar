@@ -5293,21 +5293,22 @@ function renderWriteExercise(ex) {
 
     const isCorrect = result === true;
     const isWrong = result === false;
+    const firstAnswer = Array.isArray(item.answers[0]) ? item.answers[0][0] : item.answers[0];
     html += `<div class="write-item" id="item-${ex.id}-${idx}">
       <div class="ex-item">
         <span class="num">${item.num}</span>
         <div style="flex:1">
-          <div class="write-context">${item.context || ''}</div>
-          ${item.hint ? `<div class="write-hint">${item.hint}</div>` : ''}
+          <div class="write-context">${item.context || item.before || ''}</div>
+          ${item.hint || item.hints ? `<div class="write-hint">${item.hint || (item.hints && item.hints[0]) || ''}</div>` : ''}
           <input type="text" class="write-input ${isCorrect ? 'correct' : isWrong ? 'incorrect' : ''}"
             id="input-${ex.id}-${idx}"
             placeholder="Type your answer..."
-            value="${isCorrect ? item.answers[0] : ''}"
+            value="${isCorrect ? firstAnswer : ''}"
             ${result !== undefined ? 'disabled' : ''}>
         </div>
       </div>
       <div class="feedback ${result !== undefined ? 'show' : ''} ${isCorrect ? 'correct' : isWrong ? 'incorrect' : ''}" id="fb-${ex.id}-${idx}">
-        ${isCorrect ? '&#10003; Correct!' : isWrong ? '&#10007; Correct answer: ' + item.answers[0] : ''}
+        ${isCorrect ? '&#10003; Correct!' : isWrong ? '&#10007; Correct answer: ' + firstAnswer : ''}
       </div>
     </div>`;
   });
@@ -5349,7 +5350,9 @@ function normalize(str) {
 
 function answersMatch(userAnswer, acceptedAnswers) {
   const norm = normalize(userAnswer);
-  return acceptedAnswers.some(ans => normalize(ans) === norm);
+  // Handle both flat ["a","b"] and nested [["a","b"]] formats
+  const flat = acceptedAnswers.flat();
+  return flat.some(ans => normalize(ans) === norm);
 }
 
 function recordResult(key, isCorrect) {
@@ -5417,7 +5420,8 @@ function checkAll(exId) {
       input.disabled = true;
       const fb = document.getElementById(`fb-${exId}-${idx}`);
       fb.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
-      fb.innerHTML = isCorrect ? '&#10003; Correct!' : `&#10007; Correct answer: ${item.answers[0]}`;
+      const correctAnswer = Array.isArray(item.answers[0]) ? item.answers[0][0] : item.answers[0];
+      fb.innerHTML = isCorrect ? '&#10003; Correct!' : `&#10007; Correct answer: ${correctAnswer}`;
       if (isCorrect) correct++;
     });
   } else {

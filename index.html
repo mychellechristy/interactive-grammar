@@ -5982,6 +5982,7 @@ function renderTranslation(u) {
   });
   html += `<div class="ex-footer">
     <button class="btn btn-primary" onclick="checkTranslation(${u})">Check All</button>
+    <button class="btn btn-secondary" onclick="retrySkill(${u},'translation')">Retry Mistakes</button>
     <button class="btn btn-secondary" onclick="resetSkill(${u},'translation')">Try Again</button>
     <span class="score-display" id="tr-score-${u}"></span>
   </div>`;
@@ -6032,6 +6033,7 @@ function renderDialogues(u) {
   });
   html += `<div class="ex-footer">
     <button class="btn btn-primary" onclick="checkDialogues(${u})">Check All</button>
+    <button class="btn btn-secondary" onclick="retrySkill(${u},'dialogues')">Retry Mistakes</button>
     <button class="btn btn-secondary" onclick="resetSkill(${u},'dialogues')">Try Again</button>
     <span class="score-display" id="dlg-score-${u}"></span>
   </div>`;
@@ -6139,6 +6141,7 @@ function renderBrazilianErrors(u) {
   });
   html += `<div class="ex-footer">
     <button class="btn btn-primary" onclick="checkErrors(${u})">Check All</button>
+    <button class="btn btn-secondary" onclick="retrySkill(${u},'brazilianErrors')">Retry Mistakes</button>
     <button class="btn btn-secondary" onclick="resetSkill(${u},'brazilianErrors')">Try Again</button>
     <span class="score-display" id="err-score-${u}"></span>
   </div>`;
@@ -6177,6 +6180,7 @@ function renderSentenceBuilding(u) {
   });
   html += `<div class="ex-footer">
     <button class="btn btn-primary" onclick="checkBuilding(${u})">Check All</button>
+    <button class="btn btn-secondary" onclick="retrySkill(${u},'sentenceBuilding')">Retry Mistakes</button>
     <button class="btn btn-secondary" onclick="resetSkill(${u},'sentenceBuilding')">Try Again</button>
     <span class="score-display" id="build-score-${u}"></span>
   </div>`;
@@ -6387,6 +6391,51 @@ function resetSkill(u, type) {
   if (speedTimer) { clearInterval(speedTimer); speedTimer = null; }
   const container = document.getElementById(`skill-${u}-${type}`);
   if (container) container.innerHTML = renderSkill(u, type);
+}
+
+function retrySkill(u, type) {
+  // Re-enable only incorrect inputs, clear their feedback
+  const prefixes = { translation: 'tr', dialogues: 'dlg', brazilianErrors: 'err', sentenceBuilding: 'build' };
+  const pre = prefixes[type];
+  if (!pre) return resetSkill(u, type);
+
+  let found = false;
+  const container = document.getElementById(`skill-${u}-${type}`);
+  if (!container) return;
+
+  const inputs = container.querySelectorAll('input.incorrect');
+  inputs.forEach(input => {
+    input.disabled = false;
+    input.classList.remove('incorrect');
+    input.value = '';
+    found = true;
+    // Clear feedback
+    const fbId = input.id.replace(pre + '-', pre + '-fb-');
+    const fb = document.getElementById(fbId);
+    if (fb) { fb.className = 'practice-fb'; fb.innerHTML = ''; }
+  });
+
+  // For sentence building, reset incorrect build areas
+  if (type === 'sentenceBuilding') {
+    const items = container.querySelectorAll('.build-item');
+    items.forEach(item => {
+      const fb = item.querySelector('.practice-fb');
+      if (fb && fb.classList.contains('incorrect')) {
+        found = true;
+        fb.className = 'practice-fb'; fb.innerHTML = '';
+        const area = item.querySelector('.build-answer-area');
+        const bank = item.querySelector('.build-word-bank');
+        if (area) area.innerHTML = '';
+        if (bank) bank.querySelectorAll('.build-word').forEach(w => w.classList.remove('used'));
+      }
+    });
+  }
+
+  // Clear score
+  const scoreEl = container.querySelector('.score-display');
+  if (scoreEl) scoreEl.textContent = '';
+
+  if (!found) showToast('No mistakes to retry!');
 }
 
 // ============================================================

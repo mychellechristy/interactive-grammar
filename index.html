@@ -5061,13 +5061,17 @@ function speakWord(text) {
   }
 }
 
-function addLiveFlashcard(word, definition, examplesJson) {
+function addLiveFlashcard(word, ptBr, examplesJson) {
   if (flashcards.some(f => f.word === word)) {
     showToast('Already in flashcards!');
     return;
   }
   let examples;
   try { examples = JSON.parse(examplesJson); } catch(e) { examples = [examplesJson]; }
+  // Build definition: English meaning + PT-BR
+  const local = LOCAL_DICT[word.toLowerCase()];
+  const enDef = local ? local.definition : '';
+  const definition = enDef && ptBr ? `${enDef} (PT-BR: ${ptBr})` : enDef || `(PT-BR: ${ptBr})`;
   flashcards.push({
     word: word,
     definition: definition,
@@ -5703,18 +5707,24 @@ function addToFlashcards(word, definition, example, audioUrl) {
     return;
   }
 
-  // Try to get extra examples from local dictionary
+  // Enrich with local dictionary data (PT-BR + examples)
   const local = LOCAL_DICT[word.toLowerCase()];
   let examples = example ? [example] : [];
-  if (local && local.examples) {
-    examples = local.examples;
-  } else if (local && local.example && examples.length < 2) {
-    if (!examples.includes(local.example)) examples.push(local.example);
+  let finalDef = definition;
+  if (local) {
+    if (local.examples && local.examples.length > 0) examples = local.examples;
+    else if (local.example && examples.length < 2 && !examples.includes(local.example)) examples.push(local.example);
+    // Add PT-BR to definition if available and not already there
+    if (local.ptBr && finalDef && !finalDef.includes('PT-BR')) {
+      finalDef = `${finalDef} (PT-BR: ${local.ptBr})`;
+    } else if (local.ptBr && !finalDef) {
+      finalDef = `(PT-BR: ${local.ptBr})`;
+    }
   }
 
   flashcards.push({
     word,
-    definition,
+    definition: finalDef,
     example: examples[0] || example || '',
     examples: examples,
     audioUrl,

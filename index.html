@@ -5543,9 +5543,10 @@ function normalize(str) {
     .replace(/\s+/g, ' ')
     .replace(/[''`]/g, "'")
     .replace(/[""]/g, '"')
-    .replace(/\.\s*$/, '')
-    .replace(/\?\s*$/, '?')
-    .replace(/\s*\?$/, '?');
+    .replace(/\s*\.\s*$/, '')
+    .replace(/\s*\?\s*$/, '?')
+    .replace(/\s*!\s*$/, '!')
+    .replace(/\s+([.,!?;:])/g, '$1');
 }
 
 function answersMatch(userAnswer, acceptedAnswers) {

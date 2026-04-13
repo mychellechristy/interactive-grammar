@@ -5409,7 +5409,7 @@ function renderFillExercise(ex) {
         </span>
       </div>
       <div class="feedback ${result !== undefined ? 'show' : ''} ${isCorrect ? 'correct' : isWrong ? 'incorrect' : ''}" id="fb-${ex.id}-${idx}">
-        ${isCorrect ? '&#10003; Correct!' : isWrong ? '&#10007; ' + item.explanation : ''}
+        ${isCorrect ? '&#10003; Correct!' : isWrong ? '&#10007; Correct: <strong>' + item.answers[0][0] + (item.answers[1] ? '</strong> / <strong>' + item.answers[1][0] : '') + '</strong>' + (item.explanation ? '<br><small>' + item.explanation + '</small>' : '') : ''}
       </div>`;
     } else {
       html += `<div class="ex-item" id="item-${ex.id}-${idx}">
@@ -5424,7 +5424,7 @@ function renderFillExercise(ex) {
         </span>
       </div>
       <div class="feedback ${result !== undefined ? 'show' : ''} ${isCorrect ? 'correct' : isWrong ? 'incorrect' : ''}" id="fb-${ex.id}-${idx}">
-        ${isCorrect ? '&#10003; Correct!' : isWrong ? '&#10007; ' + item.explanation : ''}
+        ${isCorrect ? '&#10003; Correct!' : isWrong ? '&#10007; Correct: <strong>' + item.answers[0][0] + '</strong>' + (item.explanation ? '<br><small>' + item.explanation + '</small>' : '') : ''}
       </div>`;
     }
   });
@@ -5646,7 +5646,7 @@ function checkAll(exId) {
         input1.disabled = true;
         const fb = document.getElementById(`fb-${exId}-${idx}`);
         fb.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
-        fb.innerHTML = isCorrect ? '&#10003; Correct!' : `&#10007; ${item.explanation}`;
+        fb.innerHTML = isCorrect ? '&#10003; Correct!' : `&#10007; Correct: <strong>${item.answers[0][0]}</strong> / <strong>${item.answers[1][0]}</strong>${item.explanation ? '<br><small>' + item.explanation + '</small>' : ''}`;
         if (isCorrect) correct++;
       } else {
         const input = document.getElementById(`input-${exId}-${idx}`);
@@ -5658,7 +5658,7 @@ function checkAll(exId) {
         input.disabled = true;
         const fb = document.getElementById(`fb-${exId}-${idx}`);
         fb.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
-        fb.innerHTML = isCorrect ? '&#10003; Correct!' : `&#10007; ${item.explanation}`;
+        fb.innerHTML = isCorrect ? '&#10003; Correct!' : `&#10007; Correct: <strong>${item.answers[0][0]}</strong>${item.explanation ? '<br><small>' + item.explanation + '</small>' : ''}`;
         if (isCorrect) correct++;
       }
     });

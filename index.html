@@ -6284,15 +6284,15 @@ function startSpeedRound(u) {
   function showItem() {
     if (idx >= items.length) { endRound(); return; }
     const item = items[idx];
-    container.innerHTML = `<div style="font-size:1.1rem;padding:0.5rem 0">${item.text.replace('___', '<input type="text" id="speed-input-${u}" class="answer-input" style="min-width:140px" autofocus>')}</div>`;
-    const input = document.getElementById(`speed-input-${u}`);
+    container.innerHTML = '<div style="font-size:1.1rem;padding:0.5rem 0">' + item.text.replace('___', '<input type="text" id="speed-input-' + u + '" class="answer-input" style="min-width:140px" autofocus>') + '</div>';
+    const input = document.getElementById('speed-input-' + u);
     if (input) { input.focus(); input.addEventListener('keydown', e => { if (e.key === 'Enter') checkSpeedItem(); }); }
     counter.textContent = `Question ${idx + 1} of ${items.length}`;
   }
 
   function checkSpeedItem() {
     const item = items[idx];
-    const input = document.getElementById(`speed-input-${u}`);
+    const input = document.getElementById('speed-input-' + u);
     if (!input) return;
     const ok = item.answers.some(a => normalize(input.value) === normalize(a));
     if (ok) score++;

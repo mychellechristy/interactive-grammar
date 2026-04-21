@@ -4610,8 +4610,19 @@ function updateSyncIndicator(status) {
   dot.title = status === 'synced' ? 'Synced to cloud' : status === 'syncing' ? 'Syncing...' : 'Offline — data saved locally';
 }
 
+// SAFETY FLAG: prevents pushing local state before we know cloud state.
+// Only set to true after a successful pull OR an explicit user save action.
+let cloudPullSucceeded = false;
+
 async function pushToSupabase() {
   if (IS_LOCAL) { updateSyncIndicator('offline'); return; }
+  // SAFETY: don't push until we've successfully pulled from cloud.
+  // This prevents overwriting cloud data with empty/stale local state
+  // if the initial pull fails or hasn't completed yet.
+  if (!cloudPullSucceeded) {
+    console.warn('Supabase push blocked: no successful pull yet (safety guard)');
+    return;
+  }
   try {
     updateSyncIndicator('syncing');
     const grammarBook = { exerciseResults, firstAttemptResults, flashcards, version: 2 };
@@ -4640,16 +4651,37 @@ async function pullFromSupabase() {
       .eq('id', SYNC_USER_ID)
       .single();
     if (error) throw error;
-    if (!data || !data.grammar_book || Object.keys(data.grammar_book).length === 0) {
+
+    // Pull succeeded — allow future pushes
+    cloudPullSucceeded = true;
+
+    const cloudBook = data && data.grammar_book ? data.grammar_book : {};
+    const cloudHasData = cloudBook && (
+      (cloudBook.flashcards && cloudBook.flashcards.length > 0) ||
+      (cloudBook.exerciseResults && Object.keys(cloudBook.exerciseResults).length > 0)
+    );
+    const localHasData = (flashcards && flashcards.length > 0) ||
+                         (exerciseResults && Object.keys(exerciseResults).length > 0);
+
+    if (!cloudHasData && !localHasData) {
+      // Fresh state everywhere, nothing to do
+      return false;
+    }
+
+    if (!cloudHasData && localHasData) {
+      // Cloud empty but local has data — push up
       await pushToSupabase();
       return false;
     }
+
     const cloudTime = new Date(data.synced_at).getTime();
     const localTime = parseInt(localStorage.getItem('grammar-sync-ts') || '0');
+
     if (cloudTime > localTime) {
-      if (data.grammar_book.exerciseResults) exerciseResults = data.grammar_book.exerciseResults;
-      if (data.grammar_book.firstAttemptResults) firstAttemptResults = data.grammar_book.firstAttemptResults;
-      if (data.grammar_book.flashcards) flashcards = data.grammar_book.flashcards;
+      // Cloud is newer — apply it
+      if (cloudBook.exerciseResults) exerciseResults = cloudBook.exerciseResults;
+      if (cloudBook.firstAttemptResults) firstAttemptResults = cloudBook.firstAttemptResults;
+      if (cloudBook.flashcards) flashcards = cloudBook.flashcards;
       saveStateLocal();
       if (data.grammar_plan && Object.keys(data.grammar_plan).length > 0) {
         try { localStorage.setItem('grammar-plan', JSON.stringify(data.grammar_plan)); } catch(e) {}
@@ -4657,13 +4689,16 @@ async function pullFromSupabase() {
       lastSyncAt = data.synced_at;
       try { localStorage.setItem('grammar-sync-ts', String(cloudTime)); } catch(e) {}
       return true;
-    } else {
+    } else if (localHasData) {
+      // Local is newer and has data — push up
       await pushToSupabase();
       return false;
     }
+    return false;
   } catch (e) {
     console.warn('Supabase pull failed, using localStorage:', e.message);
     updateSyncIndicator('offline');
+    // cloudPullSucceeded stays false — pushes will be blocked
     return false;
   }
 }

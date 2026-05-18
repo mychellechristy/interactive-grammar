@@ -1013,6 +1013,7 @@ main {
     <button onclick="showPhrases()" id="nav-phrases">Phrases</button>
     <button onclick="showPlan()" id="nav-plan">90 Days</button>
     <button onclick="showLiveClasses()" id="nav-live">Live Classes</button>
+    <button onclick="showEpisodes()" id="nav-episodes">Episodes</button>
     <button onclick="showSync()" id="nav-sync">Sync</button>
     <button onclick="exportData()">Export</button>
     <button onclick="document.getElementById('import-file').click()">Import</button>
@@ -1058,6 +1059,11 @@ main {
   <div id="live-view">
     <div class="unit-header"><h2>Live Classes</h2></div>
     <div id="live-content"></div>
+  </div>
+
+  <div id="episodes-view">
+    <div class="unit-header"><h2>Episodes</h2></div>
+    <div id="episodes-content"></div>
   </div>
 
   <div id="sync-view">
@@ -4739,6 +4745,372 @@ document.getElementById('import-file').addEventListener('change', function(e) {
 // ============================================================
 // LIVE CLASSES DATA
 // ============================================================
+const EPISODES = [{
+  id: "E1",
+  show: "Normal People",
+  season: 1,
+  episode: 1,
+  title: "Episode 1",
+  description: "Connell and Marianne meet at school in a small Irish town.",
+  subtitles: [
+    {time: "00:00:14", text: "It's a simple game."},
+    {time: "00:00:16", text: "You have 15 players. Give one of them the ball,"},
+    {time: "00:00:18", text: "get it into the net."},
+    {time: "00:00:20", text: "- Very simple. - Isn't it?"},
+    {time: "00:00:21", text: "- Oh, what? - Oh."},
+    {time: "00:00:23", text: "Brilliant."},
+    {time: "00:00:24", text: "How's it going, Rachel?"},
+    {time: "00:00:26", text: "Talking tactics, there, for the game."},
+    {time: "00:00:27", text: "We're getting a master class."},
+    {time: "00:00:29", text: "- How incredibly boring of you. - Yeah."},
+    {time: "00:00:32", text: "- Did you get your hair done? - I did, yeah."},
+    {time: "00:00:35", text: "- It's very pretty. - Thanks."},
+    {time: "00:00:38", text: "- Can I use my locker, by any chance? - Yeah."},
+    {time: "00:00:43", text: "Yeah, I sort of need you to move, Connell."},
+    {time: "00:00:46", text: "Oh, sorry. Excuse me."},
+    {time: "00:00:48", text: "- \"Uh, sorry. Ex-squeeze me\". - All right, relax, will ya?"},
+    {time: "00:00:51", text: "But you know that's important."},
+    {time: "00:00:52", text: "Because it's turned up in the exam"},
+    {time: "00:00:54", text: "twice out of the last three years."},
+    {time: "00:00:58", text: "Marianne?"},
+    {time: "00:01:01", text: "Yeah?"},
+    {time: "00:01:02", text: "Something outside caught your attention?"},
+    {time: "00:01:04", text: "I suppose so."},
+    {time: "00:01:06", text: "Eyes forward, okay?"},
+    {time: "00:01:10", text: "I wasn't aware my eye line"},
+    {time: "00:01:12", text: "fell under the jurisdiction of school rules."},
+    {time: "00:01:15", text: "Here we go. Jesus."},
+    {time: "00:01:16", text: "Trying to impress your classmates?"},
+    {time: "00:01:18", text: "They don't look too impressed to me."},
+    {time: "00:01:20", text: "I'm pretty sure I was just looking out the window."},
+    {time: "00:01:22", text: "Come on, Sheridan."},
+    {time: "00:01:24", text: "If you're staring out the window daydreaming,"},
+    {time: "00:01:26", text: "then you're not learning, are you, Marianne?"},
+    {time: "00:01:28", text: "Don't hurt yourself."},
+    {time: "00:01:30", text: "I have nothing to learn from you."},
+    {time: "00:01:33", text: "Okay, in that case, principal's office."},
+    {time: "00:01:36", text: "Yeah. I might go there."},
+    {time: "00:01:40", text: "Or I might just head home."},
+    {time: "00:01:43", text: "It's not really your business what I do, is it?"},
+    {time: "00:01:49", text: "Don't worry, sir. She's a psycho to everybody."},
+    {time: "00:01:51", text: "Do you want to follow her, Folan?"},
+    {time: "00:02:32", text: "- Hey. - Hey."},
+    {time: "00:02:35", text: "Come on in. Your mum's in the kitchen."},
+    {time: "00:02:43", text: "Hey, love."},
+    {time: "00:02:46", text: "Marianne was telling me you got your mock results back today."},
+    {time: "00:02:49", text: "Uh, just English."},
+    {time: "00:02:50", text: "They come back separately."},
+    {time: "00:02:52", text: "I hear you did very well."},
+    {time: "00:02:53", text: "- He did. - Yeah, well..."},
+    {time: "00:02:56", text: "Marianne did pretty good, too."},
+    {time: "00:03:01", text: "Can we go?"},
+    {time: "00:03:02", text: "Didn't realize we were in a rush."},
+    {time: "00:03:05", text: "Just put these away, and then we'll be off."},
+    {time: "00:03:07", text: "- Immediately, okay? - Mm-hmm."},
+    {time: "00:03:19", text: "- Do you want some? - N-no thanks."},
+    {time: "00:03:22", text: "- Didn't you get French back today? - Yesterday."},
+    {time: "00:03:26", text: "Yeah."},
+    {time: "00:03:28", text: "Got an A1."},
+    {time: "00:03:31", text: "What'd you get in German?"},
+    {time: "00:03:33", text: "Are you bragging?"},
+    {time: "00:03:36", text: "Got an A1."},
+    {time: "00:03:38", text: "Ah, you're gonna get 600, are ya?"},
+    {time: "00:03:40", text: "You probably will."},
+    {time: "00:03:41", text: "Yeah, well, you're smarter than me, so..."},
+    {time: "00:03:42", text: "Smarter than everyone."},
+    {time: "00:03:47", text: "Ah, well, you're not top of the class in English."},
+    {time: "00:03:52", text: "Maybe you should give me grinds, Connell."},
+    {time: "00:04:04", text: "- Good to go? - Yeah."},
+    {time: "00:04:07", text: "Oy."},
+    {time: "00:04:09", text: "Thanks for everything, Lorraine."},
+    {time: "00:04:11", text: "Tell your mum I'll clean upstairs tomorrow."},
+    {time: "00:04:35", text: "Did you rob the place?"},
+    {time: "00:04:37", text: "What?"},
+    {time: "00:04:39", text: "The quick getaway."},
+    {time: "00:04:43", text: "- You could have said goodbye. - I did."},
+    {time: "00:04:45", text: "She doesn't exactly have an easy time of it, Connell."},
+    {time: "00:04:48", text: "You could try being a bit nicer to her."},
+    {time: "00:04:51", text: "I am nice to her."},
+    {time: "00:04:53", text: "She's actually a very sensitive person."},
+    {time: "00:04:56", text: "Oh, look. Can we talk about something else, please?"},
+    {time: "00:05:35", text: "You enjoying your book there, Marianne?"},
+    {time: "00:05:37", text: "I said, are you enjoying your book?"},
+    {time: "00:05:41", text: "You're not getting distracted by the fuckin' window, are you?"},
+    {time: "00:05:50", text: "That is absolutely tragic."},
+    {time: "00:05:57", text: "That's it, that's it, Connell. That's it."},
+    {time: "00:06:00", text: "- Right. Let's focus it. - Yeah. Here."},
+    {time: "00:06:04", text: "Beautiful. Keep it going, boys. Fast, fast, fast."},
+    {time: "00:06:14", text: "Sorry. Am I disturbing you, Marianne?"},
+    {time: "00:06:18", text: "No."},
+    {time: "00:06:33", text: "If I knew what I wanted to study, I'd obviously tell you."},
+    {time: "00:06:35", text: "Well, you must have some idea."},
+    {time: "00:06:37", text: "No. I know what I don't want to study, but that's about it."},
+    {time: "00:06:40", text: "Jesus, how long is that list?"},
+    {time: "00:06:41", text: "Fairly long."},
+    {time: "00:06:43", text: "That's a great way to decide, Connell."},
+    {time: "00:06:46", text: "Rule out marine biology and astrophysics,"},
+    {time: "00:06:49", text: "and all the rest till you're left with one."},
+    {time: "00:06:51", text: "I could be a marine biologist."},
+    {time: "00:06:53", text: "Yeah, that sounds like your area of interest, all right."},
+    {time: "00:06:56", text: "You've not got long. Forms are due soon."},
+    {time: "00:06:59", text: "Yeah. I'm aware."},
+    {time: "00:07:17", text: "Is this just out?"},
+    {time: "00:07:21", text: "About five minutes ago."},
+    {time: "00:07:23", text: "Made some salad."},
+    {time: "00:07:28", text: "Could you not have drawn the curtains, Marianne?"},
+    {time: "00:07:32", text: "It's literally only just getting dark."},
+    {time: "00:07:33", text: "You've got the heating on full and the curtains wide open."},
+    {time: "00:07:40", text: "Did you have a good day?"},
+    {time: "00:07:42", text: "Depends on what you mean by good."},
+    {time: "00:07:44", text: "You can get rid of one client and another one arrives."},
+    {time: "00:07:47", text: "Isn't that good business?"},
+    {time: "00:07:51", text: "Yes."},
+    {time: "00:07:55", text: "Where's your brother?"},
+    {time: "00:07:57", text: "Don't shrug, Marianne."},
+    {time: "00:07:59", text: "I don't know. I haven't seen him."},
+    {time: "00:08:02", text: "- And how was school? - Okay."},
+    {time: "00:08:05", text: "Got some results back."},
+    {time: "00:08:07", text: "- Mocks. - And?"},
+    {time: "00:08:09", text: "Good."},
+    {time: "00:08:10", text: "Good."},
+    {time: "00:08:13", text: "Is there any food?"},
+    {time: "00:08:15", text: "Your sister's reheated a lasagna."},
+    {time: "00:08:17", text: "Oh, good effort, Marianne."},
+    {time: "00:08:21", text: "- How was your day? - All right."},
+    {time: "00:08:24", text: "Not too busy."},
+    {time: "00:08:25", text: "You out this evening?"},
+    {time: "00:08:27", text: "Yeah."},
+    {time: "00:08:29", text: "'Cause I got this thing called a social life."},
+    {time: "00:08:33", text: "Right."},
+    {time: "00:08:35", text: "You know, like, actual friends."},
+    {time: "00:08:38", text: "Lucky you."},
+    {time: "00:08:41", text: "Fermanagh now completing the list of qualifiers."},
+    {time: "00:08:44", text: "Draw for the next round will be held on Thursday."},
+    {time: "00:08:47", text: "Finally, at the Cricket World Cup today,"},
+    {time: "00:08:49", text: "it's the semi-final clash, as India..."},
+    {time: "00:08:54", text: "- Hello? - Alan, it's Ger. How's it going?"},
+    {time: "00:08:56", text: "- Good, yeah. - Uh, listen, I'm after missing the bus,"},
+    {time: "00:08:58", text: "and I hate to ask you, but any chance of a lift in?"},
+    {time: "00:09:02", text: "Yeah, no bother at all, man. You at the house, eh?"},
+    {time: "00:09:04", text: "- I'll swing around for you now. - Oh, thank you so much."},
+    {time: "00:09:06", text: "- Sound. Stall it there. I'll see you in a few. - Yeah, you're a star."},
+    {time: "00:09:14", text: "What are you doing?"},
+    {time: "00:09:16", text: "Uh, did you not hear that entire call?"},
+    {time: "00:09:18", text: "I have to go pick up Ger out in Garryduff."},
+    {time: "00:09:20", text: "You hop out here."},
+    {time: "00:09:22", text: "Are you serious? I'll get drenched."},
+    {time: "00:09:25", text: "Right. Shit buzz for you, pal."},
+    {time: "00:09:28", text: "Maybe you should learn to drive."},
+    {time: "00:09:30", text: "Go on."},
+    {time: "00:09:53", text: "\"It was sliding beneath the big, black wave."},
+    {time: "00:09:55", text: "Another and another."},
+    {time: "00:09:58", text: "Then I was back in it. The war was...\""},
+    {time: "00:10:02", text: "Class begins at nine, Marianne."},
+    {time: "00:10:04", text: "Yeah. Thanks for that."},
+    {time: "00:10:07", text: "Excuse me?"},
+    {time: "00:10:09", text: "Can you just give me a detention and move on?"},
+    {time: "00:10:13", text: "Quiet."},
+    {time: "00:10:17", text: "\"Then I was back in it."},
+    {time: "00:10:19", text: "The war was on outside,"},
+    {time: "00:10:21", text: "in Worcester, Massachusetts...\""},
+    {time: "00:10:37", text: "I'm having people over Friday, after the match."},
+    {time: "00:10:41", text: "Come celebrate, or drown your sorrows."},
+    {time: "00:10:45", text: "Whatever."},
+    {time: "00:10:47", text: "Yeah. Sounds good."},
+    {time: "00:10:50", text: "What happened to you this morning, Marianne?"},
+    {time: "00:10:52", text: "You're looking a bit on the drowned rat side."},
+    {time: "00:10:54", text: "Thanks, yeah. It was raining."},
+    {time: "00:10:57", text: "You should have brought an umbrella."},
+    {time: "00:10:58", text: "Good advice."},
+    {time: "00:11:00", text: "You strip off in the toilets to dry yourself again?"},
+    {time: "00:11:03", text: "Not this time. No. Why?"},
+    {time: "00:11:06", text: "Would you like an invitation next time?"},
+    {time: "00:11:09", text: "\"Just give me detention,"},
+    {time: "00:11:11", text: "and move on\"."},
+    {time: "00:11:13", text: "- That was a good one. - Glad you enjoyed it."},
+    {time: "00:11:15", text: "The shit you get away with 'cause you're smart."},
+    {time: "00:11:18", text: "I understand you're at a disadvantage there, Rob."},
+    {time: "00:11:20", text: "Fuck off."},
+    {time: "00:11:35", text: "Hey."},
+    {time: "00:11:40", text: "You're not heading home, no?"},
+    {time: "00:11:43", text: "I did actually get a detention."},
+    {time: "00:11:46", text: "Sorry."},
+    {time: "00:11:48", text: "Technically, I requested it."},
+    {time: "00:11:53", text: "You were fairly harsh on Kerrigan the other day, as well."},
+    {time: "00:11:57", text: "He's actually pretty decent."},
+    {time: "00:11:58", text: "I don't know why you had to have such a go at him."},
+    {time: "00:12:02", text: "I object to every thought or action, or..."},
+    {time: "00:12:06", text: "feeling of mine being policed"},
+    {time: "00:12:08", text: "like we're in some authoritarian fantasy."},
+    {time: "00:12:10", text: "Well, it's not that, though, is it?"},
+    {time: "00:12:12", text: "It's just school."},
+    {time: "00:12:14", text: "It's the same for everybody. It's not unique for you."},
+    {time: "00:12:18", text: "You try to act like we're friends,"},
+    {time: "00:12:21", text: "but you know you're not that kind of person."},
+    {time: "00:12:24", text: "I'm not acting."},
+    {time: "00:12:27", text: "Maybe I am that kind of person."},
+    {time: "00:12:31", text: "Why are you talking to me, then?"},
+    {time: "00:12:33", text: "Yeah."},
+    {time: "00:12:39", text: "What was Ms. Neary talking to you about after class?"},
+    {time: "00:12:42", text: "Oh, don't know. Uh..."},
+    {time: "00:12:44", text: "getting out of class early for training or something."},
+    {time: "00:12:46", text: "She must find training highly amusing, then."},
+    {time: "00:12:49", text: "Well."},
+    {time: "00:12:51", text: "Does she fancy you or something?"},
+    {time: "00:12:54", text: "Why'd you say that?"},
+    {time: "00:12:56", text: "God, you're not having an affair with her, are you?"},
+    {time: "00:12:58", text: "Please. You think it's funny"},
+    {time: "00:13:00", text: "joking about stuff like that, do you?"},
+    {time: "00:13:04", text: "- Sorry. - People going at me like I fancy her. I..."},
+    {time: "00:13:07", text: "I don't fancy her."},
+    {time: "00:13:10", text: "Well..."},
+    {time: "00:13:12", text: "maybe it's because you blush a lot"},
+    {time: "00:13:15", text: "when she talks to you."},
+    {time: "00:13:16", text: "Aah."},
+    {time: "00:13:17", text: "But you know, you blush at everything."},
+    {time: "00:13:19", text: "Thanks."},
+    {time: "00:13:21", text: "Guess you have one of those complexions."},
+    {time: "00:13:22", text: "Great."},
+    {time: "00:13:24", text: "You're blushing right now, actually."},
+    {time: "00:13:26", text: "Yeah. I'm aware."},
+    {time: "00:13:30", text: "Sorry."},
+    {time: "00:13:33", text: "I don't want to get into a fight with you or anything."},
+    {time: "00:13:36", text: "We're not fighting."},
+    {time: "00:13:38", text: "I know you... probably hate me."},
+    {time: "00:13:43", text: "But you're the only person who actually talks to me."},
+    {time: "00:13:45", text: "I never said that I hated you."},
+    {time: "00:13:48", text: "Well..."},
+    {time: "00:13:50", text: "I like you."},
+    {time: "00:13:56", text: "Oh."},
+    {time: "00:13:58", text: "Got to head to training, so, uh..."},
+    {time: "00:14:03", text: "Good luck at the match tomorrow."},
+    {time: "00:14:04", text: "Thanks."},
+    {time: "00:14:14", text: "Marianne, you gonna join us?"},
+    {time: "00:14:17", text: "Come on, lads. In you go."},
+    {time: "00:14:31", text: "Keep going, keep going."},
+    {time: "00:14:44", text: "Come on, sink his ass!"},
+    {time: "00:14:47", text: "Fuck!"},
+    {time: "00:15:16", text: "- Push through it, Kiernan! - Come on!"},
+    {time: "00:15:19", text: "- Come on! - Score!"},
+    {time: "00:15:35", text: "Yeah!"},
+    {time: "00:15:51", text: "Yeah!"},
+    {time: "00:15:53", text: "Fuck, we did it!"},
+    {time: "00:15:56", text: "Fuck!"},
+    {time: "00:15:58", text: "Come on!"},
+    {time: "00:16:23", text: "- Grand. - Good lad."},
+    {time: "00:16:38", text: "Woo!"},
+    {time: "00:17:23", text: "You're early. Come on in."},
+    {time: "00:17:25", text: "- Have a bit do, yet. - Grand."},
+    {time: "00:17:26", text: "Quick as I can."},
+    {time: "00:17:28", text: "No, not in there."},
+    {time: "00:17:29", text: "I've just finished mopping."},
+    {time: "00:17:31", text: "And well done, man of the match."},
+    {time: "00:17:33", text: "Marianne told me."},
+    {time: "00:17:35", text: "- Did she? - She did."},
+    {time: "00:18:08", text: "You played well today."},
+    {time: "00:18:11", text: "Oh, thanks."},
+    {time: "00:18:13", text: "That's nice of you."},
+    {time: "00:18:15", text: "- I can be nice. - I know you can."},
+    {time: "00:18:21", text: "You know, the way you are in school,"},
+    {time: "00:18:24", text: "I don't think you're like that, really."},
+    {time: "00:18:28", text: "What am I like, really?"},
+    {time: "00:18:39", text: "Ah."},
+    {time: "00:18:41", text: "You can borrow it, if you like."},
+    {time: "00:18:43", text: "Oh, I... I actually read it already."},
+    {time: "00:18:45", text: "I don't know why I picked it up."},
+    {time: "00:18:47", text: "- Any good? - Yeah. I liked it."},
+    {time: "00:18:49", text: "You... You'd like it, actually."},
+    {time: "00:18:50", text: "It's got a lot about feminism, and all that."},
+    {time: "00:18:55", text: "Do your friends know you read so much?"},
+    {time: "00:18:57", text: "Yeah, they wouldn't really be interested in all that stuff."},
+    {time: "00:19:02", text: "You mean they're not interested in the world around them?"},
+    {time: "00:19:04", text: "Eh, not in the same way that we would be,"},
+    {time: "00:19:07", text: "but they have their own interests, I suppose."},
+    {time: "00:19:11", text: "Right. Like, uh,"},
+    {time: "00:19:13", text: "bragging about who they're having sex with."},
+    {time: "00:19:17", text: "Yeah. They can do a bit of that."},
+    {time: "00:19:21", text: "I'm... I'm not defending it."},
+    {time: "00:19:24", text: "Doesn't it bother you?"},
+    {time: "00:19:25", text: "Most of it wouldn't."},
+    {time: "00:19:27", text: "And then they do some stuff that's a bit over the line,"},
+    {time: "00:19:29", text: "and that would bother me, obviously, but..."},
+    {time: "00:19:31", text: "they're my friends at the end of the day. It's different for you."},
+    {time: "00:19:38", text: "Why is it different?"},
+    {time: "00:19:44", text: "You know, um..."},
+    {time: "00:19:48", text: "You were saying the other day that you like me."},
+    {time: "00:19:53", text: "B-by the photocopier, you said it."},
+    {time: "00:19:55", text: "Yeah."},
+    {time: "00:19:56", text: "Yeah. Did you mean \"like\" as..."},
+    {time: "00:20:00", text: "a friend, or what?"},
+    {time: "00:20:05", text: "No."},
+    {time: "00:20:08", text: "- Not just as a friend. - Yeah."},
+    {time: "00:20:09", text: "I thought that might be implied. I just... wasn't sure."},
+    {time: "00:20:17", text: "See, I'm..."},
+    {time: "00:20:19", text: "just a little confused about what I feel, I think."},
+    {time: "00:20:22", text: "Uh, it'd be awkward in school if something happened with us."},
+    {time: "00:20:38", text: "No one would have to know."},
+    {time: "00:21:05", text: "That was nice."},
+    {time: "00:21:08", text: "What, what are you laughing for?"},
+    {time: "00:21:10", text: "Nothing."},
+    {time: "00:21:12", text: "Well, you're acting like you've never been kissed before."},
+    {time: "00:21:14", text: "I haven't."},
+    {time: "00:21:20", text: "- Connell. - Uh..."},
+    {time: "00:21:24", text: "Don't tell anybody in school about this, all right?"},
+    {time: "00:21:28", text: "Like I talk to anyone at school."},
+    {time: "00:22:09", text: "Yeah, I'll pop in for a bit. See ya in there."},
+    {time: "00:22:11", text: "Yeah, busy. Yeah. See you inside, all right?"},
+    {time: "00:22:22", text: "All right?"},
+    {time: "00:22:24", text: "How's things, boss? Keeping well, yeah?"},
+    {time: "00:22:28", text: "All right. Thanks."},
+    {time: "00:22:33", text: "Come here to me. Fair play to ya."},
+    {time: "00:22:39", text: "- Man of the hour! - Ah, no, not really."},
+    {time: "00:22:42", text: "Thought you'd change your mind."},
+    {time: "00:22:43", text: "- Oh. - Well, I'm glad you're here."},
+    {time: "00:22:46", text: "Shots."},
+    {time: "00:22:50", text: "- Go on, get that into ya. - Cheers. All right."},
+    {time: "00:22:51", text: "Cheers!"},
+    {time: "00:22:52", text: "Cheers!"},
+    {time: "00:23:20", text: "- How's the craic, Waldron? - All right."},
+    {time: "00:23:22", text: "You were on form on Friday."},
+    {time: "00:23:24", text: "So you were feelin' it, were you?"},
+    {time: "00:23:26", text: "He was almost as drunk as Rachel."},
+    {time: "00:23:28", text: "Fuck off, Rob. You passed out in a hedge."},
+    {time: "00:23:30", text: "That, I did. It was a good night."},
+    {time: "00:23:33", text: "- From what I can remember. - It was a good night."},
+    {time: "00:23:38", text: "- Hey. - All right."},
+    {time: "00:23:40", text: "- Waldron? - Yeah."},
+    {time: "00:23:41", text: "Have you got that French homework, there?"},
+    {time: "00:23:43", text: "- Yeah, I do. Yeah. - Can I get it off you before break?"},
+    {time: "00:23:45", text: "Give it to you now. I have it handy."},
+    {time: "00:23:47", text: "You're a lifesaver, man."},
+    {time: "00:23:49", text: "- Throw it back to me, yeah? - Yeah."},
+    {time: "00:25:12", text: "Hiya."},
+    {time: "00:25:14", text: "- Your mum's not here. - Yeah, um..."},
+    {time: "00:25:18", text: "Can I come in?"},
+    {time: "00:25:23", text: "Thanks."},
+    {time: "00:25:27", text: "You're not busy or anything, no?"},
+    {time: "00:25:29", text: "No, I'm just..."},
+    {time: "00:25:49", text: "Are you going to start kissing me again?"},
+    {time: "00:26:17", text: "Can we take our clothes off?"},
+    {time: "00:26:19", text: "No."},
+    {time: "00:26:22", text: "Not here. It's..."},
+    {time: "00:26:31", text: "Uh..."},
+    {time: "00:26:34", text: "Uh..."},
+    {time: "00:26:36", text: "Got a free house on Saturday."},
+    {time: "00:26:40", text: "You could come over then, if you wanted to."},
+    {time: "00:26:47", text: "Will anyone else be there?"},
+    {time: "00:26:49", text: "No."},
+    {time: "00:27:05", text: "Are you sure we can't take our clothes off?"},
+    {time: "00:27:07", text: "Oh, no. Yeah."},
+    {time: "00:27:11", text: "I said I'd take Lorraine to the shops, and this is, uh..."},
+    {time: "00:27:19", text: "You were tempted, though, for a second."},
+    {time: "00:27:23", text: "Not really."},
+    {time: "00:27:26", text: "You were tempted."},
+    {time: "00:27:28", text: "I tempted you."},
+    {time: "00:27:36", text: "So you'll come on Saturday?"},
+  ]
+}];
+
 const LIVE_LESSONS = [
   {
     id: 'L1',
@@ -5271,7 +5643,7 @@ const LIVE_LESSONS = [
 // RENDERING
 // ============================================================
 function hideAllViews() {
-  ['unit-view','flashcard-view','progress-view','phrases-view','plan-view','live-view','sync-view'].forEach(id => {
+  ['unit-view','flashcard-view','progress-view','phrases-view','plan-view','live-view','episodes-view','sync-view'].forEach(id => {
     document.getElementById(id).style.display = 'none';
   });
 }
@@ -5319,6 +5691,8 @@ function updateNav() {
     document.getElementById('nav-plan').classList.add('active');
   } else if (currentView === 'live') {
     document.getElementById('nav-live').classList.add('active');
+  } else if (currentView === 'episodes') {
+    document.getElementById('nav-episodes').classList.add('active');
   } else if (currentView === 'sync') {
     document.getElementById('nav-sync').classList.add('active');
   }
@@ -5346,6 +5720,90 @@ function showLiveClasses() {
   document.getElementById('live-view').style.display = 'block';
   renderLiveClassesView();
   updateNav();
+}
+
+let currentEpisode = null;
+function showEpisodes() {
+  currentView = 'episodes';
+  hideAllViews();
+  document.getElementById('episodes-view').style.display = 'block';
+  renderEpisodesView();
+  updateNav();
+}
+
+function renderEpisodesView() {
+  const container = document.getElementById('episodes-content');
+  if (currentEpisode) { renderEpisodeDetail(currentEpisode); return; }
+  let html = '<div style="max-width:600px;margin:0 auto">';
+  html += '<p style="text-align:center;color:var(--text-light);margin-bottom:1.5rem">Watch and read along with TV series transcripts. Double-click any word for translation, pronunciation and to add to flashcards.</p>';
+  EPISODES.forEach(ep => {
+    html += `<div class="card" style="margin-bottom:1rem;cursor:pointer;padding:1.2rem" onclick="currentEpisode='${ep.id}';renderEpisodesView()">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:700;font-size:1.1rem;color:var(--primary)">${ep.show}</div>
+          <div style="font-size:0.95rem;color:var(--text);margin-top:0.2rem">S${ep.season}E${ep.episode}: ${ep.title}</div>
+          <div style="font-size:0.85rem;color:var(--text-light);margin-top:0.3rem">${ep.description} &middot; ${ep.subtitles.length} lines</div>
+        </div>
+        <span style="font-size:1.3rem;color:var(--text-light)">&rsaquo;</span>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderEpisodeDetail(episodeId) {
+  const ep = EPISODES.find(e => e.id === episodeId);
+  if (!ep) return;
+  const container = document.getElementById('episodes-content');
+
+  let html = `<div style="max-width:760px;margin:0 auto">
+    <button class="btn btn-secondary" onclick="currentEpisode=null;renderEpisodesView()" style="margin-bottom:1rem">&larr; All Episodes</button>
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <div style="color:var(--text-light);font-size:0.9rem">${ep.show}</div>
+      <h2 style="margin:0.2rem 0">S${ep.season}E${ep.episode}: ${ep.title}</h2>
+      <div style="color:var(--text-light);font-size:0.85rem">${ep.subtitles.length} lines &middot; Double-click any word for translation, audio &amp; flashcard</div>
+    </div>
+    <div class="card" style="padding:1.2rem">
+      <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap">
+        <button class="btn btn-secondary" onclick="toggleEpisodeTimestamps()" id="ep-time-btn" style="font-size:0.85rem;padding:0.4rem 0.8rem">Hide timestamps</button>
+        <button class="btn btn-secondary" onclick="speakEpisodeFromLine(0)" style="font-size:0.85rem;padding:0.4rem 0.8rem">&#9658; Read all aloud</button>
+        <button class="btn btn-secondary" onclick="window.speechSynthesis.cancel()" style="font-size:0.85rem;padding:0.4rem 0.8rem">&#9632; Stop</button>
+      </div>
+      <div id="ep-transcript" style="line-height:1.7">`;
+  ep.subtitles.forEach((sub, idx) => {
+    html += `<div class="ep-line" data-idx="${idx}" style="padding:0.4rem 0;border-bottom:1px solid var(--border);display:flex;gap:0.8rem;align-items:start">
+      <span class="ep-time" style="color:var(--text-light);font-size:0.75rem;font-family:monospace;min-width:60px;padding-top:0.15rem">${sub.time}</span>
+      <span style="flex:1">
+        <button onclick="speakWord('${sub.text.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')" style="background:none;border:none;cursor:pointer;color:var(--primary);font-size:1rem;padding:0 0.4rem 0 0;vertical-align:middle" title="Read this line">&#128266;</button>
+        <span class="ep-text">${sub.text}</span>
+      </span>
+    </div>`;
+  });
+  html += `</div></div></div>`;
+  container.innerHTML = html;
+}
+
+function toggleEpisodeTimestamps() {
+  const times = document.querySelectorAll('.ep-time');
+  const btn = document.getElementById('ep-time-btn');
+  const isHidden = times.length > 0 && times[0].style.display === 'none';
+  times.forEach(t => t.style.display = isHidden ? '' : 'none');
+  if (btn) btn.textContent = isHidden ? 'Hide timestamps' : 'Show timestamps';
+}
+
+function speakEpisodeFromLine(startIdx) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const ep = EPISODES.find(e => e.id === currentEpisode);
+  if (!ep) return;
+  // Speak each line sequentially
+  ep.subtitles.slice(startIdx).forEach(sub => {
+    const u = new SpeechSynthesisUtterance(sub.text);
+    u.lang = 'en-GB';
+    u.rate = 0.95;
+    speechSynthesis.speak(u);
+  });
 }
 
 let currentLesson = null;
@@ -5512,6 +5970,7 @@ function renderCurrentView() {
   else if (currentView === 'phrases') renderPhrasesView();
   else if (currentView === 'plan') renderPlanView();
   else if (currentView === 'live') renderLiveClassesView();
+  else if (currentView === 'episodes') renderEpisodesView();
   else if (currentView === 'sync') renderSyncView();
 }
 

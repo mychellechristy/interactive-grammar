@@ -5797,11 +5797,14 @@ function speakEpisodeFromLine(startIdx) {
   window.speechSynthesis.cancel();
   const ep = EPISODES.find(e => e.id === currentEpisode);
   if (!ep) return;
+  const voice = getEnglishVoice();
   // Speak each line sequentially
   ep.subtitles.slice(startIdx).forEach(sub => {
     const u = new SpeechSynthesisUtterance(sub.text);
     u.lang = 'en-GB';
     u.rate = 0.95;
+    u.pitch = 1.0;
+    if (voice) u.voice = voice;
     speechSynthesis.speak(u);
   });
 }
@@ -5919,12 +5922,18 @@ function renderLessonDetail(lessonId) {
 }
 
 function speakWord(text) {
-  if ('speechSynthesis' in window) {
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-GB';
-    u.rate = 0.85;
-    speechSynthesis.speak(u);
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB';
+  u.rate = 0.9;
+  u.pitch = 1.0;
+  // Use best available voice if loaded
+  if (typeof getEnglishVoice === 'function') {
+    const v = getEnglishVoice();
+    if (v) u.voice = v;
   }
+  speechSynthesis.speak(u);
 }
 
 function addLiveFlashcard(word, ptBr, examplesJson) {
@@ -6394,8 +6403,114 @@ function retryMistakes(exId) {
 // ============================================================
 // AUDIO
 // ============================================================
+// Common English words the dictionary API often gets wrong (mostly irregular verbs and function words)
+const COMMON_WORDS = {
+  'am':    { phonetic: '/\u00E6m/', definition: 'First person singular present of "be" (I am)', ptBr: 'sou / estou', example: 'I am happy.' },
+  'is':    { phonetic: '/\u026Az/', definition: 'Third person singular present of "be" (he/she/it is)', ptBr: '\u00E9 / est\u00E1', example: 'She is here.' },
+  'are':   { phonetic: '/\u0251\u02D0r/', definition: 'Present plural of "be" (we/you/they are)', ptBr: 's\u00E3o / est\u00E3o / somos', example: 'They are friends.' },
+  'was':   { phonetic: '/w\u0252z/', definition: 'Past singular of "be" (I/he/she/it was)', ptBr: 'era / estava / fui / foi', example: 'I was tired.' },
+  'were':  { phonetic: '/w\u025C\u02D0r/', definition: 'Past plural of "be" (we/you/they were)', ptBr: 'eram / estavam / \u00E9ramos', example: 'They were happy.' },
+  'been':  { phonetic: '/bi\u02D0n/', definition: 'Past participle of "be"', ptBr: 'sido / estado', example: 'I have been there.' },
+  'being': { phonetic: '/\u02C8bi\u02D0\u026A\u014B/', definition: 'Present participle of "be"', ptBr: 'sendo / estando / ser', example: 'Being kind is important.' },
+  'have':  { phonetic: '/h\u00E6v/', definition: 'To possess or own', ptBr: 'ter', example: 'I have a book.' },
+  'has':   { phonetic: '/h\u00E6z/', definition: 'Third person singular of "have" (he/she/it has)', ptBr: 'tem', example: 'She has a car.' },
+  'had':   { phonetic: '/h\u00E6d/', definition: 'Past tense and past participle of "have"', ptBr: 'tinha / teve / tive', example: 'I had a dog.' },
+  'do':    { phonetic: '/du\u02D0/', definition: 'To perform an action; auxiliary verb for questions/negatives', ptBr: 'fazer', example: 'I do my homework.' },
+  'does':  { phonetic: '/d\u028Cz/', definition: 'Third person singular of "do"', ptBr: 'faz', example: 'She does yoga.' },
+  'did':   { phonetic: '/d\u026Ad/', definition: 'Past tense of "do"', ptBr: 'fez / fiz / fizeram', example: 'I did it.' },
+  'done':  { phonetic: '/d\u028Cn/', definition: 'Past participle of "do"', ptBr: 'feito', example: 'I have done it.' },
+  'doing': { phonetic: '/\u02C8du\u02D0\u026A\u014B/', definition: 'Present participle of "do"', ptBr: 'fazendo', example: 'What are you doing?' },
+  'go':    { phonetic: '/\u0261o\u028A/', definition: 'To move or travel from one place to another', ptBr: 'ir', example: 'Let\'s go home.' },
+  'goes':  { phonetic: '/\u0261o\u028Az/', definition: 'Third person singular of "go"', ptBr: 'vai', example: 'He goes to school.' },
+  'went':  { phonetic: '/w\u025Bnt/', definition: 'Past tense of "go"', ptBr: 'fui / foi / foram', example: 'I went home.' },
+  'gone':  { phonetic: '/\u0261\u0252n/', definition: 'Past participle of "go"', ptBr: 'ido / partiu', example: 'He has gone.' },
+  'going': { phonetic: '/\u02C8\u0261o\u028A\u026A\u014B/', definition: 'Present participle of "go"', ptBr: 'indo / indo fazer', example: 'I am going home.' },
+  'get':   { phonetic: '/\u0261\u025Bt/', definition: 'To receive, obtain, or become', ptBr: 'pegar / obter / ficar', example: 'I get tired easily.' },
+  'got':   { phonetic: '/\u0261\u0252t/', definition: 'Past tense and past participle of "get"', ptBr: 'peguei / pegou / consegui', example: 'I got a present.' },
+  'getting': { phonetic: '/\u02C8\u0261\u025Bt\u026A\u014B/', definition: 'Present participle of "get"', ptBr: 'pegando / ficando', example: 'It\'s getting late.' },
+  'make':  { phonetic: '/me\u026Ak/', definition: 'To create, produce, or cause', ptBr: 'fazer / criar', example: 'I\'ll make dinner.' },
+  'made':  { phonetic: '/me\u026Ad/', definition: 'Past tense and past participle of "make"', ptBr: 'fez / fiz / feito', example: 'I made a cake.' },
+  'take':  { phonetic: '/te\u026Ak/', definition: 'To carry or move something', ptBr: 'pegar / levar / tomar', example: 'Take this bag, please.' },
+  'took':  { phonetic: '/t\u028Ak/', definition: 'Past tense of "take"', ptBr: 'pegou / levou / tomou', example: 'I took the bus.' },
+  'taken': { phonetic: '/\u02C8te\u026Ak\u0259n/', definition: 'Past participle of "take"', ptBr: 'levado / tomado', example: 'It has been taken.' },
+  'see':   { phonetic: '/si\u02D0/', definition: 'To perceive with the eyes', ptBr: 'ver', example: 'I can see you.' },
+  'saw':   { phonetic: '/s\u0254\u02D0/', definition: 'Past tense of "see"', ptBr: 'vi / viu / viram', example: 'I saw him yesterday.' },
+  'seen':  { phonetic: '/si\u02D0n/', definition: 'Past participle of "see"', ptBr: 'visto', example: 'I have seen it.' },
+  'come':  { phonetic: '/k\u028Cm/', definition: 'To move toward the speaker or with the speaker', ptBr: 'vir', example: 'Come here, please.' },
+  'came':  { phonetic: '/ke\u026Am/', definition: 'Past tense of "come"', ptBr: 'veio / vim / vieram', example: 'She came home late.' },
+  'say':   { phonetic: '/se\u026A/', definition: 'To utter words; to express in speech', ptBr: 'dizer / falar', example: 'Say something!' },
+  'said':  { phonetic: '/s\u025Bd/', definition: 'Past tense and past participle of "say"', ptBr: 'disse / disseram', example: 'She said hello.' },
+  'know':  { phonetic: '/no\u028A/', definition: 'To be aware of through observation or information', ptBr: 'saber / conhecer', example: 'I know him.' },
+  'knew':  { phonetic: '/nju\u02D0/', definition: 'Past tense of "know"', ptBr: 'sabia / conhecia', example: 'I knew the answer.' },
+  'known': { phonetic: '/no\u028An/', definition: 'Past participle of "know"', ptBr: 'conhecido / sabido', example: 'I have known her for years.' },
+  'tell':  { phonetic: '/t\u025Bl/', definition: 'To inform or recount', ptBr: 'contar / dizer', example: 'Tell me the truth.' },
+  'told':  { phonetic: '/to\u028Ald/', definition: 'Past tense and past participle of "tell"', ptBr: 'contou / disse', example: 'I told you so.' },
+  'think': { phonetic: '/\u03B8\u026A\u014Bk/', definition: 'To use the mind to consider ideas', ptBr: 'pensar / achar', example: 'I think it\'s a good idea.' },
+  'thought': { phonetic: '/\u03B8\u0254\u02D0t/', definition: 'Past tense of "think"; also a noun for an idea', ptBr: 'pensou / pensamento / achou', example: 'I thought about it.' },
+  'feel':  { phonetic: '/fi\u02D0l/', definition: 'To experience an emotion or physical sensation', ptBr: 'sentir', example: 'I feel happy.' },
+  'felt':  { phonetic: '/f\u025Blt/', definition: 'Past tense and past participle of "feel"', ptBr: 'senti / sentiu', example: 'I felt tired.' },
+  'find':  { phonetic: '/fa\u026And/', definition: 'To discover or locate something', ptBr: 'encontrar / achar', example: 'I can\'t find my keys.' },
+  'found': { phonetic: '/fa\u028And/', definition: 'Past tense and past participle of "find"', ptBr: 'encontrou / achou', example: 'I found my phone.' },
+  'leave': { phonetic: '/li\u02D0v/', definition: 'To go away from a place or person', ptBr: 'sair / deixar / partir', example: 'I have to leave now.' },
+  'left':  { phonetic: '/l\u025Bft/', definition: 'Past tense of "leave"; also opposite of "right"', ptBr: 'saiu / partiu / esquerda', example: 'She left an hour ago.' },
+  'give':  { phonetic: '/\u0261\u026Av/', definition: 'To freely transfer something to someone', ptBr: 'dar', example: 'I\'ll give you a hand.' },
+  'gave':  { phonetic: '/\u0261e\u026Av/', definition: 'Past tense of "give"', ptBr: 'deu / dei', example: 'She gave me a gift.' },
+  'given': { phonetic: '/\u02C8\u0261\u026Av\u0259n/', definition: 'Past participle of "give"', ptBr: 'dado', example: 'It was given to me.' },
+  'put':   { phonetic: '/p\u028At/', definition: 'To place something somewhere', ptBr: 'colocar / p\u00F4r', example: 'Put it on the table.' },
+  'bring': { phonetic: '/br\u026A\u014B/', definition: 'To take something or someone with you', ptBr: 'trazer', example: 'Bring me the book, please.' },
+  'brought': { phonetic: '/br\u0254\u02D0t/', definition: 'Past tense and past participle of "bring"', ptBr: 'trouxe / trouxeram', example: 'She brought flowers.' },
+  'become': { phonetic: '/b\u026A\u02C8k\u028Cm/', definition: 'To start to be something', ptBr: 'tornar-se / virar', example: 'He became a doctor.' },
+  'became': { phonetic: '/b\u026A\u02C8ke\u026Am/', definition: 'Past tense of "become"', ptBr: 'tornou-se / virou', example: 'She became famous.' },
+  'eat':   { phonetic: '/i\u02D0t/', definition: 'To consume food', ptBr: 'comer', example: 'Let\'s eat dinner.' },
+  'ate':   { phonetic: '/e\u026At/', definition: 'Past tense of "eat"', ptBr: 'comeu / comi', example: 'I ate breakfast.' },
+  'eaten': { phonetic: '/\u02C8i\u02D0t\u0259n/', definition: 'Past participle of "eat"', ptBr: 'comido', example: 'I have eaten already.' },
+  'sleep': { phonetic: '/sli\u02D0p/', definition: 'To rest with eyes closed and consciousness reduced', ptBr: 'dormir / sono', example: 'I need to sleep.' },
+  'slept': { phonetic: '/sl\u025Bpt/', definition: 'Past tense and past participle of "sleep"', ptBr: 'dormiu / dormi', example: 'I slept well.' },
+  'run':   { phonetic: '/r\u028Cn/', definition: 'To move quickly on foot', ptBr: 'correr / executar', example: 'I run every morning.' },
+  'ran':   { phonetic: '/r\u00E6n/', definition: 'Past tense of "run"', ptBr: 'correu / corri', example: 'He ran home.' },
+  'read':  { phonetic: '/ri\u02D0d/', definition: 'To look at and understand written words', ptBr: 'ler', example: 'I love to read books.' },
+  'write': { phonetic: '/ra\u026At/', definition: 'To form letters or words on a surface', ptBr: 'escrever', example: 'Write your name here.' },
+  'wrote': { phonetic: '/ro\u028At/', definition: 'Past tense of "write"', ptBr: 'escreveu / escrevi', example: 'She wrote a book.' },
+  'written': { phonetic: '/\u02C8r\u026At\u0259n/', definition: 'Past participle of "write"', ptBr: 'escrito', example: 'It is written here.' },
+  'speak': { phonetic: '/spi\u02D0k/', definition: 'To talk; to use the voice to communicate', ptBr: 'falar', example: 'Do you speak English?' },
+  'spoke': { phonetic: '/spo\u028Ak/', definition: 'Past tense of "speak"', ptBr: 'falou / falei', example: 'She spoke softly.' },
+  'spoken': { phonetic: '/\u02C8spo\u028Ak\u0259n/', definition: 'Past participle of "speak"', ptBr: 'falado', example: 'English is spoken here.' },
+  'didn\'t': { phonetic: '/\u02C8d\u026Ad\u0259nt/', definition: 'Contraction of "did not" (past tense negative auxiliary)', ptBr: 'n\u00E3o (passado)', example: 'I didn\'t see her.' },
+  'doesn\'t': { phonetic: '/\u02C8d\u028Cz\u0259nt/', definition: 'Contraction of "does not"', ptBr: 'n\u00E3o (3\u00AA pessoa)', example: 'She doesn\'t like coffee.' },
+  'don\'t': { phonetic: '/do\u028Ant/', definition: 'Contraction of "do not"', ptBr: 'n\u00E3o', example: 'I don\'t know.' },
+  'isn\'t': { phonetic: '/\u02C8\u026Az\u0259nt/', definition: 'Contraction of "is not"', ptBr: 'n\u00E3o \u00E9 / n\u00E3o est\u00E1', example: 'It isn\'t true.' },
+  'wasn\'t': { phonetic: '/\u02C8w\u0252z\u0259nt/', definition: 'Contraction of "was not"', ptBr: 'n\u00E3o era / n\u00E3o estava', example: 'It wasn\'t me.' },
+  'aren\'t': { phonetic: '/\u0251\u02D0nt/', definition: 'Contraction of "are not"', ptBr: 'n\u00E3o s\u00E3o / n\u00E3o est\u00E3o', example: 'They aren\'t here.' },
+  'weren\'t': { phonetic: '/\u02C8w\u025C\u02D0nt/', definition: 'Contraction of "were not"', ptBr: 'n\u00E3o eram / n\u00E3o estavam', example: 'They weren\'t ready.' },
+  'haven\'t': { phonetic: '/\u02C8h\u00E6v\u0259nt/', definition: 'Contraction of "have not"', ptBr: 'n\u00E3o tenho / n\u00E3o tive', example: 'I haven\'t finished.' },
+  'hasn\'t': { phonetic: '/\u02C8h\u00E6z\u0259nt/', definition: 'Contraction of "has not"', ptBr: 'n\u00E3o tem', example: 'She hasn\'t called.' },
+  'hadn\'t': { phonetic: '/\u02C8h\u00E6d\u0259nt/', definition: 'Contraction of "had not"', ptBr: 'n\u00E3o tinha', example: 'I hadn\'t seen him before.' },
+  'won\'t': { phonetic: '/wo\u028Ant/', definition: 'Contraction of "will not"', ptBr: 'n\u00E3o vai / n\u00E3o vou', example: 'She won\'t come.' },
+  'wouldn\'t': { phonetic: '/\u02C8w\u028Ad\u0259nt/', definition: 'Contraction of "would not"', ptBr: 'n\u00E3o iria / n\u00E3o queria', example: 'I wouldn\'t do that.' },
+  'shouldn\'t': { phonetic: '/\u02C8\u0283\u028Ad\u0259nt/', definition: 'Contraction of "should not"', ptBr: 'n\u00E3o deveria', example: 'You shouldn\'t worry.' },
+  'couldn\'t': { phonetic: '/\u02C8k\u028Ad\u0259nt/', definition: 'Contraction of "could not"', ptBr: 'n\u00E3o pude / n\u00E3o conseguia', example: 'I couldn\'t hear you.' },
+  'can\'t': { phonetic: '/k\u0251\u02D0nt/', definition: 'Contraction of "cannot"', ptBr: 'n\u00E3o posso / n\u00E3o consigo', example: 'I can\'t do it.' },
+  'mustn\'t': { phonetic: '/\u02C8m\u028Cs\u0259nt/', definition: 'Contraction of "must not"', ptBr: 'n\u00E3o deve', example: 'You mustn\'t lie.' },
+  'i\'m': { phonetic: '/a\u026Am/', definition: 'Contraction of "I am"', ptBr: 'eu sou / eu estou', example: 'I\'m happy.' },
+  'you\'re': { phonetic: '/j\u028Ar/', definition: 'Contraction of "you are"', ptBr: 'voc\u00EA \u00E9 / voc\u00EA est\u00E1', example: 'You\'re right.' },
+  'he\'s': { phonetic: '/hi\u02D0z/', definition: 'Contraction of "he is" or "he has"', ptBr: 'ele \u00E9 / ele est\u00E1', example: 'He\'s a doctor.' },
+  'she\'s': { phonetic: '/\u0283i\u02D0z/', definition: 'Contraction of "she is" or "she has"', ptBr: 'ela \u00E9 / ela est\u00E1', example: 'She\'s nice.' },
+  'it\'s': { phonetic: '/\u026Ats/', definition: 'Contraction of "it is" or "it has"', ptBr: '\u00E9 / est\u00E1', example: 'It\'s cold today.' },
+  'we\'re': { phonetic: '/w\u026Ar/', definition: 'Contraction of "we are"', ptBr: 'somos / estamos', example: 'We\'re here.' },
+  'they\'re': { phonetic: '/\u00F0\u025Br/', definition: 'Contraction of "they are"', ptBr: 's\u00E3o / est\u00E3o', example: 'They\'re friends.' },
+  'i\'ve': { phonetic: '/a\u026Av/', definition: 'Contraction of "I have"', ptBr: 'eu tenho / eu j\u00E1', example: 'I\'ve been there.' },
+  'you\'ve': { phonetic: '/ju\u02D0v/', definition: 'Contraction of "you have"', ptBr: 'voc\u00EA tem / voc\u00EA j\u00E1', example: 'You\'ve done well.' },
+  'i\'ll': { phonetic: '/a\u026Al/', definition: 'Contraction of "I will" or "I shall"', ptBr: 'eu vou', example: 'I\'ll call you.' },
+  'you\'ll': { phonetic: '/ju\u02D0l/', definition: 'Contraction of "you will"', ptBr: 'voc\u00EA vai', example: 'You\'ll see.' },
+  'i\'d': { phonetic: '/a\u026Ad/', definition: 'Contraction of "I would" or "I had"', ptBr: 'eu iria / eu tinha', example: 'I\'d love to.' }
+};
+
 function buildLocalDictionary() {
   const dict = {};
+  // Pre-load common words/verbs (highest priority \u2014 these override API)
+  for (const [w, data] of Object.entries(COMMON_WORDS)) {
+    dict[w] = { word: w, audioUrl: '', examples: [data.example], ...data };
+  }
   // Pull from Live Lessons vocabulary
   for (const lesson of LIVE_LESSONS) {
     for (const v of (lesson.vocabulary || [])) {
@@ -6430,10 +6545,58 @@ function buildLocalDictionary() {
 
 const LOCAL_DICT = buildLocalDictionary();
 
+// Detect suspicious/wrong definitions from the dictionary API
+function isSuspiciousDefinition(word, definition) {
+  if (!definition) return true;
+  const def = definition.toLowerCase();
+  // For common short words, dictionary API often returns archaic/wrong matches
+  if (word.length <= 4 && (def.includes('archaic') || def.includes('obsolete') || def.includes('a man') || def.includes('husband'))) return true;
+  // Too short definitions are usually wrong
+  if (definition.length < 15) return true;
+  return false;
+}
+
+// Translate word to PT-BR using MyMemory (free, no API key)
+async function fetchPtBrTranslation(word) {
+  // Check localStorage cache
+  try {
+    const cached = JSON.parse(localStorage.getItem('ptbr-cache') || '{}');
+    if (cached[word]) return cached[word];
+  } catch(e) {}
+
+  try {
+    const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|pt-BR`);
+    if (!res.ok) return '';
+    const data = await res.json();
+    const translation = (data && data.responseData && data.responseData.translatedText) || '';
+    // Filter out garbage responses (sometimes returns the word unchanged or an error)
+    if (!translation || translation.toLowerCase() === word.toLowerCase() || translation.length > 100) return '';
+    // Cache
+    try {
+      const cached = JSON.parse(localStorage.getItem('ptbr-cache') || '{}');
+      cached[word] = translation;
+      localStorage.setItem('ptbr-cache', JSON.stringify(cached));
+    } catch(e) {}
+    return translation;
+  } catch(e) { return ''; }
+}
+
 async function fetchWordData(word) {
   if (audioCache[word]) return audioCache[word];
+  const lcWord = word.toLowerCase();
 
-  // Try external API first
+  // 1. Check local dictionary first (COMMON_WORDS + Live Lessons vocab)
+  // For common words like "were", "was", etc., this is the authoritative source.
+  const local = LOCAL_DICT[lcWord];
+  if (local && local.definition) {
+    const result = { ...local };
+    // Ensure PT-BR is present (LOCAL_DICT entries always have ptBr)
+    audioCache[word] = result;
+    return result;
+  }
+
+  // 2. Try external dictionary API
+  let result = null;
   try {
     const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
     if (res.ok) {
@@ -6456,27 +6619,28 @@ async function fetchWordData(word) {
           }
           if (definition && example) break;
         }
-        // Enrich with local PT-BR if available
-        const local = LOCAL_DICT[word.toLowerCase()];
-        const result = {
-          word: entry.word, audioUrl, phonetic, definition, example,
-          ptBr: local ? local.ptBr : ''
-        };
-        audioCache[word] = result;
-        return result;
+        // If definition looks wrong (e.g. archaic match for "were"), skip it
+        if (isSuspiciousDefinition(word, definition)) {
+          definition = '';
+          example = '';
+        }
+        result = { word: entry.word, audioUrl, phonetic, definition, example, ptBr: '' };
       }
     }
-  } catch(e) { /* fall through to local */ }
+  } catch(e) { /* continue to fallback */ }
 
-  // Fallback: local dictionary from app content
-  const local = LOCAL_DICT[word.toLowerCase()];
-  if (local) {
-    const result = { ...local };
-    audioCache[word] = result;
-    return result;
+  if (!result) {
+    result = { word: word, audioUrl: '', phonetic: '', definition: '', example: '', ptBr: '' };
   }
 
-  return null;
+  // 3. Always try to get PT-BR translation
+  result.ptBr = await fetchPtBrTranslation(word);
+
+  // If we have nothing useful at all, return null
+  if (!result.definition && !result.ptBr) return null;
+
+  audioCache[word] = result;
+  return result;
 }
 
 async function playWord(word) {
@@ -6497,7 +6661,9 @@ document.addEventListener('dblclick', async (e) => {
   if (['INPUT', 'BUTTON', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
 
   const sel = window.getSelection();
-  const word = sel.toString().trim().toLowerCase().replace(/[^a-z'-]/g, '');
+  // Normalize smart quotes to straight apostrophes before stripping non-letter chars
+  const raw = sel.toString().trim().toLowerCase().replace(/[\u2018\u2019]/g, "'");
+  const word = raw.replace(/[^a-z'-]/g, '');
   if (!word || word.length < 2) return;
 
   showWordPopup(word, e.clientX, e.clientY);
@@ -7161,6 +7327,20 @@ let _enVoice = null;
 function getEnglishVoice() {
   if (_enVoice) return _enVoice;
   const voices = speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  // Priority list of highest-quality English voices found across platforms.
+  // Neural voices (Microsoft, Google premium) sound much more natural than localService voices.
+  const preferred = [
+    'Microsoft Aria Online (Natural)', 'Microsoft Sonia Online (Natural)',
+    'Microsoft Libby Online (Natural)', 'Microsoft Jenny Online (Natural)',
+    'Microsoft Ryan Online (Natural)', 'Microsoft Guy Online (Natural)',
+    'Google UK English Female', 'Google UK English Male',
+    'Google US English', 'Samantha', 'Karen', 'Daniel', 'Moira', 'Tessa', 'Fiona'
+  ];
+  for (const name of preferred) {
+    const v = voices.find(v => v.name === name || v.name.startsWith(name));
+    if (v) { _enVoice = v; return v; }
+  }
   _enVoice = voices.find(v => v.lang === 'en-GB' && !v.localService)
     || voices.find(v => v.lang === 'en-US' && !v.localService)
     || voices.find(v => v.lang.startsWith('en-GB'))
@@ -7170,9 +7350,11 @@ function getEnglishVoice() {
   return _enVoice;
 }
 // Pre-load voices (some browsers need this)
-speechSynthesis.getVoices();
-if (speechSynthesis.onvoiceschanged !== undefined) {
-  speechSynthesis.onvoiceschanged = () => { _enVoice = null; getEnglishVoice(); };
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.getVoices();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = () => { _enVoice = null; getEnglishVoice(); };
+  }
 }
 
 function speakDictation(text, rate) {

@@ -6783,6 +6783,7 @@ async function showWordPopup(word, x, y) {
 
   popup.style.left = left + 'px';
   popup.style.top = top + 'px';
+  popup.style.transform = '';
   popup.style.display = 'block';
   overlay.style.display = 'block';
 
@@ -6871,7 +6872,9 @@ function addToFlashcardsFromPopup(word, audioUrl) {
 }
 
 function closePopup() {
-  document.getElementById('word-popup').style.display = 'none';
+  const popup = document.getElementById('word-popup');
+  popup.style.display = 'none';
+  popup.style.transform = '';
   document.getElementById('overlay').style.display = 'none';
 }
 
@@ -6986,11 +6989,12 @@ function renderCurrentCard() {
   const card = fcDueCards[fcCurrentIndex];
   fcRevealed = false;
 
+  const jsEsc = s => (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');
   area.innerHTML = `<div class="fc-card-container">
     <div class="fc-card" id="fc-card">
       <div class="fc-card-front">
         <div class="fc-word">${card.word}</div>
-        ${card.audioUrl || true ? `<button class="fc-audio-btn" onclick="playWord('${card.word}')">&#128266;</button>` : ''}
+        <button class="fc-audio-btn" onclick="playWord('${jsEsc(card.word)}')">&#128266;</button>
         <button class="fc-reveal-btn" onclick="revealCard()">Show Answer</button>
       </div>
       <div class="fc-card-back">
@@ -7003,21 +7007,61 @@ function renderCurrentCard() {
     </div>
   </div>
   <div class="fc-buttons" id="fc-buttons" style="display:none">
-    <button class="fc-btn again" onclick="rateCard(0)">Again<span class="fc-interval">1 day</span></button>
-    <button class="fc-btn hard" onclick="rateCard(3)">Hard<span class="fc-interval">${getNextInterval(card, 3)} days</span></button>
-    <button class="fc-btn good" onclick="rateCard(4)">Good<span class="fc-interval">${getNextInterval(card, 4)} days</span></button>
-    <button class="fc-btn easy" onclick="rateCard(5)">Easy<span class="fc-interval">${getNextInterval(card, 5)} days</span></button>
+    <button class="fc-btn again" onclick="rateCard(0)">Again<span class="fc-interval">${fmtInterval(getNextInterval(card, 0))}</span></button>
+    <button class="fc-btn hard" onclick="rateCard(3)">Hard<span class="fc-interval">${fmtInterval(getNextInterval(card, 3))}</span></button>
+    <button class="fc-btn good" onclick="rateCard(4)">Good<span class="fc-interval">${fmtInterval(getNextInterval(card, 4))}</span></button>
+    <button class="fc-btn easy" onclick="rateCard(5)">Easy<span class="fc-interval">${fmtInterval(getNextInterval(card, 5))}</span></button>
   </div>
-  <div style="text-align:center;color:var(--text-light);font-size:0.85rem;margin-top:0.5rem">
+  <div style="text-align:center;margin-top:0.5rem">
+    <button onclick="editFlashcardByWord('${jsEsc(card.word)}')" style="background:none;border:none;color:var(--text-light);font-size:0.8rem;cursor:pointer;text-decoration:underline">\u270E Edit this card</button>
+  </div>
+  <div style="text-align:center;color:var(--text-light);font-size:0.85rem;margin-top:0.3rem">
     Card ${fcCurrentIndex + 1} of ${fcDueCards.length}
   </div>`;
 }
 
+function fmtInterval(days) {
+  if (days < 1) return '<1 day';
+  if (days === 1) return '1 day';
+  if (days < 30) return days + ' days';
+  if (days < 365) return Math.round(days / 30) + ' mo';
+  return Math.round(days / 365) + ' yr';
+}
+
+function editFlashcardByWord(word) {
+  const idx = flashcards.findIndex(c => c.word === word);
+  if (idx >= 0) editFlashcard(idx);
+}
+
+// SM-2 inspired spaced repetition algorithm.
+// quality: 0=Again, 3=Hard, 4=Good, 5=Easy
 function getNextInterval(card, quality) {
-  if (quality < 3) return 1;
-  if (card.repetitions === 0) return 1;
-  if (card.repetitions === 1) return 3;
-  return Math.round(card.interval * card.easeFactor);
+  const ease = card.easeFactor || 2.5;
+  const reps = card.repetitions || 0;
+  const interval = card.interval || 0;
+
+  // Again: always reset to 1 day
+  if (quality === 0) return 1;
+
+  // First time seeing the card (new)
+  if (reps === 0) {
+    if (quality === 3) return 1;    // Hard: 1 day
+    if (quality === 4) return 2;    // Good: 2 days
+    if (quality === 5) return 4;    // Easy: skip ahead 4 days
+  }
+
+  // Second exposure (learning)
+  if (reps === 1) {
+    if (quality === 3) return 3;    // Hard
+    if (quality === 4) return 4;    // Good
+    if (quality === 5) return 7;    // Easy
+  }
+
+  // Review phase: multiply previous interval
+  if (quality === 3) return Math.max(2, Math.round(interval * 1.2));         // Hard
+  if (quality === 4) return Math.max(3, Math.round(interval * ease));        // Good
+  if (quality === 5) return Math.max(5, Math.round(interval * ease * 1.3));  // Easy
+  return 1;
 }
 
 function revealCard() {
@@ -7031,24 +7075,34 @@ function rateCard(quality) {
   const fc = flashcards.find(c => c.word === card.word);
   if (!fc) return;
 
-  if (quality < 3) {
+  fc.easeFactor = fc.easeFactor || 2.5;
+  fc.repetitions = fc.repetitions || 0;
+  fc.interval = fc.interval || 0;
+
+  // Calculate the new interval using the SRS algorithm
+  fc.interval = getNextInterval(fc, quality);
+
+  // Update repetitions and ease factor based on quality
+  if (quality === 0) {
+    // Again: reset repetitions, lower ease (this card is harder than expected)
     fc.repetitions = 0;
-    fc.interval = 1;
+    fc.easeFactor = Math.max(1.3, fc.easeFactor - 0.2);
   } else {
-    if (fc.repetitions === 0) {
-      fc.interval = 1;
-    } else if (fc.repetitions === 1) {
-      fc.interval = 3;
-    } else {
-      fc.interval = Math.round(fc.interval * fc.easeFactor);
-    }
     fc.repetitions++;
-    fc.easeFactor = Math.max(1.3, fc.easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)));
+    if (quality === 3) {
+      // Hard: lower ease slightly
+      fc.easeFactor = Math.max(1.3, fc.easeFactor - 0.15);
+    } else if (quality === 5) {
+      // Easy: increase ease (card is easier than expected)
+      fc.easeFactor = fc.easeFactor + 0.15;
+    }
+    // Good (4): keep ease unchanged — performing as expected
   }
 
   const next = new Date();
   next.setDate(next.getDate() + fc.interval);
   fc.nextReview = next.toISOString().split('T')[0];
+  fc.lastReview = new Date().toISOString();
 
   saveState();
   updateFcBadge();
@@ -7063,16 +7117,74 @@ function renderAllCards() {
     return;
   }
 
+  const jsEsc = s => (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');
   let html = `<h3>All Cards (${flashcards.length})</h3>`;
   flashcards.forEach((card, i) => {
     html += `<div class="fc-list-item">
       <span class="fc-list-word">${card.word}</span>
-      <span class="fc-list-def">${card.definition ? card.definition.substring(0, 60) + (card.definition.length > 60 ? '...' : '') : ''}</span>
-      <button class="popup-audio" style="width:28px;height:28px;font-size:0.9rem" onclick="playWord('${card.word}')">&#128266;</button>
-      <button class="fc-delete-btn" onclick="deleteFlashcard(${i})">&#10005;</button>
+      <span class="fc-list-def">${card.definition ? card.definition.substring(0, 60) + (card.definition.length > 60 ? '...' : '') : '<em style="color:var(--text-light)">no definition \u2014 click Edit to add</em>'}</span>
+      <button class="popup-audio" style="width:28px;height:28px;font-size:0.9rem" onclick="playWord('${jsEsc(card.word)}')" title="Play audio">&#128266;</button>
+      <button class="popup-audio" style="width:28px;height:28px;font-size:0.9rem;background:var(--warning-light);color:var(--warning)" onclick="editFlashcard(${i})" title="Edit">&#9998;</button>
+      <button class="fc-delete-btn" onclick="deleteFlashcard(${i})" title="Delete">&#10005;</button>
     </div>`;
   });
   container.innerHTML = html;
+}
+
+function editFlashcard(index) {
+  const card = flashcards[index];
+  if (!card) return;
+  // Try to extract existing PT-BR and English definition from the stored definition
+  let existingEn = card.definition || '';
+  let existingPtBr = '';
+  const ptBrMatch = existingEn.match(/\(PT-BR:\s*([^)]+)\)/);
+  if (ptBrMatch) {
+    existingPtBr = ptBrMatch[1].trim();
+    existingEn = existingEn.replace(/\s*\(PT-BR:[^)]+\)/, '').trim();
+  }
+  const example = (card.examples && card.examples[0]) || card.example || '';
+  // Show a modal-like popup overlaid
+  const popup = document.getElementById('word-popup');
+  const overlay = document.getElementById('overlay');
+  const content = document.getElementById('popup-content');
+  popup.style.left = '50%';
+  popup.style.top = '20%';
+  popup.style.transform = 'translateX(-50%)';
+  popup.style.display = 'block';
+  overlay.style.display = 'block';
+  const escAttr = s => (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  const jsEsc = s => (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');
+  content.innerHTML = `<div class="popup-header">
+    <span class="popup-word">${card.word}</span>
+    <button class="popup-audio" onclick="playWord('${jsEsc(card.word)}')">&#128266;</button>
+  </div>
+  <label style="display:block;font-size:0.7rem;color:var(--text-light);margin-top:0.5rem;text-transform:uppercase;letter-spacing:0.5px">PT-BR</label>
+  <input type="text" id="edit-ptbr" value="${escAttr(existingPtBr)}" placeholder="Tradu\u00e7\u00e3o em portugu\u00eas..."
+    style="width:100%;padding:0.4rem;border:1px solid var(--border);border-radius:6px;font-size:0.95rem;color:var(--primary);font-weight:600;background:var(--bg);margin-bottom:0.4rem">
+  <label style="display:block;font-size:0.7rem;color:var(--text-light);margin-top:0.3rem;text-transform:uppercase;letter-spacing:0.5px">Definition (English)</label>
+  <textarea id="edit-def" rows="2" placeholder="English definition..."
+    style="width:100%;padding:0.4rem;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;font-family:inherit;background:var(--bg);margin-bottom:0.4rem;resize:vertical">${escAttr(existingEn)}</textarea>
+  <label style="display:block;font-size:0.7rem;color:var(--text-light);margin-top:0.3rem;text-transform:uppercase;letter-spacing:0.5px">Example</label>
+  <textarea id="edit-ex" rows="2" placeholder="Example sentence..."
+    style="width:100%;padding:0.4rem;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;font-family:inherit;font-style:italic;background:var(--bg);margin-bottom:0.6rem;resize:vertical">${escAttr(example)}</textarea>
+  <button class="popup-add-btn" onclick="saveEditedFlashcard(${index})">Save Changes</button>`;
+}
+
+function saveEditedFlashcard(index) {
+  const card = flashcards[index];
+  if (!card) return;
+  const ptBr = (document.getElementById('edit-ptbr')||{}).value || '';
+  const definition = (document.getElementById('edit-def')||{}).value || '';
+  const example = (document.getElementById('edit-ex')||{}).value || '';
+  card.definition = definition && ptBr ? `${definition} (PT-BR: ${ptBr})`
+    : definition ? definition
+    : ptBr ? `(PT-BR: ${ptBr})` : '';
+  card.example = example;
+  card.examples = example ? [example] : [];
+  saveState();
+  closePopup();
+  renderFlashcardView();
+  showToast('Card updated');
 }
 
 function deleteFlashcard(index) {

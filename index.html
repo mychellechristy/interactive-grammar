@@ -1081,9 +1081,36 @@ main {
 <div id="toast"></div>
 
 <script>
-// ============================================================
-// SUPABASE CONFIG
-// ============================================================
+// ============================================================================
+// 📍 NAVIGATION MAP — see CODEBASE_MAP.md for full reference
+// ============================================================================
+// Search for one of these markers to jump to a section:
+//   #SUPABASE     — sync config and functions
+//   #UNITS-DATA   — grammar units (1-18) data
+//   #SKILLS-DATA  — Skills Lab content per unit
+//   #PHRASES      — phrase bank
+//   #PLAN         — 90-day plan
+//   #STATE        — global state vars
+//   #STORAGE      — localStorage save/load
+//   #EPISODES     — TV transcripts (Normal People etc.)
+//   #LIVE-LESSONS — live class content (L1, L2, L3...)
+//   #RENDER       — view rendering
+//   #ANSWERS      — answer checking & normalize
+//   #DICT         — COMMON_WORDS + buildLocalDictionary + fetchWordData
+//   #POPUP        — double-click word popup
+//   #FLASHCARDS   — flashcards + SRS algorithm
+//   #SKILLS-LAB   — Skills Lab rendering (translation, dialogues, etc.)
+//   #PHRASE-VIEW  — phrase bank rendering
+//   #PLAN-VIEW    — 90-day plan rendering
+//   #PROGRESS     — stats and difficulty detection
+//   #SYNC-VIEW    — Cloud Sync screen
+//   #INIT         — startup code
+// ============================================================================
+
+// #SUPABASE ============================================================
+// Sync to Supabase Cloud. Protected by IS_LOCAL (skip on localhost)
+// and cloudPullSucceeded (no push before first successful pull).
+// ============================================================================
 const SUPABASE_URL = 'https://bemkdfkayiyxbeeqximt.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlbWtkZmtheWl5eGJlZXF4aW10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMDc5MTQsImV4cCI6MjA4MDc4MzkxNH0.DJhIL7p0R-vxOwIGD6VEIQQO5Lkj4fJnCAt5SyVYvbg';
 const SYNC_USER_ID = 'mychelle';
@@ -1093,7 +1120,7 @@ let syncTimer = null;
 let lastSyncAt = null;
 
 // ============================================================
-// DATA
+// #UNITS-DATA — grammar units (1-18). Add unit N: { number, title, grammar:[], exercises:[] }
 // ============================================================
 const UNITS = {
   1: {
@@ -3044,7 +3071,7 @@ Who <strong>invented</strong> the telephone? (<em>not</em> has invented)</p>`
 };
 
 // ============================================================
-// SKILLS DATA
+// #SKILLS-DATA — Skills Lab data per unit. Each unit has translation, dialogues, speedRound, brazilianErrors, sentenceBuilding, grammarCards, dictation, shadowing
 // ============================================================
 const SKILLS = {
   1: {
@@ -4395,7 +4422,7 @@ const SKILLS = {
 };
 
 // ============================================================
-// PHRASE BANK DATA
+// #PHRASES — static phrase bank
 // ============================================================
 const PHRASES = [
   { cat: "Starting a conversation", icon: "&#128172;", phrases: [
@@ -4441,7 +4468,7 @@ const PHRASES = [
 ];
 
 // ============================================================
-// 90-DAY PLAN DATA
+// #PLAN — 12-week plan: 145 units. 1-2 units/day.
 // ============================================================
 // 12-week plan: 145 units. 1-2 units/day. Related/short units paired.
 // U = study unit (grammar + exercises). S = skills practice. R = review.
@@ -4557,7 +4584,7 @@ const PLAN_WEEKS = [
 ];
 
 // ============================================================
-// STATE
+// #STATE — global mutable state (currentUnit, flashcards, audioCache, etc.)
 // ============================================================
 let currentUnit = 1;
 let currentView = 'unit';
@@ -4569,7 +4596,7 @@ let speedTimer = null;
 let skillResults = {};
 
 // ============================================================
-// STORAGE
+// #STORAGE — localStorage persistence
 // ============================================================
 function saveState() {
   const data = { exerciseResults, firstAttemptResults, flashcards, version: 2 };
@@ -4595,7 +4622,7 @@ function loadState() {
 }
 
 // ============================================================
-// SUPABASE SYNC
+// #SUPABASE-SYNC — push/pull functions with safety guards
 // ============================================================
 function debouncedCloudPush() {
   clearTimeout(syncTimer);
@@ -4743,7 +4770,7 @@ document.getElementById('import-file').addEventListener('change', function(e) {
 });
 
 // ============================================================
-// LIVE CLASSES DATA
+// #EPISODES — TV transcripts. Add new with id E2, E3...
 // ============================================================
 const EPISODES = [{
   id: "E1",
@@ -5640,7 +5667,7 @@ const LIVE_LESSONS = [
 ];
 
 // ============================================================
-// RENDERING
+// #RENDER — view show/hide, renderUnit, renderLessonDetail, renderEpisodeDetail
 // ============================================================
 function hideAllViews() {
   ['unit-view','flashcard-view','progress-view','phrases-view','plan-view','live-view','episodes-view','sync-view'].forEach(id => {
@@ -6210,7 +6237,7 @@ function toggleCard(header) {
 }
 
 // ============================================================
-// ANSWER CHECKING
+// #ANSWERS — normalize() and answersMatch() handle both [["a"]] and ["a"] formats
 // ============================================================
 function normalize(str) {
   return str
@@ -6401,7 +6428,7 @@ function retryMistakes(exId) {
 }
 
 // ============================================================
-// AUDIO
+// #DICT — COMMON_WORDS dictionary + buildLocalDictionary + fetchWordData + fetchPtBrTranslation
 // ============================================================
 // Common English words the dictionary API often gets wrong (mostly irregular verbs and function words)
 const COMMON_WORDS = {
@@ -6693,7 +6720,7 @@ async function playWord(word) {
 }
 
 // ============================================================
-// WORD POPUP (double-click)
+// #POPUP — double-click word popup AND multi-word selection lookup
 // ============================================================
 document.addEventListener('dblclick', async (e) => {
   // Don't trigger on inputs, buttons, selects
@@ -6926,7 +6953,7 @@ function addToFlashcards(word, definition, example, audioUrl) {
 }
 
 // ============================================================
-// FLASHCARDS
+// #FLASHCARDS — review screen, SRS algorithm (getNextInterval), edit modal
 // ============================================================
 let fcCurrentIndex = 0;
 let fcDueCards = [];
@@ -7195,7 +7222,7 @@ function deleteFlashcard(index) {
 }
 
 // ============================================================
-// TOAST
+// #TOAST — bottom notification
 // ============================================================
 let toastTimeout;
 function showToast(msg) {
@@ -7207,7 +7234,7 @@ function showToast(msg) {
 }
 
 // ============================================================
-// SKILLS LAB RENDERING
+// #SKILLS-LAB — render 8 skill types: translation, dialogues, speedRound, brazilianErrors, sentenceBuilding, grammarCards, dictation, shadowing
 // ============================================================
 function renderSkillsLab(unitNum) {
   const skills = SKILLS[unitNum];
@@ -7740,7 +7767,7 @@ function retrySkill(u, type) {
 }
 
 // ============================================================
-// PHRASE BANK
+// #PHRASE-VIEW — render phrase bank
 // ============================================================
 function renderPhrasesView() {
   let html = '';
@@ -7800,7 +7827,7 @@ function addAllPhrases() {
 }
 
 // ============================================================
-// 90-DAY PLAN
+// #PLAN-VIEW — render 90-day plan
 // ============================================================
 function getPlanState() {
   try {
@@ -7913,7 +7940,7 @@ function resetPlan() {
 }
 
 // ============================================================
-// PROGRESS & DIFFICULTY TRACKING
+// #PROGRESS — getExerciseStats, getDifficulties, getExerciseTopic
 // ============================================================
 function getExerciseStats(exId) {
   const unit = Object.values(UNITS).find(u => u.exercises.some(e => e.id === exId));
@@ -8136,7 +8163,7 @@ function retryExercise(exId) {
 }
 
 // ============================================================
-// REMEDIAL EXERCISE GENERATION
+// #REMEDIAL — auto-generated practice for difficult exercises
 // ============================================================
 const PRACTICE_BANK = {
   '1.3': {
@@ -8314,7 +8341,7 @@ function checkPractice(exId) {
 }
 
 // ============================================================
-// SYNC — Supabase Cloud + Export/Import
+// #SYNC-VIEW — Cloud Sync screen with manual sync, export/import
 // ============================================================
 function getAllSaveData() {
   return { exerciseResults, firstAttemptResults, flashcards, plan: getPlanState(), syncedAt: new Date().toISOString() };
@@ -8390,7 +8417,7 @@ function renderSyncView() {
 }
 
 // ============================================================
-// INIT
+// #INIT — startup: loadState, showUnit(1), background Supabase pull
 // ============================================================
 loadState();
 updateFcBadge();
